@@ -23,16 +23,16 @@ public class PlayerTest {
     }
     
     @Test
-    public void addResourceTest() {
-        System.out.println("PlayerTest::addResourceTest()");
-        System.out.println("PlayerTest::addResourceTest:  PlayerResources: " 
+    public void addResourceSimpleTest() {
+        System.out.println("PlayerTest::addResourceSimpleTest()");
+        System.out.println("PlayerTest::addResourceSimpleTest:  PlayerResources: " 
                             + player.getAvailableResources());
         assertEquals(player.getAvailableResources(), 10);
         
         player.addResources(); // function that should automatically add resource
         assertEquals(player.getAvailableResources(), 20); // should gain 10 resources
 
-        System.out.println("PlayerTest::addResourceTest: PlayerResources: "
+        System.out.println("PlayerTest::addResourceSimpleTest: PlayerResources: "
                             + player.getAvailableResources());
     }
 }
