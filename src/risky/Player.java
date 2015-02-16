@@ -10,5 +10,7 @@ public class Player {
 	private int availableResources;
 	private Spot[] spotsOwned;
 	
-	public Player()
+	public Player() {
+		
+	}
 }
