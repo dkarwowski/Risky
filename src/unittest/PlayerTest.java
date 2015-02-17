@@ -35,4 +35,18 @@ public class PlayerTest {
         System.out.println("PlayerTest::addResourceSimpleTest: PlayerResources: "
                             + player.getAvailableResources());
     }
+    
+    @Test
+    public void addResourcesFromCountryTest() {
+        System.out.println("PlayerTest::addResourcesFromCountryTest()");
+        System.out.println("PlayerTest::addResourcesFromCountryTest:  PlayerResources: "
+                            + player.getAvailableResources());
+        assertEquals(player.getAvailableResources(), 10);
+        
+        player.addResources(15);
+        assertEquals(player.getAvailableResources(), 25);
+        
+        System.out.println("PlayerTest::addResourcesFromCountryTest:  PlayerResources: "
+                            + player.getAvailableResources());
+    }
 }
