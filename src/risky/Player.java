@@ -67,10 +67,28 @@ public class Player {
     }
     
 //--Getters End---------------------------------------------------------------
+//--Debugging Functions-------------------------------------------------------
+    
+    public String toString() {
+        return "Player: " + this.name + " with id: " + this.id;
+    }
+
 //--Game Related Functions----------------------------------------------------
     
     // should add default 
     public void addResources() {
         this.availableResources += this.resourcesPerTurn;
+    }
+    
+    public void addResources(int countriesResources) {
+        this.availableResources += countriesResources;
+    }
+    
+    public void addCountry(Country c) {
+        this.countriesOwned.add(c);
+    }
+    
+    public void addSpot(Spot s) {
+        this.spotsOwned.add(s);
     }
 }

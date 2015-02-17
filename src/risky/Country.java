@@ -16,11 +16,12 @@ public class Country {
     	// initialize the array list of spots for this country
     	this.setSpotsInCountry(new ArrayList<Spot>());
     	
-    	this.setResources(initialResources);
+    	// initial resources the country has
+    	this.resources = 5;
     	
     }
 
-//--Getters Start-------------------------------------------------------------
+//--Getters Start------------------------------------------------------------
 
     public String getName(){
     	return this.name;
@@ -34,29 +35,40 @@ public class Country {
 		return spotsInCountry;
 	}
 	
-	public int getResources() {
-		return resources;
+	public int getResources(){
+		return this.resources;
 	}
-//--Getters End---------------------------------------------------------------    
-//--Setters Start-------------------------------------------------------------
 	
-	public void setResources(int resourceCount){
-		this.resources = resourceCount;
-	}
-
-//--Getters End---------------------------------------------------------------  
-//--Game Related Functions Start--------------------------------------------------------------- 
-    
-    public void setOwner(Player setOwner){
-    	this.owner = setOwner;
-    }
-    
-    public void updateResources(int newResourceCount){
-    	this.resources += newResourceCount;
-    }
+//--Getters End---------------------------------------------------------------     
+//--Game Related Functions Start----------------------------------------------
 
 	public void setSpotsInCountry(ArrayList<Spot> spotsInCountry) {
 		this.spotsInCountry = spotsInCountry;
 	}
 	
+	public void claimCountry(){
+		if(doesPlayerOwnAllSpots() == true){
+			this.owner = spotsInCountry.get(0).getPlayer();
+			// once turns are in place, add resource distribution
+		}
+	}
+	
+	public boolean doesPlayerOwnAllSpots(){
+		Player player = spotsInCountry.get(0).getPlayer();
+		int counter = 0;
+		for(int i = 0; i < spotsInCountry.size(); i++){
+			if(spotsInCountry.get(i).getPlayer() == player){
+				counter++;
+			}else{
+				counter = counter + 0;
+			}
+		}
+		if(counter == spotsInCountry.size()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+//--Game Related Functions End------------------------------------------------ 
+
 }

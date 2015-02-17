@@ -2,7 +2,7 @@ package risky;
 
 public class Spot 
 {
-	private String _player;
+	private Player _player;
 	private int _resources;
 	private String _country;
 	private int[] _coordinates;
@@ -24,7 +24,7 @@ public class Spot
 	}
 	
 	//Getters
-	public String getPlayer() 
+	public Player getPlayer() 
 	{
 		return _player;
 	}
@@ -50,7 +50,7 @@ public class Spot
 	}
 	
 	//Setters
-	public void setPlayer(String player)
+	public void setPlayer(Player player)
 	{
 		_player = player;
 	}
