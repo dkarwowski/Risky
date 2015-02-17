@@ -55,7 +55,7 @@ public class SpotTest
 		System.out.println("SpotTest::checkCountryTest()");
 		System.out.println("SpotTest::checkCountryTest()::Country: " + 
 				country.getName());
-		assertEquals(country.getName(), "Test Country");
+		assertEquals(spot.getCountry(), country);
 		ArrayList<Spot> spotArray = country.getSpotsInCountry();
 		Boolean inSpotArray = false;
 		country.setSpotsInCountry(spot);
