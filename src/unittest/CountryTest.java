@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class CountryTest {
     Country country;
-	Spot spot1 = null;
-	Spot spot2 = null;
+	Spot spot1 = new Spot();
+	Spot spot2 = new Spot();
 	Player player1 = new Player("player1", 1);
 	Player player2 = new Player("player2", 2);
 
