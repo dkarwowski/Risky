@@ -10,11 +10,11 @@ public class Country {
 	
     private ArrayList<Spot> spotsInCountry;
     
-    public Country(String setName, int initialResources){
+    public Country(String setName){
     	this.name = setName;
     	
     	// initialize the array list of spots for this country
-    	this.setSpotsInCountry(new ArrayList<Spot>());
+    	this.spotsInCountry = new ArrayList<Spot>();
     	
     	// initial resources the country has
     	this.resources = 5;
@@ -23,7 +23,7 @@ public class Country {
 
 //--Getters Start------------------------------------------------------------
 
-    public String getName(){
+	public String getName(){
     	return this.name;
     }
     
@@ -42,8 +42,8 @@ public class Country {
 //--Getters End---------------------------------------------------------------     
 //--Game Related Functions Start----------------------------------------------
 
-	public void setSpotsInCountry(ArrayList<Spot> spotsInCountry) {
-		this.spotsInCountry = spotsInCountry;
+	public void setSpotsInCountry(Spot spot) {
+		this.spotsInCountry.add(spot);
 	}
 	
 	public void claimCountry(){
