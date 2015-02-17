@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import risky.Player;
 import risky.Country;
 import risky.Spot;
 
