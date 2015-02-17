@@ -80,7 +80,7 @@ public class PlayerTest {
         System.out.println("PlayerTest::addCountryTest:  countries: "
                             + player.getCountriesOwned());
         
-        Country country = new Country("NA", 10);
+        Country country = new Country("NA");
         player.addCountry(country);
         assertArrayEquals(player.getCountriesOwned().toArray(),
                 new ArrayList<Country>(Arrays.asList(country)).toArray());
