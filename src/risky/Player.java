@@ -69,11 +69,13 @@ public class Player {
 //--Getters End---------------------------------------------------------------
 //--Debugging Functions-------------------------------------------------------
     
+    @Override
     public String toString() {
         return "Player: " + this.name + " with id: " + this.id;
     }
 
-//--Game Related Functions----------------------------------------------------
+//--Debugging Functions End---------------------------------------------------
+//--Game Related Functions Start----------------------------------------------
     
     // should add default 
     public void addResources() {
@@ -91,4 +93,6 @@ public class Player {
     public void addSpot(Spot s) {
         this.spotsOwned.add(s);
     }
+
+//--Game Related Functions End------------------------------------------------
 }
