@@ -4,7 +4,7 @@ public class Spot
 {
 	private Player _player;
 	private int _resources;
-	private String _country;
+	private Country _country;
 	private int[] _coordinates;
 	
 	//Constructors
@@ -15,7 +15,7 @@ public class Spot
 		_country = null;
 		_coordinates = new int[2];
 	}
-	public Spot(String country, int[] coords)
+	public Spot(Country country, int[] coords)
 	{
 		this.setPlayer(null);
 		this.setResources(0);
@@ -32,7 +32,7 @@ public class Spot
 	{
 		return _resources;
 	}
-	public String getCountry()
+	public Country getCountry()
 	{
 		return _country;
 	}
@@ -58,7 +58,7 @@ public class Spot
 	{
 		_resources = resources;
 	}
-	public void setCountry(String country)
+	public void setCountry(Country country)
 	{
 		_country = country;
 	}
