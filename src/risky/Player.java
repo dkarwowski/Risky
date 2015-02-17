@@ -67,6 +67,12 @@ public class Player {
     }
     
 //--Getters End---------------------------------------------------------------
+//--Debugging Functions-------------------------------------------------------
+    
+    public String toString() {
+        return "Player: " + this.name + " with id: " + this.id;
+    }
+
 //--Game Related Functions----------------------------------------------------
     
     // should add default 
