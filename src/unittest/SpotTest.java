@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import risky.Country;
-import risky.Spot;
+import risky.common.Country;
+import risky.common.Spot;
 
 import org.junit.Before;
 import org.junit.After;

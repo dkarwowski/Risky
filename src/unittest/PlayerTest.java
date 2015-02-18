@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import risky.Player;
-import risky.Spot;
-import risky.Country;
+import risky.common.Country;
+import risky.common.Player;
+import risky.common.Spot;
 
 import org.junit.Before;
 import org.junit.After;

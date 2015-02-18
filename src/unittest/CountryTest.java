@@ -1,9 +1,9 @@
 package unittest;
 
 import static org.junit.Assert.*;
-import risky.Player;
-import risky.Country;
-import risky.Spot;
+import risky.common.Country;
+import risky.common.Player;
+import risky.common.Spot;
 
 import org.junit.Before;
 import org.junit.After;

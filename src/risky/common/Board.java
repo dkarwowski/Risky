@@ -1,4 +1,4 @@
-package risky;
+package risky.common;
 
 public class Board {
 
