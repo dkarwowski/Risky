@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Test;
 
 public class PlayerTest {
-    Player player;
+    private Player player;
 
     @Before
     public void setUp() throws Exception {
