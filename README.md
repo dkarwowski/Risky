@@ -32,3 +32,4 @@ Future Aspects
     - will need more work
  * Create basic game functionalities
  * Add necessary information to Board class to function properly
+ * Swag.jpg
