@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import risky.common.Coords;
 import risky.common.Country;
 import risky.common.Spot;
 
@@ -15,15 +16,13 @@ public class SpotTest
 {	
     Spot spot;
     Country country = new Country("Test Country");
-    int[] coordinates;	
+    Coords coordinates;	
 
     @Before
     public void setUp() throws Exception 
     {
         System.out.println("SpotTest::setUp()\n");
-        coordinates = new int[2];
-        coordinates[0] = 1;
-        coordinates[1] = 2;
+        coordinates = new Coords(1,2);
         spot = new Spot(country, coordinates);  
     }
 

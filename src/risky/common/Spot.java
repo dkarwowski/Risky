@@ -5,7 +5,7 @@ public class Spot
     private Player _player;
     private int _resources;
     private Country _country;
-    private int[] _coordinates;
+    private Coords _coordinates;
 
     //Constructors
     public Spot()
@@ -13,14 +13,14 @@ public class Spot
         _player = null;
         _resources = 0;
         _country = null;
-        _coordinates = new int[2];
+        _coordinates = new Coords(0,0); //Default Coords of 0,0
     }
-    public Spot(Country country, int[] coords)
+    public Spot(Country country, Coords coords)
     {
         this.setPlayer(null);
         this.setResources(0);
         this.setCountry(country);
-        this.setCoordinates(coords);
+        this.setCoords(coords);
     }
 
     //Getters
@@ -36,18 +36,19 @@ public class Spot
     {
         return _country;
     }
-    public int[] getCoordinateArray()
+    public Coords getCoords()
     {
         return _coordinates;
     }
     public int getX()
     {
-        return _coordinates[0];
+    	return _coordinates.getX();
     }
     public int getY()
     {
-        return _coordinates[1];
+    	return _coordinates.getY();
     }
+  
 
     //Setters
     public void setPlayer(Player player)
@@ -62,7 +63,7 @@ public class Spot
     {
         _country = country;
     }
-    public void setCoordinates(int[] coords)
+    public void setCoords(Coords coords)
     {
         _coordinates = coords;
     }
