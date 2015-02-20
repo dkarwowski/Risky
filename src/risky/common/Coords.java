@@ -124,10 +124,23 @@ public class Coords {
 //--Game Related Functions End------------------------------------------------
 //--Static Functions Start----------------------------------------------------
 
+    /**
+     * Grabs the x Coordinate directly next to the Hex in that direction
+     * @param x the current x Coord
+     * @param dir the direction to go in [0..5]
+     * @return the x in axial coordinates
+     */
     public static int xInDir(int x, int dir) {
         return(xInDir(x, dir, 1));
     }
 
+    /**
+     * Grabs the x Coordinate at a distance dist away from the Hex in that direction
+     * @param x the current x Coord
+     * @param dir the direction to go in [0..5]
+     * @param dist the distance to check
+     * @return the x in axial coordinates
+     */
     public static int xInDir(int x, int dir, int dist) {
         switch(dir) {
         case 1:
@@ -141,10 +154,23 @@ public class Coords {
         }
     }
 
+    /**
+     * Grabs the y Coordinate directly next to the Hex in that direction
+     * @param y the current y Coord
+     * @param dir the direction to go in [0..5]
+     * @return y in axial coordinates
+     */
     public static int yInDir(int y, int dir) {
         return(yInDir(y, dir, 1));
     }
 
+    /**
+     * Grabs the y Coordinate at a certain distance
+     * @param y the current y Coord
+     * @param dir the direction to go in [0..5]
+     * @param dist the distance to check
+     * @return y in axial coordinates
+     */
     public static int yInDir(int y, int dir, int dist) {
         switch(dir) {
         case 0:
@@ -156,6 +182,20 @@ public class Coords {
         default:
             return(y);
         }
+    }
+    
+    /**
+     * Converts axial coordinates into their Cartesian equivalent
+     * @param x axial x Coord
+     * @param y axial y Coord
+     * @return pair of Cartesian x and Cartesian y
+     */
+    public static int[] convertToCartesian(int x, int y) {
+        int[] result = new int[2];
+        result[0] = x;
+        result[1] = y + x/2;
+        
+        return(result);
     }
 
 //--Static Functions End------------------------------------------------------
