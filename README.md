@@ -29,6 +29,8 @@ Currently working
     - basic information
  * Spot
     - basic information
+ * States
+ 	- basic state design pattern implemented
     
     
 Future Aspects
