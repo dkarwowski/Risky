@@ -84,14 +84,12 @@ public class Spot {
     public void setExit(Spot other, int direction) {
     	//Direction = int 0-5, as shown in Coords.java
     	this._exits[direction] = other;
-    	
     	if(direction < 3)
     		other._exits[direction + 3] = this;
     	else if(direction < 6)
     		other._exits[direction - 3] = this;
     	else
     		System.out.println("Invalid direction.");
-    	
     	/* 	
     	if(direction == 0)
     		other._exits[3] = this;
@@ -129,8 +127,6 @@ public class Spot {
     	}
     }
     
-    
-    
 //--To String Functions End---------------------------------------------------
     
 //--Game Functions Start------------------------------------------------------
@@ -142,5 +138,6 @@ public class Spot {
     		return false;
     }
 
+//--Game Functions End--------------------------------------------------------
     
 }

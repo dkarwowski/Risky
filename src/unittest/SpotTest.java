@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import risky.common.Coords;
 import risky.common.Country;
+import risky.common.Player;
 import risky.common.Spot;
 
 import org.junit.Before;
@@ -78,6 +79,15 @@ public class SpotTest
         assertEquals(spot.getY(), testCoords[1]);
     }
 
-
+    @Test void printTest()
+    {
+    	System.out.println("SpotTest::printTest()");
+    	Player player = new Player("Bob", 1);
+    	Country country = new Country("America");
+    	Coords coords1 = new Coords(0,1);
+    	Coords coords2 = new Coords(0,2);
+    	Spot spot1 = new Spot(country, coords1);
+    	Spot spot2 = new Spot(country, coords2);
+    }
 
 }
