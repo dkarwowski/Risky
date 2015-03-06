@@ -57,6 +57,10 @@ public class Spot {
     	return _exits;
     }
     
+    public Spot getExitInDirection(int direction) {
+    	return _exits[direction];
+    }
+    
 //--Getters End---------------------------------------------------------------     
 
 //--Setters Start-------------------------------------------------------------     
@@ -121,7 +125,7 @@ public class Spot {
     		if(this._exits[i] == null)
     			System.out.println("Exit " + i + ": No exit");
     		else
-    			System.out.println("Exit " + i + ": " + this._exits[i]);
+    			System.out.println("Exit " + i + ": " + this.getExitInDirection(i));
     	}
     }
     
