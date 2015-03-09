@@ -20,12 +20,12 @@ public class PerlinNoiseTest {
                 double value = noise.eval(x/FEATURE_SIZE, y/FEATURE_SIZE);
                 if (value < 0)
                     value *= -1;
-                int rgb = (int)(value*(double)(0x00FF0000 - 0x0000FF00)) + 0x0000FF00;
+                int rgb = (int)(value*200);
                 image.setRGB(x, y, rgb);
             }
         }
        
         // if testing, change file location to wherever you'd like
-        ImageIO.write(image, "png", new File("D:\\noise.png"));
+        ImageIO.write(image, "png", new File("/home/david/noise.png"));
     }
 }

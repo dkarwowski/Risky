@@ -18,7 +18,7 @@ Currently working
 -----------------
 
 
- * Player
+ * -Player-
     - basic information
     - can add spots, countries, and resources
  * Country
