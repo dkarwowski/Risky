@@ -79,7 +79,8 @@ public class SpotTest
         assertEquals(spot.getY(), testCoords[1]);
     }
 
-    @Test void printTest()
+    @Test
+    public void printTest()
     {
     	System.out.println("SpotTest::printTest()");
     	Player player = new Player("Bob", 1);
