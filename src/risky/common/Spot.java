@@ -127,6 +127,15 @@ public class Spot {
     	}
     }
     
+    public String simpleString() {
+    	String result = "";
+    	if (this._player != null)
+    		result += Integer.toString(this._player.getID());
+    	else
+    		result += " ";
+    	return result;
+    }
+    
 //--To String Functions End---------------------------------------------------
     
 //--Game Functions Start------------------------------------------------------

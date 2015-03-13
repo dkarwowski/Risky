@@ -93,6 +93,17 @@ public class Board {
 		return contains(c.getX(), c.getY());
 	}
 	
+	public Player playerOwnsAll() {
+		boolean singlePlayerOwnsAll = true;
+		for (Country country : countries) {
+			singlePlayerOwnsAll &= country.doesPlayerOwnAllSpots();
+		}
+		
+		if (singlePlayerOwnsAll)
+			return (countries[0].getOwner());
+		return (null);
+	}
+	
 	private void setCountries() {
 		ArrayList<Country> toSet = new ArrayList<Country>();
 		for (Spot spot : this.spots) {
@@ -105,7 +116,7 @@ public class Board {
 			}
 			
 			if (shouldSkip) continue;
-			toSet.add(spot.getCountry());
+			if (spot != null) toSet.add(spot.getCountry());
 		}
 		
 		this.countries = new Country[toSet.size()];
@@ -115,5 +126,33 @@ public class Board {
 	}
 
 //--Game Related Functions End------------------------------------------------------------	 
+	
+//--Other Functions-----------------------------------------------------------------------
+	@Override
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < this.width; i++)
+			result += (i % 2 == 0) ? " __" : "   ";
+		
+		result += "\n";
+
+		for (int y = 0; y < this.height; ++y) {
+			for (int x = 0; x < this.width; ++x) {
+				String spotName = (this.spots[x + y * this.width] != null) ? 
+						this.spots[x + y * this.width].simpleString() : " ";
+				result += (x % 2 == 0) ? 
+						String.format("/ %s", spotName)  : "\\__";
+			}
+			
+			result += "/\n";
+
+			for (int x = 0; x < this.width; ++x)
+				result += (x % 2 == 0) ? "\\__" : "/  ";
+			
+			result += "\\\n";
+		}
+		
+		return (result);
+	}
 
 }

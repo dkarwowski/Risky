@@ -1,11 +1,14 @@
 package risky.common;
 
 public class StateContext {
-	
 	private Statelike myState;
 	
 	public StateContext() {
-		setState(new StateExample());
+		this(null);
+	}
+	
+	public StateContext(Statelike state) {
+		setState(state);
 	}
 	
 	/**
@@ -15,9 +18,5 @@ public class StateContext {
 	 */
 	void setState(final Statelike newState) {
 		myState = newState;
-	}
-	
-	public void writeName(final String name) {
-		myState.writeName(this, name);
 	}
 }
