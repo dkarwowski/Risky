@@ -40,6 +40,15 @@ public class Board {
 		this.setCountries();
 	}
 	
+	public void setSpot(Spot spot) {
+		Coords coords = spot.getCoords();
+		int x = coords.getX(false);
+		int y = coords.getY(false);
+		this.spots[x + y * this.width] = spot;
+
+		this.setCountries();
+	}
+	
 //--Getters Start----------------------------------------------------------
 
 	public String getName(){
@@ -107,6 +116,7 @@ public class Board {
 	private void setCountries() {
 		ArrayList<Country> toSet = new ArrayList<Country>();
 		for (Spot spot : this.spots) {
+			if (spot == null) continue;
 			boolean shouldSkip = false;
 			for (Country country : toSet) {
 				if (country.equals(spot.getCountry())) {
@@ -123,6 +133,27 @@ public class Board {
 		for (int i = 0; i < toSet.size(); ++i) {
 			this.countries[i] = toSet.get(i);
 		}
+	}
+	
+	public void claimSpot(Player player, int x, int y, int resources) {
+		Coords coords = new Coords(x, y);
+		if (this.contains(coords)) {
+			this.getSpot(coords).setPlayer(player);
+			this.getSpot(coords).setResources(resources);
+		}
+		
+	}
+	
+	public boolean spotFree(int x, int y) {
+		Coords coords = new Coords(x, y);
+		if (this.contains(coords))
+			return (this.getSpot(coords).getPlayer() == null);
+		return false;
+	}
+	
+	public void claimCountries() {
+		for (Country c : this.countries)
+			c.claimCountry();
 	}
 
 //--Game Related Functions End------------------------------------------------------------	 
@@ -146,11 +177,20 @@ public class Board {
 			
 			result += "/\n";
 
-			for (int x = 0; x < this.width; ++x)
-				result += (x % 2 == 0) ? "\\__" : "/  ";
+			for (int x = 0; x < this.width; ++x) {
+				String spotName = (this.spots[x + y * this.width] != null) ? 
+						this.spots[x + y * this.width].simpleString() : " ";
+				result += (x % 2 == 0) ? 
+						"\\__" : String.format("/ %s", spotName);
+			}
 			
 			result += "\\\n";
 		}
+		
+		for (int i = 0; i < this.width; i++)
+			result += (i % 2 == 0) ? "/  " : "\\__";
+		
+		result += "/\n";
 		
 		return (result);
 	}

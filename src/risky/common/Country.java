@@ -42,7 +42,7 @@ public class Country {
 //--Getters End---------------------------------------------------------------     
 //--Game Related Functions Start----------------------------------------------
 
-    public void setSpotsInCountry(Spot spot) {
+    public void addSpot(Spot spot) {
         this.spotsInCountry.add(spot);
     }
 
@@ -70,4 +70,14 @@ public class Country {
         }
     }
 //--Game Related Functions End------------------------------------------------ 
+    
+    @Override
+    public boolean equals(Object object) {
+    	if (object == null)
+    		return false;
+    	if (!(object instanceof Country))
+    		return false;
+    	Country other = (Country)object;
+    	return (this.getName() == other.getName());
+    }
 }

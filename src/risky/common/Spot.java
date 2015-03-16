@@ -132,7 +132,7 @@ public class Spot {
     	if (this._player != null)
     		result += Integer.toString(this._player.getID());
     	else
-    		result += " ";
+    		result += "x";
     	return result;
     }
     

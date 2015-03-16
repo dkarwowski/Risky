@@ -57,7 +57,7 @@ public class SpotTest
         assertEquals(spot.getCountry(), country);
         ArrayList<Spot> spotArray = country.getSpotsInCountry();
         Boolean inSpotArray = false;
-        country.setSpotsInCountry(spot);
+        country.addSpot(spot);
         if (spotArray.contains(spot))
         {
             inSpotArray = true;

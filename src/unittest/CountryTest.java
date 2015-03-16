@@ -34,8 +34,8 @@ public class CountryTest {
     public void countrySpotOwnershipTest() {
         spot1.setPlayer(player1);
         spot2.setPlayer(player2);
-        country.setSpotsInCountry(spot1);
-        country.setSpotsInCountry(spot2);
+        country.addSpot(spot1);
+        country.addSpot(spot2);
         System.out.println("CountryTest::countrySpotOwnershipTest()");
 
         System.out.println("CountryTest::countrySpotOwnershipTest:  Ownership: False ");
@@ -50,8 +50,8 @@ public class CountryTest {
     public void countryClaimTest() {
         spot1.setPlayer(player1);
         spot2.setPlayer(player1);
-        country.setSpotsInCountry(spot1);
-        country.setSpotsInCountry(spot2);
+        country.addSpot(spot1);
+        country.addSpot(spot2);
         System.out.println("CountryTest::countryClaimTest()");
 
         country.claimCountry();
@@ -68,11 +68,11 @@ public class CountryTest {
         System.out.println("CountryTest::countryAddSpotsTest:  SpotsAdded: 0 ");
         assertEquals(country.getSpotsInCountry().size(), 0); // should be 0
 
-        country.setSpotsInCountry(spot1);
+        country.addSpot(spot1);
         System.out.println("CountryTest::countryAddSpotsTest:  SpotsAdded: 1 ");
         assertEquals(country.getSpotsInCountry().size(), 1); // should be 1
 
-        country.setSpotsInCountry(spot2);
+        country.addSpot(spot2);
         System.out.println("CountryTest::countryAddSpotsTest:  SpotsAdded: 2 ");
         assertEquals(country.getSpotsInCountry().size(), 2); // should be 2
     }

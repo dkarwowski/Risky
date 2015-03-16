@@ -6,4 +6,8 @@ public class StatePlayer implements Statelike{
     public StatePlayer(Player plyr){
         this.player = plyr;
     }
+    
+    public Player getPlayer() {
+    	return (this.player);
+    }
 }

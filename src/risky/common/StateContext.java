@@ -16,7 +16,11 @@ public class StateContext {
 	 * Normally only called by classes implementing the State interface.
 	 * @param newState the new state of this context
 	 */
-	void setState(final Statelike newState) {
+	public void setState(Statelike newState) {
 		myState = newState;
+	}
+	
+	public Player getPlayer() {
+		return (this.myState.getPlayer());
 	}
 }
