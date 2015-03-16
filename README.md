@@ -14,11 +14,10 @@
 An unofficial Risk-like game where players place Resources/Troops on spaces on a map, attempting to gain control of Countries in order to end up in control of the entire Map.
 
 
-Currently working
------------------
+## Currently working
 
 
- * -Player-
+ * Player
     - basic information
     - can add spots, countries, and resources
  * Country
@@ -31,6 +30,9 @@ Currently working
     - basic information
  * States
  	- basic state design pattern implemented
+ * Risky
+    - Holds the very simple game loop
+    - Needs a lot of work
     
     
 Future Aspects
@@ -38,8 +40,5 @@ Future Aspects
 
 
  * Map generation via Perlin/Simplex Noise
- * Specify the Spot class to be a Hex (like in MegaMek)
-    - will need more work
- * Create basic game functionalities
- * Add necessary information to Board class to function properly
+ * All of those damn TODOs in Risky.java
  * Swag.jpg
