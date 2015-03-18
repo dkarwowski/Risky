@@ -154,6 +154,7 @@ public class Risky {
             boolean getInput = true;
             String[] split = new String[1];
 
+            // Need to loop input in case an error comes up
             while (getInput) {
                 try {
                     split = in.nextLine().split(" ");
@@ -169,6 +170,8 @@ public class Risky {
                 if (split[0].equals("q"))
                     break;
             
+            // simple variables, could use better names
+            // account for axial x, y coords and #resources for the spot
             int x = Integer.parseInt(split[0]);
             int y = Integer.parseInt(split[1]);
             int r = Integer.parseInt(split[2]);
@@ -194,7 +197,7 @@ public class Risky {
         }
     }
     
-    //TODO(david): remove these temporary testing functions
+    //TODO(david): remove this temporary testing functions
     public Board getBoard() {
         return this.board;
     }
