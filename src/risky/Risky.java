@@ -2,6 +2,7 @@ package risky;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,15 +23,15 @@ public class Risky {
     private int currentState;
 
     private Player playerWon = null;
+    
+    //TODO(david): remove this
+    private Scanner in;
 
     public Risky(boolean console) {
-        if(console) {
+        if(console)
             this.consoleInit();
-            this.consoleRun();
-        }
-        else {
+        else
             System.out.println("GUI Not Enabled\n");
-        }
     }
 
     public Risky(Board _board, Statelike[] _playerStates) {
@@ -56,39 +57,14 @@ public class Risky {
         return (result);
     }
 
-    // TODO: see if this class needed
-    public boolean spotFree(int x, int y) {
-        return (this.board.spotFree(x, y));
-    }
-
-    // TODO: see if this class needed
-    public void claimSpot(int x, int y, int resources) {
-        this.board.claimSpot(this.stateContext.getPlayer(), x, y, resources);
-    }
-
-    // TODO: see if this class needed
-    public void claimCountries() {
-        this.board.claimCountries();
-    }
-
-    // TODO: see if this class needed
-    public int getPlayerResources() {
-        return (this.stateContext.getPlayer().getAvailableResources());
-    }
-
-    // TODO: see if this class needed
-    public int getPlayerID() {
-        return (this.stateContext.getPlayer().getID());
-    }
-
     public void consoleInit() {
-        Scanner in = new Scanner(System.in);
+        this.in = new Scanner(System.in);
 
         // TODO(david): replace this with UI version
         System.out.print("Enter Player 1 Name: ");
-        Player p1 = new Player(in.next(), 0);
+        Player p1 = new Player(this.in.next(), 0);
         System.out.print("Enter Player 2 Name: ");
-        Player p2 = new Player(in.next(), 1);
+        Player p2 = new Player(this.in.next(), 1);
 
         this.playerStates = new Statelike[2];
         this.playerStates[0] = new StatePlayer(p1);
@@ -119,7 +95,7 @@ public class Risky {
         } catch (FileNotFoundException e) {
             // TODO(david): Auto-generated catch block
             e.printStackTrace();
-            in.close();
+            this.in.close();
             return;
         }
 
@@ -156,12 +132,11 @@ public class Risky {
 
             this.board.setSpot(spot);
         }
-
-        in.close();
+        
+        in.nextLine();
     }
 
-    public void consoleRun() {
-        Scanner in = new Scanner(System.in);
+    public void consoleRun() throws IOException {
         System.out.println(this.toString());
 
         boolean thisRunning = true;
@@ -169,22 +144,24 @@ public class Risky {
             // TODO: make first move unique for both players
             // TODO: make moves only possible to consecutive spots
             // TODO: determine how to connect disjointed countries
-            System.out.println("Free resources: " + this.getPlayerResources());
-            System.out .println("Player " + this.getPlayerID() + ": Enter Coordinates to take over with resources [enter as '1 1 10']: ");
-            int x = in.nextInt();
-            int y = in.nextInt();
-            int r = in.nextInt();
-            in.nextLine();
+            System.out.println("Free resources: " + this.stateContext.getPlayer().getAvailableResources());
+            System.out .println("Player " 
+                    + this.stateContext.getPlayer().getID() 
+                    + ": Enter Coordinates to take over with resources [enter as '1 1 10']: ");
+            String[] split = in.nextLine().split(" ");
+            int x = Integer.parseInt(split[0]);
+            int y = Integer.parseInt(split[1]);
+            int r = Integer.parseInt(split[2]);
 
             // TODO: deal with combat
-            if (!this.spotFree(x, y)) {
+            if (!this.board.spotFree(x, y)) {
                 continue;
             }
 
             // TODO: make player lose resources
             // TODO: give player resources every turn
-            this.claimSpot(x, y, r);
-            this.claimCountries();
+            this.board.claimSpot(this.stateContext.getPlayer(), x, y, r);
+            this.board.claimCountries();
 
             // TODO: test that this works
             if (this.checkPlayerWon())
@@ -195,10 +172,11 @@ public class Risky {
                     % this.playerStates.length;
             this.stateContext.setState(this.playerStates[this.currentState]);
         }
-
-        in.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // Replace with actually working version
+        Risky game = new Risky(true);
+        game.consoleRun();
     }
 }
