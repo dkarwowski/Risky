@@ -21,7 +21,7 @@ public class Country {
 
     }
 
-//--Getters Start------------------------------------------------------------
+    //--Getters Start------------------------------------------------------------
 
     public String getName(){
         return this.name;
@@ -39,8 +39,8 @@ public class Country {
         return this.resources;
     }
 
-//--Getters End---------------------------------------------------------------     
-//--Game Related Functions Start----------------------------------------------
+    //--Getters End---------------------------------------------------------------     
+    //--Game Related Functions Start----------------------------------------------
 
     public void addSpot(Spot spot) {
         this.spotsInCountry.add(spot);
@@ -69,15 +69,15 @@ public class Country {
             return false;
         }
     }
-//--Game Related Functions End------------------------------------------------ 
-    
+    //--Game Related Functions End------------------------------------------------ 
+
     @Override
     public boolean equals(Object object) {
-    	if (object == null)
-    		return false;
-    	if (!(object instanceof Country))
-    		return false;
-    	Country other = (Country)object;
-    	return (this.getName() == other.getName());
+        if (object == null)
+            return false;
+        if (!(object instanceof Country))
+            return false;
+        Country other = (Country)object;
+        return (this.getName() == other.getName());
     }
 }

@@ -14,21 +14,21 @@ public class PerlinNoise {
     private int gridWidth;
     private int gridHeight;
     private int squaresPerSide;
-    
+
     private int prime1;
     private int prime2;
     private int prime3;
     private int prime4;
     private int prime5;
     private int prime6;
-    
+
     private double persistance;
     private int octaves;
-    
+
     private final int[] randPrime1 = {31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-    
+
     private final int[] randPrime2 = {1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43};
-    
+
     private final int[] randPrime3 = {13001, 13003, 13007, 13009, 13033, 13037, 13043, 13049, 13063, 13093, 13099, 13103, 13109, 13121, 13127, 
             13147, 13151, 13159, 13163, 13171, 13177, 13183, 13187, 13217, 13219, 13229, 13241, 13249, 13259, 13267, 
             13291, 13297, 13309, 13313, 13327, 13331, 13337, 13339, 13367, 13381, 13397, 13399, 13411, 13417, 13421, 
@@ -57,7 +57,7 @@ public class PerlinNoise {
             16631, 16633, 16649, 16651, 16657, 16661, 16673, 16691, 16693, 16699, 16703, 16729, 16741, 16747, 16759, 
             16763, 16787, 16811, 16823, 16829, 16831, 16843, 16871, 16879, 16883, 16889, 16901, 16903, 16921, 16927, 
             16931, 16937, 16943, 16963, 16979, 16981, 16987, 16993};
-    
+
     private final int[] randPrime4 = {785003, 785017, 785033, 785053, 785093, 785101, 785107, 785119, 785123, 785129, 785143, 785153, 785159, 785167, 785203, 
             785207, 785219, 785221, 785227, 785249, 785269, 785287, 785293, 785299, 785303, 785311, 785321, 785329, 785333, 785341, 
             785347, 785353, 785357, 785363, 785377, 785413, 785423, 785431, 785459, 785461, 785483, 785501, 785503, 785527, 785537, 
@@ -108,7 +108,7 @@ public class PerlinNoise {
             794413, 794449, 794471, 794473, 794477, 794483, 794491, 794509, 794531, 794537, 794543, 794551, 794557, 794569, 794579, 
             794587, 794593, 794641, 794653, 794657, 794659, 794669, 794693, 794711, 794741, 794743, 794749, 794779, 794831, 794879, 
             794881, 794887, 794921, 794923, 794953, 794957, 794993, 794999};
-    
+
     private final int[] randPrime5 = {1376310031, 1376310097, 1376310107, 1376310119, 1376310197, 1376310227, 1376310241, 1376310251, 1376310337, 1376310343, 1376310347, 1376310367, 1376310371, 1376310389, 1376310407, 
             1376310431, 1376310437, 1376310451, 1376310457, 1376310473, 1376310491, 1376310511, 1376310521, 1376310527, 1376310539, 1376310553, 1376310563, 1376310577, 1376310601, 1376310613, 
             1376310653, 1376310671, 1376310709, 1376310721, 1376310737, 1376310757, 1376310763, 1376310799, 1376310821, 1376310841, 1376310893, 1376310899, 1376310911, 1376310953, 1376310977, 
@@ -140,7 +140,7 @@ public class PerlinNoise {
             1376319187, 1376319221, 1376319253, 1376319257, 1376319331, 1376319341, 1376319349, 1376319403, 1376319409, 1376319419, 1376319433, 1376319437, 1376319467, 1376319479, 1376319499, 
             1376319509, 1376319559, 1376319569, 1376319577, 1376319631, 1376319641, 1376319647, 1376319661, 1376319713, 1376319719, 1376319757, 1376319761, 1376319767, 1376319781, 1376319799, 
             1376319811, 1376319823, 1376319827, 1376319899, 1376319907, 1376319913};
-    
+
     private final int[] randPrime6 = {1073740013, 1073740049, 1073740061, 1073740067, 1073740079, 1073740123, 1073740127, 1073740133, 1073740139, 1073740147, 1073740163, 1073740177, 1073740183, 1073740189, 1073740201, 
             1073740249, 1073740379, 1073740391, 1073740403, 1073740439, 1073740463, 1073740477, 1073740489, 1073740501, 1073740517, 1073740523, 1073740529, 1073740537, 1073740541, 1073740543, 
             1073740567, 1073740571, 1073740609, 1073740649, 1073740691, 1073740693, 1073740697, 1073740781, 1073740783, 1073740793, 1073740807, 1073740819, 1073740847, 1073740853, 1073740879, 
@@ -174,7 +174,7 @@ public class PerlinNoise {
             1073749409, 1073749433, 1073749459, 1073749463, 1073749471, 1073749477, 1073749487, 1073749493, 1073749499, 1073749507, 1073749519, 1073749531, 1073749541, 1073749553, 1073749561, 
             1073749609, 1073749619, 1073749681, 1073749711, 1073749723, 1073749727, 1073749741, 1073749763, 1073749769, 1073749777, 1073749783, 1073749811, 1073749849, 1073749889, 1073749891, 
             1073749913, 1073749927, 1073749933, 1073749951, 1073749979, 1073749991, 1073749993};
-    
+
     public PerlinNoise(int height, int width, double persist, int octaves) {
         this(height, width, 10, persist, octaves);
     }
@@ -185,7 +185,7 @@ public class PerlinNoise {
         this.squaresPerSide = squaresPerSide;
         this.persistance = persist;
         this.octaves = octaves;
-        
+
         Random rand = new Random(System.currentTimeMillis());
         this.prime1 = randPrime1[(int)(randPrime1.length*rand.nextDouble())];
         this.prime2 = randPrime2[(int)(randPrime2.length*rand.nextDouble())];
@@ -200,54 +200,54 @@ public class PerlinNoise {
         n = (n << this.prime2)^n;
         return(1.0 - ((n*(n*n*this.prime3 + this.prime4) + this.prime5)&0x7fffffff)/(double)(this.prime6));
     }
-    
+
     private double smoothNoise(int x, int y) {
         double corners = (this.noise(x - 1, y - 1)
-                         +this.noise(x + 1, y - 1)
-                         +this.noise(x - 1, y + 1)
-                         +this.noise(x + 1, y + 1))/16.0;
+                +this.noise(x + 1, y - 1)
+                +this.noise(x - 1, y + 1)
+                +this.noise(x + 1, y + 1))/16.0;
         double sides   = (this.noise(x - 1, y)
-                         +this.noise(x + 1, y)
-                         +this.noise(x,     y - 1)
-                         +this.noise(x,     y + 1))/8.0;
+                +this.noise(x + 1, y)
+                +this.noise(x,     y - 1)
+                +this.noise(x,     y + 1))/8.0;
         double center  = (this.noise(x,     y))/4.0;
-        
+
         return(corners + sides + center);
     }
-    
+
     private double interpolate(double x, double y, double fraction) {
         double ft = fraction*Math.PI;
         double f = (1 - Math.cos(ft))*0.5;
-        
+
         return(x*(1 - f) + y*f);
     }
-    
+
     private double interpolatedNoise(double x, double y) {
         int integerX = (int)(x);
         double fractionX = x - integerX;
         int integerY = (int)(y);
         double fractionY = y - integerY;
-        
+
         double v1 = smoothNoise(integerX,     integerY);
         double v2 = smoothNoise(integerX + 1, integerY);
         double v3 = smoothNoise(integerX,     integerY + 1);
         double v4 = smoothNoise(integerX + 1, integerY + 1);
-        
+
         double i1 = interpolate(v1, v2, fractionX);
         double i2 = interpolate(v3, v4, fractionX);
-        
+
         return(interpolate(i1, i2, fractionY));
     }
-    
+
     public double eval(double x, double y) {
         double total = 0;
         for(int i = 0; i < this.octaves; i++) {
             double frequency = Math.pow(2, i);
             double amplitude = Math.pow(this.persistance, i);
-            
+
             total += this.interpolatedNoise(x*frequency, y*frequency)*amplitude;
         }
-        
+
         return(total);
     }
 }

@@ -13,7 +13,7 @@ public class Player {
     private int resourcesPerTurn;
     private ArrayList<Spot> spotsOwned;
     private ArrayList<Country> countriesOwned;
-    
+
     /**
      * Initialize a player with just a name and ID, sets the resources to defaults of 10&10
      * @param setName name of the player
@@ -43,9 +43,9 @@ public class Player {
         this.spotsOwned = new ArrayList<Spot>();
         this.countriesOwned = new ArrayList<Country>();
     }
-    
-//--Getters Start-------------------------------------------------------------
-    
+
+    //--Getters Start-------------------------------------------------------------
+
     public int getID() {
         return this.id;
     }
@@ -53,46 +53,46 @@ public class Player {
     public String getName() {
         return this.name;
     }
-    
+
     public int getAvailableResources() {
         return this.availableResources;
     }
-    
+
     public ArrayList<Spot> getSpotsOwned() {
         return this.spotsOwned;
     }
-    
+
     public ArrayList<Country> getCountriesOwned() {
         return this.countriesOwned;
     }
-    
-//--Getters End---------------------------------------------------------------
-//--Debugging Functions-------------------------------------------------------
-    
+
+    //--Getters End---------------------------------------------------------------
+    //--Debugging Functions-------------------------------------------------------
+
     @Override
     public String toString() {
         return "Player: " + this.name + " with id: " + this.id;
     }
 
-//--Debugging Functions End---------------------------------------------------
-//--Game Related Functions Start----------------------------------------------
-    
+    //--Debugging Functions End---------------------------------------------------
+    //--Game Related Functions Start----------------------------------------------
+
     // should add default 
     public void addResources() {
         this.availableResources += this.resourcesPerTurn;
     }
-    
+
     public void addResources(int countriesResources) {
         this.availableResources += countriesResources;
     }
-    
+
     public void addCountry(Country c) {
         this.countriesOwned.add(c);
     }
-    
+
     public void addSpot(Spot s) {
         this.spotsOwned.add(s);
     }
 
-//--Game Related Functions End------------------------------------------------
+    //--Game Related Functions End------------------------------------------------
 }

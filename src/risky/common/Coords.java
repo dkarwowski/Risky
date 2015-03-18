@@ -61,7 +61,7 @@ public class Coords {
         return("Coords: (" + this.x + ", " + this.y + ")");
     }
 
-//--Getters Start-------------------------------------------------------------
+    //--Getters Start-------------------------------------------------------------
 
     /**
      * Get the x value (doesn't change regardless)
@@ -99,8 +99,8 @@ public class Coords {
         return(this.getY(true));
     }
 
-//--Getters End---------------------------------------------------------------
-//--Game Related Functions Start----------------------------------------------
+    //--Getters End---------------------------------------------------------------
+    //--Game Related Functions Start----------------------------------------------
 
     /**
      * Get a hex one space in the specified direction
@@ -121,8 +121,8 @@ public class Coords {
         return(new Coords(xInDir(this.x, dir, dist), yInDir(this.y, dir, dist)));
     }
 
-//--Game Related Functions End------------------------------------------------
-//--Static Functions Start----------------------------------------------------
+    //--Game Related Functions End------------------------------------------------
+    //--Static Functions Start----------------------------------------------------
 
     /**
      * Grabs the x Coordinate directly next to the Hex in that direction
@@ -183,7 +183,7 @@ public class Coords {
             return(y);
         }
     }
-    
+
     /**
      * Converts axial coordinates into their Cartesian equivalent
      * @param x axial x Coord
@@ -194,9 +194,9 @@ public class Coords {
         int[] result = new int[2];
         result[0] = x;
         result[1] = y + x/2;
-        
+
         return(result);
     }
 
-//--Static Functions End------------------------------------------------------
+    //--Static Functions End------------------------------------------------------
 }
