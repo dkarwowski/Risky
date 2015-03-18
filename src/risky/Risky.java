@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import risky.common.Board;
@@ -137,6 +138,8 @@ public class Risky {
     }
 
     public void consoleRun() throws IOException {
+        // TODO(david); find a way to clean this out after tests
+        in = new Scanner(System.in);
         System.out.println(this.toString());
 
         boolean thisRunning = true;
@@ -145,10 +148,27 @@ public class Risky {
             // TODO: make moves only possible to consecutive spots
             // TODO: determine how to connect disjointed countries
             System.out.println("Free resources: " + this.stateContext.getPlayer().getAvailableResources());
-            System.out .println("Player " 
+            System.out .print("Player " 
                     + this.stateContext.getPlayer().getID() 
                     + ": Enter Coordinates to take over with resources [enter as '1 1 10']: ");
-            String[] split = in.nextLine().split(" ");
+            boolean getInput = true;
+            String[] split = new String[1];
+
+            while (getInput) {
+                try {
+                    split = in.nextLine().split(" ");
+                    getInput = false;
+                }
+                catch (NoSuchElementException e) {
+                    getInput = true;
+                }
+            }
+            
+            //TODO(david): add more cases to remove wrong input
+            if (split.length == 1)
+                if (split[0].equals("q"))
+                    break;
+            
             int x = Integer.parseInt(split[0]);
             int y = Integer.parseInt(split[1]);
             int r = Integer.parseInt(split[2]);
@@ -172,6 +192,11 @@ public class Risky {
                     % this.playerStates.length;
             this.stateContext.setState(this.playerStates[this.currentState]);
         }
+    }
+    
+    //TODO(david): remove these temporary testing functions
+    public Board getBoard() {
+        return this.board;
     }
 
     public static void main(String[] args) throws IOException {
