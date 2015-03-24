@@ -175,15 +175,18 @@ public class Risky {
             int x = Integer.parseInt(split[0]);
             int y = Integer.parseInt(split[1]);
             int r = Integer.parseInt(split[2]);
+            Coords c = new Coords(x, y);
+            
+            if (!this.board.containsSpot(c))
+                continue;
 
             // TODO: deal with combat
-            if (!this.board.spotFree(x, y)) {
+            if (!this.board.spotFree(c))
                 continue;
-            }
 
             // TODO: make player lose resources
             // TODO: give player resources every turn
-            this.board.claimSpot(this.stateContext.getPlayer(), x, y, r);
+            this.board.claimSpot(this.stateContext.getPlayer(), c, r);
             this.board.claimCountries();
 
             // TODO: test that this works

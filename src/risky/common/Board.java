@@ -42,8 +42,8 @@ public class Board {
 
     public void setSpot(Spot spot) {
         Coords coords = spot.getCoords();
-        int x = coords.getX(false);
-        int y = coords.getY(false);
+        int x = coords.getXCart();
+        int y = coords.getYCart();
         this.spots[x + y * this.width] = spot;
 
         this.setCountries();
@@ -64,7 +64,7 @@ public class Board {
     }
 
     public Spot getSpot(Coords c) {
-        return getSpot(c.getX(false), c.getY(false));
+        return getSpot(c.getXCart(), c.getYCart());
     }
 
     public Spot getSpot(int x, int y) {
@@ -84,24 +84,62 @@ public class Board {
     }
 
     public Country getCountry(Coords c) {
-        return this.getCountry(c.getX(), c.getY());
+        return this.getCountry(c.getXCart(), c.getYCart());
     }
 
     //--Getters End------------------------------------------------------------
 
     //--Game Related Functions Start------------------------------------------------------------
 
+    /**
+     * Checks if the spot is within bounds based on Cartesian Coordinates
+     * @param x Cartesian X
+     * @param y Cartesian Y
+     * @return whether the spot is within bounds
+     */
     public boolean contains(int x, int y) {
         return (x >= 0) && (y >= 0) && (x < width) && (y < height);
     }
 
+    /**
+     * Check if the coordinates exist
+     * @param c The coordinates of the space
+     * @return whether the spot is within bounds
+     */
     public boolean contains(Coords c) {
         if (c == null) {
             return false;
         }
-        return contains(c.getX(), c.getY());
+        return contains(c.getXCart(), c.getYCart());
+    }
+    
+    /**
+     * Check if a spot is playable based on Cartesian Coordinates
+     * @param x Cartesian X
+     * @param y Cartesian Y
+     * @return whether the spot exists
+     */
+    public boolean containsSpot(int x, int y) {
+        if (!this.contains(x,y))
+            return (false);
+        return (this.spots[x + y * this.width] != null);
+    }
+    
+    /**
+     * Check if a spot is playable based on coordinates
+     * @param c Coordinates of the spot
+     * @return whether the spot exists
+     */
+    public boolean containsSpot(Coords c) {
+        if (c == null)
+            return (false);
+        return (this.containsSpot(c.getXCart(), c.getYCart()));
     }
 
+    /**
+     * Check if a single player owns the whole board
+     * @return whether a player has won or not
+     */
     public Player playerOwnsAll() {
         boolean singlePlayerOwnsAll = true;
         for (Country country : countries) {
@@ -113,6 +151,10 @@ public class Board {
         return (null);
     }
 
+    /**
+     * Set all the countries based on the spots array that should be initialized
+     * Used to update the board.
+     */
     private void setCountries() {
         ArrayList<Country> toSet = new ArrayList<Country>();
         for (Spot spot : this.spots) {
@@ -135,22 +177,57 @@ public class Board {
         }
     }
 
+    /**
+     * Claim a spot for a player based on cartesian coordinates
+     * @param player who is claiming
+     * @param x Cartesian X
+     * @param y Cartesian Y
+     * @param resources number of resources being placed
+     */
     public void claimSpot(Player player, int x, int y, int resources) {
-        Coords coords = new Coords(x, y);
+        Coords coords = new Coords(x, y, false);
+        this.claimSpot(player, coords, resources);
+    }
+    
+    /**
+     * Claim a spot based on the coordinates of the space
+     * @param player who is claiming
+     * @param coords the space being claimed
+     * @param resources number being placed
+     */
+    public void claimSpot(Player player, Coords coords, int resources) {
         if (this.contains(coords)) {
             this.getSpot(coords).setPlayer(player);
             this.getSpot(coords).setResources(resources);
         }
-
     }
 
+    /**
+     * Check if a spot has been claimed already based on Cartesian Coordinates
+     * TODO(david): deal with combat
+     * @param x Cartesian X
+     * @param y Cartesian Y
+     * @return whether the spot is empty
+     */
     public boolean spotFree(int x, int y) {
-        Coords coords = new Coords(x, y);
-        if (this.contains(coords))
-            return (this.getSpot(coords).getPlayer() == null);
+        Coords coords = new Coords(x, y, false);
+        return (this.spotFree(coords));
+    }
+    
+    /**
+     * Check if a spot has been claimed already
+     * @param c coordinates of the space
+     * @return whether the spot is empty
+     */
+    public boolean spotFree(Coords c) {
+        if (this.contains(c))
+            return (this.getSpot(c).getPlayer() == null);
         return false;
     }
 
+    /**
+     * Update the countries to be claimed if necessary
+     */
     public void claimCountries() {
         for (Country c : this.countries)
             c.claimCountry();

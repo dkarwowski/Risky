@@ -79,6 +79,10 @@ public class Coords {
     public int getX() {
         return(this.getX(true));
     }
+    
+    public int getXCart() {
+        return (this.getX(false));
+    }
 
     /**
      * Get the y value (changes depending on which x value we're in
@@ -97,6 +101,10 @@ public class Coords {
      */
     public int getY() {
         return(this.getY(true));
+    }
+    
+    public int getYCart() {
+        return (this.getY(false));
     }
 
     //--Getters End---------------------------------------------------------------
