@@ -1,5 +1,6 @@
 package risky;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,10 +16,12 @@ import risky.common.Spot;
 import risky.common.StateContext;
 import risky.common.StatePlayer;
 import risky.common.Statelike;
+import risky.ui.base;
 
 public class Risky {
     private Board board;
     private StateContext stateContext;
+    private base app = new base();
 
     private Statelike[] playerStates;
     private int currentState;
@@ -63,8 +66,10 @@ public class Risky {
 
         // TODO(david): replace this with UI version
         System.out.print("Enter Player 1 Name: ");
+        app.printTextOutput("Enter Player 1 Name");
         Player p1 = new Player(this.in.next(), 0);
         System.out.print("Enter Player 2 Name: ");
+        app.printTextOutput("Enter Player 2 Name");
         Player p2 = new Player(this.in.next(), 1);
 
         this.playerStates = new Statelike[2];
@@ -138,9 +143,12 @@ public class Risky {
     }
 
     public void consoleRun() throws IOException {
+
         // TODO(david); find a way to clean this out after tests
         in = new Scanner(System.in);
         System.out.println(this.toString());
+
+        app.printGameOutput(this.toString());
 
         boolean thisRunning = true;
         while (thisRunning) {
@@ -194,6 +202,10 @@ public class Risky {
                 thisRunning = false;
 
             System.out.println(this.toString());
+
+            app.printGameOutput(this.toString());
+
+
             this.currentState = (this.currentState + 1)
                     % this.playerStates.length;
             this.stateContext.setState(this.playerStates[this.currentState]);
