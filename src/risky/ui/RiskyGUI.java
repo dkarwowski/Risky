@@ -29,7 +29,7 @@ public class RiskyGUI {
         frame.add(infoPanel, BorderLayout.SOUTH);
         
         int testWidth = boardPanel.getPanelDimension().width;
-        int testHeight = boardPanel.getPanelDimension().height + infoPanel.getHeight() + 9; // width and height and padding
+        int testHeight = boardPanel.getPanelDimension().height + infoPanel.getHeight(); // width and height and padding
         frame.setSize(testWidth, testHeight);
         frame.setVisible(true);
     }
