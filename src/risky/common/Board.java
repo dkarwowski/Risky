@@ -1,6 +1,9 @@
 package risky.common;
 
+import java.awt.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class Board {
     private String name;
@@ -71,6 +74,10 @@ public class Board {
         if (contains(x, y))
             return this.spots[x + y * this.width];
         return null;
+    }
+    
+    public Spot[] getAllSpots() {
+        return this.spots;
     }
 
     public Country getCountry(Spot s) {

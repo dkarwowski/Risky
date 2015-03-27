@@ -71,12 +71,12 @@ public class SpotTest
     {
         System.out.println("SpotTest::checkCoordsTest()");
         System.out.println("SpotTest::checkCoordsTest()::Coordinates: " +
-                spot.getX() + "," + spot.getY());
+                spot.getX(false) + "," + spot.getY(false));
         int[] testCoords = new int[2];
         testCoords[0] = 1;
         testCoords[1] = 2;
-        assertEquals(spot.getX(), testCoords[0]);
-        assertEquals(spot.getY(), testCoords[1]);
+        assertEquals(spot.getX(false), testCoords[0]);
+        assertEquals(spot.getY(false), testCoords[1]);
     }
 
     @Test

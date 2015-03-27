@@ -45,12 +45,12 @@ public class Spot {
         return _coordinates;
     }
 
-    public int getX() {
-        return _coordinates.getX();
+    public int getX(boolean cartesian) {
+        return _coordinates.getX(!cartesian);
     }
 
-    public int getY() {
-        return _coordinates.getY();
+    public int getY(boolean cartesian) {
+        return _coordinates.getY(!cartesian);
     }
 
     public Spot[] getExits() {
@@ -117,7 +117,7 @@ public class Spot {
         System.out.println("Belongs to " + this.getPlayer());
         System.out.println("Located in " + this.getCountry());
         System.out.println("Has " + this.getResources() + " resources");
-        System.out.println("Has Coordinates of (" + this.getX() + this.getY() + ")");
+        System.out.println("Has Coordinates of (" + this.getX(false) + this.getY(false) + ")");
         System.out.println("Exits:");
         for(int i = 0; i < 6; i++) {
             if(this._exits[i] == null)
