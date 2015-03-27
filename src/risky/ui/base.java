@@ -8,12 +8,16 @@ import java.awt.event.*;
  * Created by AdamToris on 3/24/15.
  */
 public class base extends JFrame implements ActionListener{
+    private JFrame window;
     private JTextArea gameOutput = new JTextArea();
     private JTextField input = new JTextField();
     private JTextField textOutput = new JTextField();
 
+    // TODO(david): remove this solution
+    private String actionString;
+
     public base(){
-        JFrame window = new JFrame("Risky");
+        window = new JFrame("Risky");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("Risky");
         window.setSize(800,400);
@@ -42,10 +46,7 @@ public class base extends JFrame implements ActionListener{
         box.add(input, BOTTOM_ALIGNMENT);
         window.add(box);
 
-
-
         window.setVisible(true);
-
     }
 
     public void printGameOutput(String str){
@@ -57,7 +58,7 @@ public class base extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        returnText();
+        this.actionString = returnText();
     }
 
     public String returnText(){
@@ -66,7 +67,17 @@ public class base extends JFrame implements ActionListener{
         return text;
     }
 
+    public String getActionString() {
+        String result = this.actionString;
+        this.actionString = null;
+        return (result);
+    }
 
+    // TODO(david): clean this out to it's own class?
+    public String getDialog(String message) {
+        String result = JOptionPane.showInputDialog(this.window, message);
+        return result;
+    }
 
     // Main method for testing
     public static void main(String args[]) {

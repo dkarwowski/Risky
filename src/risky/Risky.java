@@ -27,7 +27,7 @@ public class Risky {
     private int currentState;
 
     private Player playerWon = null;
-    
+
     //TODO(david): remove this
     private Scanner in;
 
@@ -35,7 +35,7 @@ public class Risky {
         if(console)
             this.consoleInit();
         else
-            System.out.println("GUI Not Enabled\n");
+            this.guiInit();
     }
 
     public Risky(Board _board, Statelike[] _playerStates) {
@@ -61,25 +61,8 @@ public class Risky {
         return (result);
     }
 
-    public void consoleInit() {
-        this.in = new Scanner(System.in);
-
-        // TODO(david): replace this with UI version
-        System.out.print("Enter Player 1 Name: ");
-        app.printTextOutput("Enter Player 1 Name");
-        Player p1 = new Player(this.in.next(), 0);
-        System.out.print("Enter Player 2 Name: ");
-        app.printTextOutput("Enter Player 2 Name");
-        Player p2 = new Player(this.in.next(), 1);
-
-        this.playerStates = new Statelike[2];
-        this.playerStates[0] = new StatePlayer(p1);
-        this.playerStates[1] = new StatePlayer(p2);
-
-        this.stateContext = new StateContext(this.playerStates[0]);
-        this.currentState = 0;
-
-        // TODO(david): streamline this. not necessary in general init
+    // TODO(david): generalize this to load a random board/player chosen board
+    private void loadBoard() {
         String boardName;
         int width, height;
         String[] board;
@@ -132,13 +115,51 @@ public class Risky {
             if (!switched)
                 countries.add(thisCountry);
 
-            // TODO: have spots update countries they're attached to
             Spot spot = new Spot(thisCountry, new Coords(xCart, yCart, false));
             thisCountry.addSpot(spot);
 
             this.board.setSpot(spot);
         }
-        
+    }
+
+    public void guiInit() {
+        // TODO(david): currently works with ASCII instead of images
+        String actionString = app.getDialog("Enter Player 1 Name");
+        Player p1 = new Player(actionString, 0);
+
+        actionString = app.getDialog("Enter Player 2 Name");
+        Player p2 = new Player(actionString, 1);
+
+        this.playerStates = new Statelike[2];
+        this.playerStates[0] = new StatePlayer(p1);
+        this.playerStates[1] = new StatePlayer(p2);
+
+        this.stateContext = new StateContext(this.playerStates[0]);
+        this.currentState = 0;
+
+        this.loadBoard();
+    }
+
+    public void consoleInit() {
+        this.in = new Scanner(System.in);
+
+        // TODO(david): replace this with UI version
+        System.out.print("Enter Player 1 Name: ");
+        app.printTextOutput("Enter Player 1 Name");
+        Player p1 = new Player(this.in.next(), 0);
+        System.out.print("Enter Player 2 Name: ");
+        app.printTextOutput("Enter Player 2 Name");
+        Player p2 = new Player(this.in.next(), 1);
+
+        this.playerStates = new Statelike[2];
+        this.playerStates[0] = new StatePlayer(p1);
+        this.playerStates[1] = new StatePlayer(p2);
+
+        this.stateContext = new StateContext(this.playerStates[0]);
+        this.currentState = 0;
+
+        this.loadBoard();
+
         in.nextLine();
     }
 
@@ -156,8 +177,8 @@ public class Risky {
             // TODO: make moves only possible to consecutive spots
             // TODO: determine how to connect disjointed countries
             System.out.println("Free resources: " + this.stateContext.getPlayer().getAvailableResources());
-            System.out .print("Player " 
-                    + this.stateContext.getPlayer().getID() 
+            System.out .print("Player "
+                    + this.stateContext.getPlayer().getID()
                     + ": Enter Coordinates to take over with resources [enter as '1 1 10']: ");
             boolean getInput = true;
             String[] split = new String[1];
@@ -172,19 +193,19 @@ public class Risky {
                     getInput = true;
                 }
             }
-            
+
             //TODO(david): add more cases to remove wrong input
             if (split.length == 1)
                 if (split[0].equals("q"))
                     break;
-            
+
             // simple variables, could use better names
             // account for axial x, y coords and #resources for the spot
             int x = Integer.parseInt(split[0]);
             int y = Integer.parseInt(split[1]);
             int r = Integer.parseInt(split[2]);
             Coords c = new Coords(x, y);
-            
+
             if (!this.board.containsSpot(c))
                 continue;
 
@@ -211,7 +232,7 @@ public class Risky {
             this.stateContext.setState(this.playerStates[this.currentState]);
         }
     }
-    
+
     //TODO(david): remove this temporary testing functions
     public Board getBoard() {
         return this.board;
@@ -219,7 +240,8 @@ public class Risky {
 
     public static void main(String[] args) throws IOException {
         // Replace with actually working version
-        Risky game = new Risky(true);
+        Risky game = new Risky(false);
         game.consoleRun();
     }
 }
+
