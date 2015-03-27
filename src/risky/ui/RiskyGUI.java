@@ -18,15 +18,26 @@ public class RiskyGUI {
         JFrame frame = new JFrame("Risky");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        frame.setTitle("Risky");
         
+        // find a way to do some of this in Risky
         Board board = RiskyGUI.loadBoard();
         BoardPanel boardPanel = new BoardPanel(board);
         frame.add(boardPanel, BorderLayout.CENTER);
         
-        frame.setSize(boardPanel.getPanelDimension());
+        InfoPanel infoPanel = new InfoPanel();
+        frame.add(infoPanel, BorderLayout.SOUTH);
+        
+        int testWidth = boardPanel.getPanelDimension().width;
+        int testHeight = boardPanel.getPanelDimension().height + infoPanel.getHeight() + 9; // width and height and padding
+        frame.setSize(testWidth, testHeight);
         frame.setVisible(true);
     }
     
+    /**
+     * Load board function taken from Risky.java
+     * @return the board that will be created
+     */
     private static Board loadBoard() {
         String boardName;
         int width, height;

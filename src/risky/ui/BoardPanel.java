@@ -16,20 +16,17 @@ public class BoardPanel extends JPanel {
     private Board board;
 
     public BoardPanel(Board setBoard) {
-        this.setBackground(Color.BLACK);
-        
+        this.setBackground(Color.WHITE);
         this.board = setBoard;
+        
+        this.setSize(this.getPanelDimension());
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
-        Dimension dim = this.getPanelDimension();
-        int imageWidth = dim.width;
-        int imageHeight = dim.height;
-        g.fillRect(0, 0, imageWidth, imageHeight);
         
+        // go through each of the spots
         Spot[] spots = this.board.getAllSpots();
         int width = this.board.getWidth();
         int height = this.board.getHeight();
@@ -38,6 +35,7 @@ public class BoardPanel extends JPanel {
                 Spot spot = spots[x + y * width];
                 Polygon p = new Polygon();
                 
+                // determine where the hex will be drawn
                 if (x % 2 == 0) {
                     p.addPoint(9  + 28 * x, 25 + 32 * y);
                     p.addPoint(18 + 28 * x, 9  + 32 * y);
@@ -55,6 +53,8 @@ public class BoardPanel extends JPanel {
                     p.addPoint(18 + 28 * x, 57 + 32 * y);
                 }
                 
+                // color of the square
+                // add selection color here?
                 if (spot == null)
                     g.setColor(new Color(0.3f, 0.3f, 0.9f));
                 else
@@ -62,12 +62,17 @@ public class BoardPanel extends JPanel {
                 
                 g.fillPolygon(p);
                 
+                // draw the outline
                 g.setColor(Color.BLACK);
                 g.drawPolygon(p);
             }
         }
     }
     
+    /**
+     * Get the dimensions of the board itself in pixels
+     * @return the dimensions
+     */
     public Dimension getPanelDimension() {
         Dimension result = new Dimension(
                 (this.board.getWidth() + 1)  * 28 + 18,

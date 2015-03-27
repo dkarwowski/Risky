@@ -15,12 +15,10 @@ import risky.common.Spot;
 import risky.common.StateContext;
 import risky.common.StatePlayer;
 import risky.common.Statelike;
-import risky.ui.base;
 
 public class Risky {
     private Board board;
     private StateContext stateContext;
-    private base app = new base();
 
     private Statelike[] playerStates;
     private int currentState;
@@ -34,7 +32,7 @@ public class Risky {
         if(console)
             this.consoleInit();
         else
-            this.guiInit();
+            this.guiInit(); // replace this with riskygui when working
     }
 
     public Risky(Board _board, Statelike[] _playerStates) {
@@ -121,17 +119,10 @@ public class Risky {
         }
     }
 
+    // TODO(david): fix this to work with other gui
     public void guiInit() {
         // TODO(david): currently works with ASCII instead of images
-        String actionString = app.getDialog("Enter Player 1 Name");
-        Player p1 = new Player(actionString, 0);
-
-        actionString = app.getDialog("Enter Player 2 Name");
-        Player p2 = new Player(actionString, 1);
-
         this.playerStates = new Statelike[2];
-        this.playerStates[0] = new StatePlayer(p1);
-        this.playerStates[1] = new StatePlayer(p2);
 
         this.stateContext = new StateContext(this.playerStates[0]);
         this.currentState = 0;
@@ -144,10 +135,8 @@ public class Risky {
 
         // TODO(david): replace this with UI version
         System.out.print("Enter Player 1 Name: ");
-        app.printTextOutput("Enter Player 1 Name");
         Player p1 = new Player(this.in.next(), 0);
         System.out.print("Enter Player 2 Name: ");
-        app.printTextOutput("Enter Player 2 Name");
         Player p2 = new Player(this.in.next(), 1);
 
         this.playerStates = new Statelike[2];
@@ -167,8 +156,6 @@ public class Risky {
         // TODO(david); find a way to clean this out after tests
         in = new Scanner(System.in);
         System.out.println(this.toString());
-
-        app.printGameOutput(this.toString());
 
         boolean thisRunning = true;
         while (thisRunning) {
@@ -222,9 +209,6 @@ public class Risky {
                 thisRunning = false;
 
             System.out.println(this.toString());
-
-            app.printGameOutput(this.toString());
-
 
             this.currentState = (this.currentState + 1)
                     % this.playerStates.length;

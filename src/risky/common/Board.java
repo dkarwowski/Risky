@@ -1,9 +1,6 @@
 package risky.common;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class Board {
     private String name;
