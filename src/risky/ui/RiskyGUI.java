@@ -44,7 +44,7 @@ public class RiskyGUI {
         String[] board;
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test.map"));
+            Scanner loadBoard = new Scanner(new File("data/test2.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();

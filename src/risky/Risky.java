@@ -59,13 +59,14 @@ public class Risky {
     }
 
     // TODO(david): generalize this to load a random board/player chosen board
+    // TODO(david): create spots that connect intercontinentally
     private void loadBoard() {
         String boardName;
         int width, height;
         String[] board;
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test.map"));
+            Scanner loadBoard = new Scanner(new File("data/test2.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();
@@ -223,7 +224,7 @@ public class Risky {
 
     public static void main(String[] args) throws IOException {
         // Replace with actually working version
-        Risky game = new Risky(false);
+        Risky game = new Risky(true);
         game.consoleRun();
     }
 }
