@@ -136,6 +136,16 @@ public class Spot {
         return result;
     }
 
+    @Override
+    public String toString() {
+        String result = "Spot: ";
+        result += (this._player != null) ? this._player.getName() : "Unowned";
+        result += " with ";
+        result += this._resources;
+        result += " resources";
+        return (result);
+    }
+
     //--To String Functions End---------------------------------------------------
 
     //--Game Functions Start------------------------------------------------------

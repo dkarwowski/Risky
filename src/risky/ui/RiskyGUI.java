@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,8 +14,9 @@ import risky.Risky;
 import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
+import risky.common.Spot;
 
-public class RiskyGUI extends JFrame implements MouseListener, ActionListener {
+public class RiskyGUI extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
 
     private Risky game;
@@ -32,7 +34,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener {
 
         // TODO(david): have board selection here?
         Board gameBoard = this.game.getBoard();
-        this.boardPanel = new BoardPanel(this, gameBoard);
+        this.boardPanel = new BoardPanel(this, this, gameBoard);
         this.add(this.boardPanel, BorderLayout.CENTER);
 
         this.infoPanel = new InfoPanel(this);
@@ -78,7 +80,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener {
     }
 
     public void boardRepaint() {
-        this.boardPanel.update(this.game.getBoard(), this.game.getCurrentPlayer());
+        this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
         this.boardPanel.validate();
         this.boardPanel.repaint();
     }
@@ -91,6 +93,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener {
         }
         if (e.getActionCommand().equals("userCommandEnter")) {
             // TODO(david): set next move
+        }
+        if (e.getActionCommand().equals("userCommandCancel")) {
+            // TODO(david): reset player's choices
+            this.boardPanel.boardUpdate(null);
         }
     }
 
@@ -107,10 +113,17 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener {
     }
     
     public void mouseClicked(MouseEvent e) {
-        int fixedX = e.getX() - 9 - 4;
-        int squareX = (int)(fixedX / 28);
-        int fixedY = e.getY() - 9 - ((squareX % 2 == 0) ? 0 : 16);
-        int squareY = (int)(fixedY / 32);
-        this.boardPanel.update(new Coords(squareX, squareY, false));
+        this.boardPanel.boardUpdate(this.boardPanel.coordsFromPosition(e.getX(), e.getY()));
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        // TODO(david): add setting to have this append?
+        Coords position = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
+        Spot temp = this.game.getBoard().getSpot(position);
+        if (temp != null) 
+            this.infoPanel.writeToPanel(temp.toString());
+    }
+
+    public void mouseDragged(MouseEvent e) {
     }
 }

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -20,8 +21,9 @@ public class BoardPanel extends JPanel {
     private Player currPlayer;
     private Coords selected;
 
-    public BoardPanel(MouseListener listener, Board setBoard) {
+    public BoardPanel(MouseListener listener, MouseMotionListener listener2, Board setBoard) {
         this.addMouseListener(listener);
+        this.addMouseMotionListener(listener2);
         this.setBackground(Color.WHITE);
         this.board = setBoard;
         
@@ -63,7 +65,7 @@ public class BoardPanel extends JPanel {
                     if (spot.getPlayer() == null)
                         g.setColor(new Color(0.1f, 0.6f, 0.2f));
                     else if (spot.getPlayer() == this.currPlayer)
-                        g.setColor(new Color(0.1f, 0.7f, 0.5f));
+                        g.setColor(new Color(0.1f, 1.0f, 1.0f));
                     else
                         g.setColor(new Color(0.6f, 0.1f, 0.2f));
                 }
@@ -96,16 +98,22 @@ public class BoardPanel extends JPanel {
     }
 
     // TODO(david): clean this out with proper board functionality?
-    public void update(Board board, Player player) {
+    public void boardUpdate(Board board, Player player) {
         this.board = board;
         this.currPlayer = player;
         this.selected = null;
     }
 
-    public void update(Coords playerSelect) {
-        if (this.board.containsSpot(playerSelect))
+    public void boardUpdate(Coords playerSelect) {
+        if (this.board.containsSpot(playerSelect) || playerSelect == null)
             this.selected = playerSelect;
         this.repaint();
+    }
+
+    public Coords coordsFromPosition(int x, int y) {
+        int squareX = (int)((x - 13) / 28);
+        int squareY = (int)((y - 9 - ((squareX % 2 == 0) ? 0 : 16)) / 32);
+        return (new Coords(squareX, squareY, false));
     }
     
     /**

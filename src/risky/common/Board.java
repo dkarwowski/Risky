@@ -137,7 +137,6 @@ public class Board {
     public boolean containsSpot(Coords c) {
         if (c == null)
             return (false);
-        System.out.println("x: " + c.getXCart() + " y: " + c.getYCart());
         return (this.containsSpot(c.getXCart(), c.getYCart()));
     }
 
