@@ -16,7 +16,12 @@ import risky.common.StateContext;
 import risky.common.StatePlayer;
 import risky.common.Statelike;
 
+import risky.ui.RiskyGUI;
+
 public class Risky {
+    // TODO(david): remove this
+    private RiskyGUI guiTest;
+
     private Board board;
     private StateContext stateContext;
 
@@ -122,13 +127,11 @@ public class Risky {
 
     // TODO(david): fix this to work with other gui
     public void guiInit() {
-        // TODO(david): currently works with ASCII instead of images
-        this.playerStates = new Statelike[2];
-
-        this.stateContext = new StateContext(this.playerStates[0]);
-        this.currentState = 0;
-
         this.loadBoard();
+
+        this.guiTest = new RiskyGUI(this.board);
+        // TODO(david): remove this
+        this.consoleInit();
     }
 
     public void consoleInit() {
@@ -214,6 +217,9 @@ public class Risky {
             this.currentState = (this.currentState + 1)
                     % this.playerStates.length;
             this.stateContext.setState(this.playerStates[this.currentState]);
+
+            // TODO(david): remove this
+            this.guiTest.boardRepaint(this.board);
         }
     }
 
@@ -224,8 +230,15 @@ public class Risky {
 
     public static void main(String[] args) throws IOException {
         // Replace with actually working version
-        Risky game = new Risky(true);
-        game.consoleRun();
+        if (args.length == 2) {
+            Risky game = new Risky(Boolean.parseBoolean(args[1]));
+            // change this to work with regular run?
+            game.consoleRun();
+        }
+        else {
+            Risky game = new Risky(false);// TODO(david): testing gui
+            game.consoleRun();
+        }
     }
 }
 

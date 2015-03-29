@@ -35,30 +35,26 @@ public class BoardPanel extends JPanel {
                 Spot spot = spots[x + y * width];
                 Polygon p = new Polygon();
                 
-                // determine where the hex will be drawn
-                if (x % 2 == 0) {
-                    p.addPoint(9  + 28 * x, 25 + 32 * y);
-                    p.addPoint(18 + 28 * x, 9  + 32 * y);
-                    p.addPoint(37 + 28 * x, 9  + 32 * y);
-                    p.addPoint(46 + 28 * x, 25 + 32 * y);
-                    p.addPoint(37 + 28 * x, 41 + 32 * y);
-                    p.addPoint(18 + 28 * x, 41 + 32 * y);
-                }
-                else {
-                    p.addPoint(9  + 28 * x, 41 + 32 * y);
-                    p.addPoint(18 + 28 * x, 25 + 32 * y);
-                    p.addPoint(37 + 28 * x, 25 + 32 * y);
-                    p.addPoint(46 + 28 * x, 41 + 32 * y);
-                    p.addPoint(37 + 28 * x, 57 + 32 * y);
-                    p.addPoint(18 + 28 * x, 57 + 32 * y);
-                }
+                int initialX = 9;
+                int initialY = (x % 2 == 0) ? 25 : 41;
+
+                p.addPoint( initialX + 0  + 28 * x, initialY + 0  + 32 * y);
+                p.addPoint( initialX + 9  + 28 * x, initialY - 16 + 32 * y);
+                p.addPoint( initialX + 28 + 28 * x, initialY - 16 + 32 * y);
+                p.addPoint( initialX + 37 + 28 * x, initialY + 0  + 32 * y);
+                p.addPoint( initialX + 28 + 28 * x, initialY + 16 + 32 * y);
+                p.addPoint( initialX + 9  + 28 * x, initialY + 16 + 32 * y);
                 
                 // color of the square
                 // add selection color here?
                 if (spot == null)
                     g.setColor(new Color(0.3f, 0.3f, 0.9f));
-                else
-                    g.setColor(new Color(0.1f, 0.6f, 0.2f));
+                else {
+                    if (spot.getPlayer() == null)
+                        g.setColor(new Color(0.1f, 0.6f, 0.2f));
+                    else
+                        g.setColor(new Color(0.2f, 0.7f, 0.3f));
+                }
                 
                 g.fillPolygon(p);
                 
@@ -67,6 +63,10 @@ public class BoardPanel extends JPanel {
                 g.drawPolygon(p);
             }
         }
+    }
+
+    public void boardUpdate(Board board) {
+        this.board = board;
     }
     
     /**

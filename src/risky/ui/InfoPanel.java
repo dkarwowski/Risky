@@ -15,4 +15,8 @@ public class InfoPanel extends JPanel {
         
         this.setSize(this.textBox.getMinimumSize());
     }
+
+    public void writeToPanel(String message) {
+        this.textBox.setText(message);
+    }
 }
