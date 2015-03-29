@@ -129,9 +129,10 @@ public class Risky {
     public void guiInit() {
         this.loadBoard();
 
-        this.guiTest = new RiskyGUI(this.board);
-        // TODO(david): remove this
-        this.consoleInit();
+        this.guiTest = new RiskyGUI(this);
+        this.guiTest.createPlayers();
+        // TODO(david): make this dynamic?
+        this.loadBoard();
     }
 
     public void consoleInit() {
@@ -153,6 +154,22 @@ public class Risky {
         this.loadBoard();
 
         in.nextLine();
+    }
+
+    // TODO(david): move this properly
+    public void createPlayers(Player... players) {
+        if (players instanceof Player[]) {
+            this.playerStates = new Statelike[players.length];
+            for (int i = 0; i < players.length; ++i)
+                this.playerStates[i] = new StatePlayer(players[i]);
+        }
+        else {
+            this.playerStates = new Statelike[1];
+            this.playerStates[0] = new StatePlayer(players[0]);
+        }
+
+        this.stateContext = new StateContext(this.playerStates[0]);
+        this.currentState = 0;
     }
 
     public void consoleRun() throws IOException {
@@ -219,13 +236,18 @@ public class Risky {
             this.stateContext.setState(this.playerStates[this.currentState]);
 
             // TODO(david): remove this
-            this.guiTest.boardRepaint(this.board);
+            this.guiTest.boardRepaint();
         }
     }
 
     //TODO(david): remove this temporary testing functions
     public Board getBoard() {
         return this.board;
+    }
+
+    // TODO(david): move this properly
+    public Player getCurrentPlayer() {
+        return (this.stateContext.getPlayer());
     }
 
     public static void main(String[] args) throws IOException {
