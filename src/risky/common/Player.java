@@ -20,6 +20,7 @@ public class Player {
      * @param setID id of the player for the game
      */
     public Player(String setName, int setID) {
+        // TODO(david): set initial resources to be based on number of players
         this(setName, setID, 10, 10);
     }
 
@@ -42,6 +43,17 @@ public class Player {
         // spot(s)
         this.spotsOwned = new ArrayList<Spot>();
         this.countriesOwned = new ArrayList<Country>();
+    }
+
+    public boolean equals(Object o) {
+        if (this == o)
+            return (true);
+
+        if (!(o instanceof Player))
+            return (false);
+
+        Player other = (Player) o;
+        return (this.getID() == other.getID());
     }
 
     //--Getters Start-------------------------------------------------------------

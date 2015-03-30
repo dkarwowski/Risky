@@ -23,6 +23,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     
     private BoardPanel boardPanel;
     private InfoPanel infoPanel;
+    private PlayerPanel playerPanel;
 
     public RiskyGUI(Risky risky) {
         super("Risky"); // initialize with name
@@ -40,9 +41,14 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.infoPanel = new InfoPanel(this);
         this.add(this.infoPanel, BorderLayout.SOUTH);
 
+        this.playerPanel = new PlayerPanel();
+        this.add(this.playerPanel, BorderLayout.NORTH);
+
         this.setSize(
                 this.boardPanel.getPanelDimension().width,
-                this.boardPanel.getPanelDimension().height + this.infoPanel.getHeight() + 9);
+                this.boardPanel.getPanelDimension().height 
+                + this.infoPanel.getHeight() 
+                + this.playerPanel.getHeight() + 9);
         this.setVisible(true);
     }
 
@@ -69,6 +75,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             }
 
             this.game.createPlayers(players);
+            this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
         }
         catch (NumberFormatException e) {
             createPlayers();
@@ -91,12 +98,20 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             if (this.boardPanel.isSelected((this.game.isSetup() ? 
                             BoardPanel.BOARD_SETUP : BoardPanel.BOARD_GENERAL))) {
                 if (this.game.isSetup()) {
-                    this.game.makeMove(this.boardPanel.getSelected(), null, 1);
+                    if (this.game.getBoard().spotFree(this.boardPanel.getSelected()))
+                        this.game.makeMove(this.boardPanel.getSelected(), null, 1);
+                    else
+                        this.game.makeMove(this.boardPanel.getSelected(), null,
+                                Integer.parseInt(JOptionPane.showInputDialog(
+                                        this,
+                                        "Number of Resources")));
                     this.game.switchPlayer();
                 }
                 this.game.checkSetup();
             }
-            // TODO(david): set next move
+            // TODO(david): only set next move when player completely finished turn
+            // TODO(david): current player should show resources left
+            this.playerPanel.writeToPanel(this.game.getCurrentPlayer().toString());
             this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
             this.boardPanel.repaint();
         }

@@ -126,11 +126,19 @@ public class BoardPanel extends JPanel {
     }
 
     public void select(Coords select, int type) {
-        if (type == BoardPanel.BOARD_SETUP)
-            if (this.board.spotFree(select))
-                this.selected = select;
+        if (type == BoardPanel.BOARD_SETUP) {
+            if (this.board.isSetupDone()) {
+                if (this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
+                    this.selected = select;
+            }
+            else {
+                if (this.board.spotFree(select))
+                    this.selected = select;
+            }
+        }
         else if (type == BoardPanel.BOARD_GENERAL) {
-            if (this.source == null && this.currPlayer == this.board.getSpot(select).getPlayer())
+            if (this.source == null 
+                    && this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                 this.source = select;
             else if (this.board.getSpot(select).connectedTo(this.source))
                 this.selected = select;

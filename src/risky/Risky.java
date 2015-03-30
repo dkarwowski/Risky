@@ -79,7 +79,7 @@ public class Risky {
         String[] board;
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test3.map"));
+            Scanner loadBoard = new Scanner(new File("data/test2.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();
@@ -274,9 +274,15 @@ public class Risky {
     public Board makeMove(Coords src, Coords dest, int resources) {
         if (this.move == Risky.FIRST) {
             // assume dest is null
-            this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
-            this.board.claimCountries();
-            this.stateContext.removeResources(1);
+            if (this.board.spotFree(src)) {
+                this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
+                this.board.claimCountries();
+                this.stateContext.removeResources(1);
+            }
+            else {
+                this.board.getSpot(src).addResources(resources);
+                this.stateContext.removeResources(resources);
+            }
         }
         else {
             if (this.board.getSpot(src).getPlayer().equals(
@@ -298,8 +304,15 @@ public class Risky {
     }
 
     public void checkSetup() {
-        if (this.board.isSetupDone())
+        if (this.board.isSetupDone() && this.playersFinishedSetup())
             this.move = Risky.PLAY;
+    }
+
+    public boolean playersFinishedSetup() {
+        boolean result = true;
+        for (Statelike state : this.playerStates)
+            result = result && (state.getPlayer().getAvailableResources() == 0);
+        return result;
     }
 
     public static void main(String[] args) throws IOException {
