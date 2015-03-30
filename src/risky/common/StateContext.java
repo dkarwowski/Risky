@@ -23,4 +23,8 @@ public class StateContext {
     public Player getPlayer() {
         return (this.myState.getPlayer());
     }
+
+    public void removeResources(int resources) {
+        this.myState.removeResources(resources);
+    }
 }

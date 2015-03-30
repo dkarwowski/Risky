@@ -157,6 +157,18 @@ public class Spot {
             return false;
     }
 
+    public void addResources(int resources) {
+        this._resources += resources;
+    }
+
+    public boolean connectedTo(Coords coords) {
+        // TODO(david): fix this. currently assumes the coords are a spot on the board
+        for (int i = 0; i < 6; ++i) // hard codes 6 directions
+            if (coords.equals(this._coordinates.hexInDir(i)))
+                return (true);
+        return (false);
+    }
+
     //--Game Functions End--------------------------------------------------------
 
 }

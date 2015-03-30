@@ -10,4 +10,8 @@ public class StatePlayer implements Statelike{
     public Player getPlayer() {
         return (this.player);
     }
+
+    public void removeResources(int resources) {
+        this.player.addResources(-resources);
+    }
 }

@@ -30,10 +30,18 @@ public class Risky {
 
     private Player playerWon = null;
 
+    // TODO(david): see about moving this out
+    private int move;
+
+    private final static int NONE = 0;
+    private final static int FIRST = 1;
+    private final static int PLAY = 2;
+
     //TODO(david): remove this
     private Scanner in;
 
     public Risky(boolean console) {
+        this.move = NONE;
         if(console)
             this.consoleInit();
         else
@@ -71,7 +79,7 @@ public class Risky {
         String[] board;
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test2.map"));
+            Scanner loadBoard = new Scanner(new File("data/test3.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();
@@ -133,6 +141,9 @@ public class Risky {
         this.guiTest.createPlayers();
         // TODO(david): make this dynamic?
         this.loadBoard();
+
+        // TODO(david): find a better solution
+        this.move = FIRST;
     }
 
     public void consoleInit() {
@@ -231,9 +242,7 @@ public class Risky {
 
             System.out.println(this.toString());
 
-            this.currentState = (this.currentState + 1)
-                    % this.playerStates.length;
-            this.stateContext.setState(this.playerStates[this.currentState]);
+            this.switchPlayer();
 
             // TODO(david): remove this
             this.guiTest.boardRepaint();
@@ -246,8 +255,51 @@ public class Risky {
     }
 
     // TODO(david): move this properly
+    public boolean isSetup() {
+        return (this.move == Risky.FIRST);
+    }
+
+    // TODO(david): move this properly
     public Player getCurrentPlayer() {
         return (this.stateContext.getPlayer());
+    }
+
+    public void switchPlayer() {
+        this.currentState = (this.currentState + 1) % this.playerStates.length;
+        this.stateContext.setState(this.playerStates[this.currentState]);
+    }
+
+    // TODO(david): make player change a setting?
+    // TODO(david): ensure this is actually changing the board
+    public Board makeMove(Coords src, Coords dest, int resources) {
+        if (this.move == Risky.FIRST) {
+            // assume dest is null
+            this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
+            this.board.claimCountries();
+            this.stateContext.removeResources(1);
+        }
+        else {
+            if (this.board.getSpot(src).getPlayer().equals(
+                        this.board.getSpot(dest).getPlayer())) {
+                this.board.getSpot(src).addResources(-resources);
+                this.board.getSpot(dest).addResources(resources);
+            }
+            else if (this.board.getSpot(dest).getPlayer() != null) {
+                // combat dealt with here
+            }
+            else {
+                // player placing of his own accord
+                this.stateContext.removeResources(resources);
+                this.board.getSpot(src).addResources(resources);
+            }
+        }
+
+        return (this.board);
+    }
+
+    public void checkSetup() {
+        if (this.board.isSetupDone())
+            this.move = Risky.PLAY;
     }
 
     public static void main(String[] args) throws IOException {
@@ -259,7 +311,7 @@ public class Risky {
         }
         else {
             Risky game = new Risky(false);// TODO(david): testing gui
-            game.consoleRun();
+//            game.consoleRun();
         }
     }
 }

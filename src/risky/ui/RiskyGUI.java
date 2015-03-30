@@ -64,7 +64,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             for (int i = 0; i < numPlayers; ++i) {
                 dialogInput = JOptionPane.showInputDialog(
                         this,
-                        String.format("Enter Player %d Name", i));
+                        String.format("Enter Player %d Name", (i + 1)));
                 players[i] = new Player(dialogInput, i);
             }
 
@@ -73,10 +73,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         catch (NumberFormatException e) {
             createPlayers();
         }
-    }
-
-    public void firstMove() {
-        // first move, each player places until all spots have been occupied
     }
 
     public void boardRepaint() {
@@ -92,7 +88,17 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             this.dispose();
         }
         if (e.getActionCommand().equals("userCommandEnter")) {
+            if (this.boardPanel.isSelected((this.game.isSetup() ? 
+                            BoardPanel.BOARD_SETUP : BoardPanel.BOARD_GENERAL))) {
+                if (this.game.isSetup()) {
+                    this.game.makeMove(this.boardPanel.getSelected(), null, 1);
+                    this.game.switchPlayer();
+                }
+                this.game.checkSetup();
+            }
             // TODO(david): set next move
+            this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
+            this.boardPanel.repaint();
         }
         if (e.getActionCommand().equals("userCommandCancel")) {
             // TODO(david): reset player's choices
@@ -113,7 +119,15 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
     
     public void mouseClicked(MouseEvent e) {
-        this.boardPanel.boardUpdate(this.boardPanel.coordsFromPosition(e.getX(), e.getY()));
+        Coords temp = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
+        if (!this.game.getBoard().containsSpot(temp))
+            return;
+
+        // setup state where the players are establishing positions
+        if (this.game.isSetup())
+            this.boardPanel.select(temp, BoardPanel.BOARD_SETUP);
+        else
+            this.boardPanel.select(temp, BoardPanel.BOARD_GENERAL);
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -121,7 +135,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         Coords position = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
         Spot temp = this.game.getBoard().getSpot(position);
         if (temp != null) 
-            this.infoPanel.writeToPanel(temp.toString());
+            this.infoPanel.appendToPanel(temp.toString());
     }
 
     public void mouseDragged(MouseEvent e) {

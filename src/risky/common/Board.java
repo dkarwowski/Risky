@@ -10,6 +10,8 @@ public class Board {
     private Spot[] spots;
     private Country[] countries;
 
+    private ArrayList<Coords> freeSpots;
+
     public Board() {
         this(0, 0);
     }
@@ -26,12 +28,15 @@ public class Board {
         this.name = setName;
         this.width = setWidth;
         this.height = setHeight;
+        this.freeSpots = new ArrayList<Coords>();
 
         this.spots = new Spot[this.width * this.height];
         if (setSpots != null) {
-            for (int x = 0; x < this.width; x++) {
-                for (int y = 0; y < this.height; y++) {
+            for (int y = 0; y < this.height; y++) {
+                for (int x = 0; x < this.width; x++) {
                     this.spots[x + y * this.width] = setSpots[x + y * this.width];
+                    if (setSpots[x + y * this.width] != null)
+                        this.freeSpots.add(this.spots[x + y * this.width].getCoords());
                 }
             }
         }
@@ -45,6 +50,8 @@ public class Board {
         int x = coords.getXCart();
         int y = coords.getYCart();
         this.spots[x + y * this.width] = spot;
+        if (spot.getPlayer() == null)
+            this.freeSpots.add(this.spots[x + y * this.width].getCoords());
 
         this.setCountries();
     }
@@ -203,6 +210,7 @@ public class Board {
         if (this.contains(coords)) {
             this.getSpot(coords).setPlayer(player);
             this.getSpot(coords).setResources(resources);
+            this.freeSpots.remove(this.getSpot(coords).getCoords());
         }
     }
 
@@ -235,6 +243,11 @@ public class Board {
     public void claimCountries() {
         for (Country c : this.countries)
             c.claimCountry();
+    }
+
+    public boolean isSetupDone() {
+        boolean result = this.freeSpots.isEmpty();
+        return (result);
     }
 
     //--Game Related Functions End------------------------------------------------------------	 

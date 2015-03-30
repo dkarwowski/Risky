@@ -14,6 +14,8 @@ public class InfoPanel extends JPanel {
     private JButton enterButton;
     private JButton cancelButton;
     private JButton quitButton;
+
+    private String constMessage;
     
     public InfoPanel(ActionListener listener) {
         this.setLayout(new FlowLayout());
@@ -39,9 +41,16 @@ public class InfoPanel extends JPanel {
         this.add(quitButton);
         
         this.setSize(this.enterButton.getMinimumSize());
+
+        this.constMessage = "";
     }
 
     public void writeToPanel(String message) {
+        this.constMessage = message;
         this.textBox.setText(message);
+    }
+
+    public void appendToPanel(String message) {
+        this.textBox.setText(this.constMessage + " " + message);
     }
 }
