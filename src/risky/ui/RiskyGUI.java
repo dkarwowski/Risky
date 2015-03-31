@@ -55,7 +55,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     public void runGame() {
     }
 
-    // TODO(david): have this run for main menu things?
     // TODO(david): create players with colors?
     public void createPlayers() {
         String dialogInput = JOptionPane.showInputDialog(
@@ -83,8 +82,8 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
 
     public void boardRepaint() {
+        // TODO(david): start using this properly again
         this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
-        this.boardPanel.validate();
         this.boardPanel.repaint();
     }
 
@@ -94,27 +93,64 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             this.setVisible(false);
             this.dispose();
         }
+        
+        // the user has pressed enter to end the specific decision in their turn
         if (e.getActionCommand().equals("userCommandEnter")) {
+            // check if the the selections have been made properly based on stage in game
             if (this.boardPanel.isSelected((this.game.isSetup() ? 
                             BoardPanel.BOARD_SETUP : BoardPanel.BOARD_GENERAL))) {
                 if (this.game.isSetup()) {
+                    // if the spot is free, we're in setup 1; just place a single resource there
                     if (this.game.getBoard().spotFree(this.boardPanel.getSelected()))
                         this.game.makeMove(this.boardPanel.getSelected(), null, 1);
-                    else
-                        this.game.makeMove(this.boardPanel.getSelected(), null,
-                                Integer.parseInt(JOptionPane.showInputDialog(
-                                        this,
-                                        "Number of Resources")));
+                    // otherwise we have the player place however many resources they want
+                    else {
+                        // gotta make sure that the input resources are valid
+                        // TODO(david): make a function for this?
+                        boolean outOfBounds = false;
+                        int input = 0;
+                        do {
+                            try {
+                                input = Integer.parseInt(JOptionPane.showInputDialog(
+                                            this, "Number of Resources to Use"));
+                                int t = this.game.getCurrentPlayer().getAvailableResources();
+                                if (1 < input && input < (t + 1))
+                                    outOfBounds = false;
+                                else
+                                    outOfBounds = true;
+                            } catch (NumberFormatException exception) {
+                                outOfBounds = true;
+                            }
+                        } while (outOfBounds);
+                        
+                        // actually place the resources
+                        this.game.makeMove( this.boardPanel.getSelected(), null, input);
+                    }
+                    
+                    // TODO(david): move this to an end turn button
                     this.game.switchPlayer();
+                    
+                    // check if setup is done
+                    this.game.checkSetup();
                 }
-                this.game.checkSetup();
+                else {
+                    // TODO(david): create general playing rules
+                    // - Stage one   (gain new resources)
+                    // - Stage two   (place gained resources)
+                    // - Stage three (attack/move placed resources
+                }
             }
-            // TODO(david): only set next move when player completely finished turn
-            // TODO(david): current player should show resources left
-            this.playerPanel.writeToPanel(this.game.getCurrentPlayer().toString());
+            
+            // properly update things
+            // TODO(david): move these back to their own function?
+            this.playerPanel.writeToPanel(
+                    "Player: " + this.game.getCurrentPlayer().getName() + 
+                    " with " + this.game.getCurrentPlayer().getAvailableResources() +
+                    " resources");
             this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
             this.boardPanel.repaint();
         }
+        
         if (e.getActionCommand().equals("userCommandCancel")) {
             // TODO(david): reset player's choices
             this.boardPanel.boardUpdate(null);
@@ -134,10 +170,12 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
     
     public void mouseClicked(MouseEvent e) {
+        // ensure the clicked spot is a valid spot
         Coords temp = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
         if (!this.game.getBoard().containsSpot(temp))
             return;
 
+        // have the boardpanel determine whether the spot is valid for the turn
         // setup state where the players are establishing positions
         if (this.game.isSetup())
             this.boardPanel.select(temp, BoardPanel.BOARD_SETUP);
@@ -146,7 +184,8 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
 
     public void mouseMoved(MouseEvent e) {
-        // TODO(david): add setting to have this append?
+        // displays information for the last spot that was hovered over
+        // TODO(david): have each spot display number of resources on it?
         Coords position = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
         Spot temp = this.game.getBoard().getSpot(position);
         if (temp != null) 
