@@ -79,7 +79,7 @@ public class Risky {
         String[] board;
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test3.map"));
+            Scanner loadBoard = new Scanner(new File("data/test2.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();

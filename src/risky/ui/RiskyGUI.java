@@ -52,9 +52,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.setVisible(true);
     }
 
-    public void runGame() {
-    }
-
     // TODO(david): create players with colors?
     public void createPlayers() {
         String dialogInput = JOptionPane.showInputDialog(
@@ -101,6 +98,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                             BoardPanel.BOARD_SETUP : BoardPanel.BOARD_GENERAL))) {
                 if (this.game.isSetup()) {
                     // if the spot is free, we're in setup 1; just place a single resource there
+                    boolean setupFinishedNow = this.game.getBoard().isSetupDone();
                     if (this.game.getBoard().spotFree(this.boardPanel.getSelected()))
                         this.game.makeMove(this.boardPanel.getSelected(), null, 1);
                     // otherwise we have the player place however many resources they want
@@ -128,7 +126,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     }
                     
                     // TODO(david): move this to an end turn button
-                    this.game.switchPlayer();
+                    if (!this.game.getBoard().isSetupDone()
+                            || this.game.getBoard().isSetupDone() != setupFinishedNow
+                            || this.game.getCurrentPlayer().getAvailableResources() == 0)
+                        this.game.switchPlayer();
                     
                     // check if setup is done
                     this.game.checkSetup();
@@ -139,6 +140,9 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     // - Stage two   (place gained resources)
                     // - Stage three (attack/move placed resources
                 }
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "You need to select properly!");
             }
             
             // properly update things

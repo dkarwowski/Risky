@@ -59,10 +59,17 @@ public class BoardPanel extends JPanel {
                 else {
                     if (spot.getPlayer() == null)
                         g.setColor(new Color(0.1f, 0.6f, 0.2f));
+                    else {
+                        float mod = spot.getPlayer().getID() * 0.2f;
+                        mod = 1.0f - mod;
+                        g.setColor(new Color(mod * 0.9f, mod * mod * 0.9f, mod * 0.9f));
+                    }
+                    /*
                     else if (spot.getPlayer() == this.currPlayer)
                         g.setColor(new Color(0.1f, 0.9f, 0.9f));
                     else
                         g.setColor(new Color(0.6f, 0.1f, 0.2f));
+                    */
                 }
                 
                 g.fillPolygon(p);
