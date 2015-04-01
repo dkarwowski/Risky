@@ -35,7 +35,9 @@ public class Risky {
 
     private final static int NONE = 0;
     private final static int FIRST = 1;
-    private final static int PLAY = 2;
+    private final static int PLAY_GAIN = 2;
+    private final static int PLAY_PUTS = 3;
+    private final static int PLAY_ATTK = 4;
 
     //TODO(david): remove this
     private Scanner in;
@@ -77,9 +79,11 @@ public class Risky {
         String boardName;
         int width, height;
         String[] board;
+
+        // TODO(david): consolidate the board loops
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test2.map"));
+            Scanner loadBoard = new Scanner(new File("data/test3.map"));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();
@@ -184,7 +188,6 @@ public class Risky {
     }
 
     public void consoleRun() throws IOException {
-
         // TODO(david); find a way to clean this out after tests
         in = new Scanner(System.in);
         System.out.println(this.toString());
@@ -305,7 +308,25 @@ public class Risky {
 
     public void checkSetup() {
         if (this.board.isSetupDone() && this.playersFinishedSetup())
-            this.move = Risky.PLAY;
+            this.move = Risky.PLAY_GAIN;
+    }
+
+    public void setPlayNext() {
+        this.move += 1;
+        if (this.move > Risky.PLAY_ATTK)
+            this.switchPlayer();
+    }
+
+    public boolean isPlayGain() {
+        return (this.move == Risky.PLAY_GAIN);
+    }
+
+    public boolean isPlayPuts() {
+        return (this.move == Risky.PLAY_PUTS);
+    }
+
+    public boolean isPlayAttk() {
+        return (this.move == Risky.PLAY_ATTK);
     }
 
     public boolean playersFinishedSetup() {
@@ -313,6 +334,16 @@ public class Risky {
         for (Statelike state : this.playerStates)
             result = result && (state.getPlayer().getAvailableResources() == 0);
         return result;
+    }
+
+    public void addStateResources() {
+        int numSpots = this.stateContext.getPlayer().getSpotsOwned().size();
+        int numResources = numSpots / 3;
+        numResources = (numResources > 1) ? numResources : 1;
+        for (Country c : this.stateContext.getPlayer().getCountriesOwned())
+            numResources += c.getResources();
+
+        this.stateContext.getPlayer().addResources(numResources);
     }
 
     public static void main(String[] args) throws IOException {

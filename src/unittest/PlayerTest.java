@@ -35,7 +35,7 @@ public class PlayerTest {
                             + player.getAvailableResources());
         assertEquals(player.getAvailableResources(), 10);
         
-        player.addResources(); // function that should automatically add resource
+        player.addResources(10); // function that should automatically add resource
         assertEquals(player.getAvailableResources(), 20); // should gain 10 resources
 
         System.out.println("PlayerTest::addResourceSimpleTest: PlayerResources: "

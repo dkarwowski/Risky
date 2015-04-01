@@ -10,6 +10,8 @@ public class Board {
     private Spot[] spots;
     private Country[] countries;
 
+    private int numSpots;
+
     private ArrayList<Coords> freeSpots;
 
     public Board() {
@@ -29,14 +31,17 @@ public class Board {
         this.width = setWidth;
         this.height = setHeight;
         this.freeSpots = new ArrayList<Coords>();
+        this.numSpots = 0;
 
         this.spots = new Spot[this.width * this.height];
         if (setSpots != null) {
             for (int y = 0; y < this.height; y++) {
                 for (int x = 0; x < this.width; x++) {
                     this.spots[x + y * this.width] = setSpots[x + y * this.width];
-                    if (setSpots[x + y * this.width] != null)
+                    if (setSpots[x + y * this.width] != null) {
                         this.freeSpots.add(this.spots[x + y * this.width].getCoords());
+                        this.numSpots += 1;
+                    }
                 }
             }
         }
@@ -49,6 +54,7 @@ public class Board {
         Coords coords = spot.getCoords();
         int x = coords.getXCart();
         int y = coords.getYCart();
+        this.numSpots += 1;
         this.spots[x + y * this.width] = spot;
         if (spot.getPlayer() == null)
             this.freeSpots.add(this.spots[x + y * this.width].getCoords());
@@ -96,6 +102,10 @@ public class Board {
 
     public Country getCountry(Coords c) {
         return this.getCountry(c.getXCart(), c.getYCart());
+    }
+
+    public int getNumSpots() {
+        return (this.numSpots);
     }
 
     //--Getters End------------------------------------------------------------

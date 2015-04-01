@@ -95,15 +95,27 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         if (e.getActionCommand().equals("userCommandEnter")) {
             // check if the the selections have been made properly based on stage in game
             if (this.boardPanel.isSelected((this.game.isSetup() ? 
-                            BoardPanel.BOARD_SETUP : BoardPanel.BOARD_GENERAL))) {
+                            BoardPanel.BOARD_SETUP : 
+                            ((this.game.isPlayGain()) ?
+                                BoardPanel.BOARD_PLAY_GAIN : 
+                                ((this.game.isPlayPuts()) ?
+                                    BoardPanel.BOARD_PLAY_PUTS :
+                                    BoardPanel.BOARD_PLAY_ATTK))))) {
                 if (this.game.isSetup()) {
                     // if the spot is free, we're in setup 1; just place a single resource there
-                    boolean setupFinishedNow = this.game.getBoard().isSetupDone();
-                    if (this.game.getBoard().spotFree(this.boardPanel.getSelected()))
-                        this.game.makeMove(this.boardPanel.getSelected(), null, 1);
-                    // otherwise we have the player place however many resources they want
-                    else {
-                        // gotta make sure that the input resources are valid
+                    this.game.makeMove(this.boardPanel.getSelected(), null, 1);
+                    this.game.switchPlayer();
+                    
+                    // check if setup is done
+                    this.game.checkSetup();
+                }
+                else {
+                    // TODO(david): create general playing rules
+                    // - Stage one   (gain new resources)
+                    if (this.game.isPlayGain())
+                        this.game.addStateResources();
+                    // - Stage two   (place gained resources)
+                    if (this.game.isPlayPuts()) {
                         // TODO(david): make a function for this?
                         boolean outOfBounds = false;
                         int input = 0;
@@ -120,25 +132,17 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                                 outOfBounds = true;
                             }
                         } while (outOfBounds);
-                        
-                        // actually place the resources
-                        this.game.makeMove( this.boardPanel.getSelected(), null, input);
+
+                        this.game.makeMove(
+                                this.boardPanel.getSelected(),
+                                null,
+                                input);
                     }
-                    
-                    // TODO(david): move this to an end turn button
-                    if (!this.game.getBoard().isSetupDone()
-                            || this.game.getBoard().isSetupDone() != setupFinishedNow
-                            || this.game.getCurrentPlayer().getAvailableResources() == 0)
-                        this.game.switchPlayer();
-                    
-                    // check if setup is done
-                    this.game.checkSetup();
-                }
-                else {
-                    // TODO(david): create general playing rules
-                    // - Stage one   (gain new resources)
-                    // - Stage two   (place gained resources)
-                    // - Stage three (attack/move placed resources
+                    // - Stage three attack/move placed resources
+                    if (this.game.isPlayAttk()) {
+                    }
+
+                    this.game.setPlayNext();
                 }
             }
             else {
@@ -183,8 +187,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         // setup state where the players are establishing positions
         if (this.game.isSetup())
             this.boardPanel.select(temp, BoardPanel.BOARD_SETUP);
-        else
-            this.boardPanel.select(temp, BoardPanel.BOARD_GENERAL);
+        else if (this.game.isPlayPuts())
+            this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_PUTS);
+        else if (this.game.isPlayAttk())
+            this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_ATTK);
     }
 
     public void mouseMoved(MouseEvent e) {

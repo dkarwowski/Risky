@@ -18,7 +18,9 @@ public class BoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     public static final int BOARD_SETUP = 0;
-    public static final int BOARD_GENERAL = 1;
+    public static final int BOARD_PLAY_GAIN = 1;
+    public static final int BOARD_PLAY_PUTS = 2;
+    public static final int BOARD_PLAY_ATTK = 3;
 
     private Board board;
     private Player currPlayer;
@@ -133,7 +135,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void select(Coords select, int type) {
-        if (type == BoardPanel.BOARD_SETUP) {
+        if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS) {
             if (this.board.isSetupDone()) {
                 if (this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                     this.selected = select;
@@ -143,7 +145,7 @@ public class BoardPanel extends JPanel {
                     this.selected = select;
             }
         }
-        else if (type == BoardPanel.BOARD_GENERAL) {
+        else if (type == BoardPanel.BOARD_PLAY_GAIN) {
             if (this.source == null 
                     && this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                 this.source = select;
@@ -155,10 +157,12 @@ public class BoardPanel extends JPanel {
     }
 
     public boolean isSelected(int type) {
-        if (type == BoardPanel.BOARD_SETUP)
+        if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS)
             return (this.selected != null);
-        else if (type == BoardPanel.BOARD_GENERAL)
+        else if (type == BoardPanel.BOARD_PLAY_ATTK)
             return (this.selected != null && this.source != null);
+        else if (type == BoardPanel.BOARD_PLAY_GAIN)
+            return (true);
         return (false);
     }
 

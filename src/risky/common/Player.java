@@ -10,7 +10,6 @@ public class Player {
 
     // resources the player can place
     private int availableResources;
-    private int resourcesPerTurn;
     private ArrayList<Spot> spotsOwned;
     private ArrayList<Country> countriesOwned;
 
@@ -21,7 +20,7 @@ public class Player {
      */
     public Player(String setName, int setID) {
         // TODO(david): set initial resources to be based on number of players
-        this(setName, setID, 10, 10);
+        this(setName, setID, 10);
     }
 
     /**
@@ -29,15 +28,13 @@ public class Player {
      * @param setName name of the player
      * @param setID id of the player for the game
      * @param startResources resources the game starts with
-     * @param resourcesPerTurn resources automatically gained per turn
      */
-    public Player(String setName, int setID, int startResources, int resourcesPerTurn) {
+    public Player(String setName, int setID, int startResources) {
         this.name = setName;
         this.id = setID;
 
         // initialize resources to the amount each player should start with
         this.availableResources = startResources;
-        this.resourcesPerTurn = resourcesPerTurn;
 
         // spots Owned is initialized to be empty, first turn will add the first
         // spot(s)
@@ -90,12 +87,8 @@ public class Player {
     //--Game Related Functions Start----------------------------------------------
 
     // should add default 
-    public void addResources() {
-        this.availableResources += this.resourcesPerTurn;
-    }
-
-    public void addResources(int countriesResources) {
-        this.availableResources += countriesResources;
+    public void addResources(int resources) {
+        this.availableResources += resources;
     }
 
     public void addCountry(Country c) {
