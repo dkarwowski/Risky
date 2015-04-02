@@ -275,7 +275,7 @@ public class Risky {
     // TODO(david): make player change a setting?
     // TODO(david): ensure this is actually changing the board
     public Board makeMove(Coords src, Coords dest, int resources) {
-        if (this.move == Risky.FIRST) {
+        if (this.move == Risky.FIRST || this.move == Risky.PLAY_PUTS) {
             // assume dest is null
             if (this.board.spotFree(src)) {
                 this.board.claimSpot(this.stateContext.getPlayer(), src, 1);

@@ -94,6 +94,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         // the user has pressed enter to end the specific decision in their turn
         if (e.getActionCommand().equals("userCommandEnter")) {
             // check if the the selections have been made properly based on stage in game
+            // TODO(david): simplify this call?
             if (this.boardPanel.isSelected((this.game.isSetup() ? 
                             BoardPanel.BOARD_SETUP : 
                             ((this.game.isPlayGain()) ?
@@ -124,7 +125,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                                 input = Integer.parseInt(JOptionPane.showInputDialog(
                                             this, "Number of Resources to Use"));
                                 int t = this.game.getCurrentPlayer().getAvailableResources();
-                                if (1 < input && input < (t + 1))
+                                if (0 < input && input < (t + 1))
                                     outOfBounds = false;
                                 else
                                     outOfBounds = true;
@@ -140,6 +141,27 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     }
                     // - Stage three attack/move placed resources
                     if (this.game.isPlayAttk()) {
+                        // TODO(david): make a function for this?
+                        boolean outOfBounds = false;
+                        int input = 0;
+                        do {
+                            try {
+                                input = Integer.parseInt(JOptionPane.showInputDialog(
+                                            this, "Number of Resources to Use"));
+                                int t = this.game.getCurrentPlayer().getAvailableResources();
+                                if (0 < input && input < (t + 1))
+                                    outOfBounds = false;
+                                else
+                                    outOfBounds = true;
+                            } catch (NumberFormatException exception) {
+                                outOfBounds = true;
+                            }
+                        } while (outOfBounds);
+
+                        this.game.makeMove(
+                                this.boardPanel.getSource(),
+                                this.boardPanel.getSelected(),
+                                input);
                     }
 
                     this.game.setPlayNext();
@@ -191,6 +213,13 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_PUTS);
         else if (this.game.isPlayAttk())
             this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_ATTK);
+
+        if (e.getClickCount() == 2) {
+            this.actionPerformed(new ActionEvent(
+                        this.infoPanel, 
+                        ActionEvent.ACTION_PERFORMED, 
+                        "userCommandEnter"));
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
