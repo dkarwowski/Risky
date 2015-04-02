@@ -61,7 +61,13 @@ public class FileIO
 		
 	public void removeFile(String name)
 	{
-		
+		File file = new File(name);
+		try {
+			file.delete();
+		}
+		catch(Exception e) {
+			System.out.println("File cannot be deleted.");
+		}
 	}
 	
 	public void spotFromString(String line)
