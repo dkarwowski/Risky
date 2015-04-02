@@ -66,9 +66,17 @@ public class FileIO
 	
 	public void spotFromString(String line)
 	{
-		Pattern namepat = Pattern.compile("^(A-Za-z0-9)+(?=\\#)");
+		String r = "(\\w+)#(\\w+)";
+		Pattern namepat = Pattern.compile(r);
 		Matcher m = namepat.matcher(line);
-		String name = m.group(1);
-		System.out.println(name);
+		
+		if(m.find()) 
+		{
+			String name = m.group(1);
+			System.out.println(name);
+			System.out.println(m.group(2));
+		}
+		else
+			System.out.println("Not found");
 	}
 }

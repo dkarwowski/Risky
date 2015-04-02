@@ -27,6 +27,8 @@ public class FileTest
 		f.createFile("test.txt");	
 		f.loadFromFile("test.txt");
 		
-		f.spotFromString("Player#Player");
+		String testspot = "Player#America";
+		
+		f.spotFromString(testspot);
 	}	
 }
