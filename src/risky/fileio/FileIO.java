@@ -29,9 +29,9 @@ public class FileIO
 			File file = new File(name);
 			output = new BufferedWriter(new FileWriter(file));
 			
-			output.write("" + _board.getName() + '\n');		//Board Name
-			output.write("" + _board.getWidth() + '\n'); 	//Board Width
-			output.write("" + _board.getHeight()+ '\n'); 	//Board Height
+			//output.write("" + _board.getName() + '\n');		//Board Name
+			//output.write("" + _board.getWidth() + '\n'); 	//Board Width
+			//output.write("" + _board.getHeight()+ '\n'); 	//Board Height
 			
 			output.close();
 			System.out.println("File has been written");
@@ -71,7 +71,20 @@ public class FileIO
 		}
 	}
 	
-	//--Create Object from String methods----------------------------------------
+	//--Start Create String from Object methods----------------------------------
+	
+	public String stringFromBoard(Board board)
+	{
+		String name = board.getName();
+		int width = board.getWidth();
+		int height = board.getHeight();
+		String string = "" + name + "#" + width + "#" + height;
+		return string;
+	}
+	
+	//--End Create String from Object methods------------------------------------
+	
+	//--Start Create Object from String methods----------------------------------
 	
 	public Board boardFromString(String line)
 	{
@@ -102,7 +115,7 @@ public class FileIO
 		return board;
 	}
 	
-	public Spot spotFromString(String line)
+	public Spot spotFromString(String line)	//Needs work
 	{
 		String r = "(.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
 		Pattern namepat = Pattern.compile(r);
