@@ -57,6 +57,10 @@ public class Player {
     public int getAvailableResources() {
         return this.availableResources;
     }
+    
+    public int getResoucesPerTurn() {
+    	return this.availableResources;
+    }
 
     public ArrayList<Spot> getSpotsOwned() {
         return this.spotsOwned;

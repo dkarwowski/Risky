@@ -6,16 +6,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.BufferedWriter;
+import java.util.ArrayList;
 import java.util.regex.*;
 
 import risky.common.Board;
 import risky.common.Coords;
+import risky.common.Country;
+import risky.common.Player;
 import risky.common.Spot;
 
 public class FileIO 
 {
 	
 	Board _board;
+	Player[] _players = new Player[4];
+	Country[] _countries;
+	Spot[] _spots;
 	
 	public void setBoard(Board board) {
 		_board = board;
@@ -80,6 +86,28 @@ public class FileIO
 		int height = board.getHeight();
 		String string = "" + name + "#" + width + "#" + height;
 		return string;
+	}
+	
+	public String stringFromPlayer(Player player)
+	{
+		String name = player.getName();
+		int id = player.getID();
+		int availableResources = player.getAvailableResources();
+	    int resourcesPerTurn = player.getResoucesPerTurn();
+	    String string = "" + name + "#" + id + "#" + availableResources + "#" + resourcesPerTurn;
+		return string;
+	}
+	
+	public String stringFromCountry(Country country)
+	{
+		//TODO
+		return "";
+	}
+	
+	public String stringFromSpot(Spot spot)
+	{
+		//TODO
+		return "";
 	}
 	
 	//--End Create String from Object methods------------------------------------
