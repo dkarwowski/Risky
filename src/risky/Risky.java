@@ -19,7 +19,7 @@ import risky.common.Statelike;
 import risky.ui.RiskyGUI;
 
 public class Risky {
-    // TODO(david): remove this
+    // TODO(david): remove this.
     private RiskyGUI guiTest;
 
     private Board board;
