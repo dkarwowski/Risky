@@ -33,7 +33,6 @@ public class FileIO
 			output.write("" + _board.getWidth() + '\n'); 	//Board Width
 			output.write("" + _board.getHeight()+ '\n'); 	//Board Height
 			
-			
 			output.close();
 			System.out.println("File has been written");
 			
@@ -72,6 +71,37 @@ public class FileIO
 		}
 	}
 	
+	//--Create Object from String methods----------------------------------------
+	
+	public Board boardFromString(String line)
+	{
+		String r = "(.+)#(\\d+)#(\\d+)";
+		Pattern p = Pattern.compile(r);
+		Matcher m = p.matcher(line);
+		
+		String name = "";
+		int width = 0;
+		int height = 0;
+		
+		if(m.find()) 
+		{
+			name = m.group(1);
+			width = Integer.parseInt(m.group(2));
+			height = Integer.parseInt(m.group(3));
+			
+			System.out.println(name);
+			System.out.println(width);
+			System.out.println(height);
+		}
+		else
+		{
+			System.out.println("Not found");
+		}
+		
+		Board board = new Board(name, width, height);
+		return board;
+	}
+	
 	public Spot spotFromString(String line)
 	{
 		String r = "(.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
@@ -106,7 +136,8 @@ public class FileIO
 		Coords coords = new Coords(x, y);
 		
 		Spot spot = new Spot();
-		return spot;
-		
+		return spot;	
 	}
+	
+	//--End Object from String methods-------------------------------------------
 }
