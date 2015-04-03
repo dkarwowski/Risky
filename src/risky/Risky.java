@@ -171,7 +171,7 @@ public class Risky {
         in.nextLine();
     }
 
-    // TODO(david): move this properly
+    // TODO(david): move this properly.
     public void createPlayers(Player... players) {
         if (players instanceof Player[]) {
             this.playerStates = new Statelike[players.length];
