@@ -33,6 +33,10 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
  * Risky
     - Holds the very simple game loop
     - Needs a lot of work
+ * UI
+    - Polygon map generation
+    - Basic UI
+    - Game loop integration
     
     
 Future Aspects
