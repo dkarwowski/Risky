@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.util.regex.*;
 
 import risky.common.Board;
+import risky.common.Coords;
+import risky.common.Spot;
 
 public class FileIO 
 {
@@ -70,19 +72,41 @@ public class FileIO
 		}
 	}
 	
-	public void spotFromString(String line)
+	public Spot spotFromString(String line)
 	{
-		String r = "(\\w+)#(\\w+)";
+		String r = "(.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
 		Pattern namepat = Pattern.compile(r);
 		Matcher m = namepat.matcher(line);
 		
+		String name;
+		String country;
+		int resources;
+		int x = -1;
+		int y = -1;
+		
 		if(m.find()) 
 		{
-			String name = m.group(1);
+			name = m.group(1);
+			country = m.group(2);
+			resources = Integer.parseInt(m.group(3));
+			x = Integer.parseInt(m.group(4));
+			y = Integer.parseInt(m.group(5));
+			
 			System.out.println(name);
-			System.out.println(m.group(2));
+			System.out.println(country);
+			System.out.println(resources);
+			System.out.println(x);
+			System.out.println(y);
 		}
 		else
+		{
 			System.out.println("Not found");
+		}
+		
+		Coords coords = new Coords(x, y);
+		
+		Spot spot = new Spot();
+		return spot;
+		
 	}
 }
