@@ -111,29 +111,12 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     this.game.checkSetup();
                 }
                 else {
-                    // TODO(david): create general playing rules
                     // - Stage one   (gain new resources)
                     if (this.game.isPlayGain())
                         this.game.addStateResources();
                     // - Stage two   (place gained resources)
                     if (this.game.isPlayPuts()) {
-                        // TODO(david): make a function for this?
-                        boolean outOfBounds = false;
-                        int input = 0;
-                        do {
-                            try {
-                                input = Integer.parseInt(JOptionPane.showInputDialog(
-                                            this, "Number of Resources to Use"));
-                                int t = this.game.getCurrentPlayer().getAvailableResources();
-                                if (0 < input && input < (t + 1))
-                                    outOfBounds = false;
-                                else
-                                    outOfBounds = true;
-                            } catch (NumberFormatException exception) {
-                                outOfBounds = true;
-                            }
-                        } while (outOfBounds);
-
+                        int input = getResourcesBox();
                         this.game.makeMove(
                                 this.boardPanel.getSelected(),
                                 null,
@@ -141,23 +124,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     }
                     // - Stage three attack/move placed resources
                     if (this.game.isPlayAttk()) {
-                        // TODO(david): make a function for this?
-                        boolean outOfBounds = false;
-                        int input = 0;
-                        do {
-                            try {
-                                input = Integer.parseInt(JOptionPane.showInputDialog(
-                                            this, "Number of Resources to Use"));
-                                int t = this.game.getCurrentPlayer().getAvailableResources();
-                                if (0 < input && input < (t + 1))
-                                    outOfBounds = false;
-                                else
-                                    outOfBounds = true;
-                            } catch (NumberFormatException exception) {
-                                outOfBounds = true;
-                            }
-                        } while (outOfBounds);
-
+                        int input = getResourcesBox();
                         this.game.makeMove(
                                 this.boardPanel.getSource(),
                                 this.boardPanel.getSelected(),
@@ -185,6 +152,26 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             // TODO(david): reset player's choices
             this.boardPanel.boardUpdate(null);
         }
+    }
+
+    public int getResourcesBox() {
+        boolean outOfBounds = false;
+        int input = 0;
+        do {
+            try {
+                input = Integer.parseInt(JOptionPane.showInputDialog(
+                            this, "Number of Resources to Use"));
+                int t = this.game.getCurrentPlayer().getAvailableResources();
+                if (0 < input && input < (t + 1))
+                    outOfBounds = false;
+                else
+                    outOfBounds = true;
+            } catch (NumberFormatException exception) {
+                outOfBounds = true;
+            }
+        } while (outOfBounds);
+
+        return (input);
     }
 
     public void mousePressed(MouseEvent e) {
