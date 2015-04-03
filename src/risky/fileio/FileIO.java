@@ -143,6 +143,47 @@ public class FileIO
 		return board;
 	}
 	
+	public Player playerFromString(String line)
+	{
+		String r = "(.+)#(\\d+)#(\\d+)#(\\d+)";
+		Pattern p = Pattern.compile(r);
+		Matcher m = p.matcher(line);
+		
+		String name = "";
+		int id = 0;
+		int availableResources = 0;
+		int resourcesPerTurn = 0;
+		
+		if(m.find()) 
+		{
+			name = m.group(1);
+			id = Integer.parseInt(m.group(2));
+			availableResources = Integer.parseInt(m.group(3));
+			resourcesPerTurn = Integer.parseInt(m.group(4));
+			
+			System.out.println(name);
+			System.out.println(id);
+			System.out.println(availableResources);
+			System.out.println(resourcesPerTurn);
+		}
+		else
+		{
+			System.out.println("Not found");
+		}
+		
+		Player player = new Player(name, id, availableResources, resourcesPerTurn);
+		return player;
+	}
+	
+	public Country countryFromString(String line) 
+	{
+		String r = "(.+)#(\\d+)#(\\d+)";
+		Pattern p = Pattern.compile(r);
+		Matcher m = p.matcher(line);
+		
+		return null;
+	}
+	
 	public Spot spotFromString(String line)	//Needs work
 	{
 		String r = "(.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
