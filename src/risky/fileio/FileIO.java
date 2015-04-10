@@ -39,7 +39,22 @@ public class FileIO
 			//output.write("" + _board.getWidth() + '\n'); 	//Board Width
 			//output.write("" + _board.getHeight()+ '\n'); 	//Board Height
 			
+			output.write(stringFromBoard(_board) + '\n');
+			
+			for(Player player : _players) {
+				output.write(stringFromPlayer(player) + '\n');
+			}
+			
+			for(Country country : _countries) {
+				output.write(stringFromCountry(country) + '\n');
+			}
+			
+			for(Spot spot : _spots) {
+				output.write(stringFromSpot(spot) + '\n');
+			}
+			
 			output.close();
+			
 			System.out.println("File has been written");
 			
 		} catch(Exception e) {
@@ -100,14 +115,26 @@ public class FileIO
 	
 	public String stringFromCountry(Country country)
 	{
-		//TODO
-		return "";
+		String name = country.getName();
+		Player player = country.getOwner();	//Will have to convert back to player
+		String owner = player.getName();
+		int resources = country.getResources();
+		String string = "" + name + "#" + owner + "#" + resources;
+		return string;
 	}
 	
 	public String stringFromSpot(Spot spot)
 	{
-		//TODO
-		return "";
+		Player player = spot.getPlayer();
+		String owner = player.getName();
+		Country country = spot.getCountry();
+		String countryIn = country.getName();
+		int resources = spot.getResources();
+		Coords coords = spot.getCoords();
+		int x = coords.getX();
+		int y = coords.getY();
+		String string = "" + player + "#" + country + "#" + resources + "#" + x + "," + y;
+		return string;
 	}
 	
 	//--End Create String from Object methods------------------------------------
