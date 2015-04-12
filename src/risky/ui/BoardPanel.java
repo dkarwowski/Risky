@@ -145,7 +145,7 @@ public class BoardPanel extends JPanel {
                     this.selected = select;
             }
         }
-        else if (type == BoardPanel.BOARD_PLAY_GAIN) {
+        else if (type == BoardPanel.BOARD_PLAY_ATTK) {
             if (this.source == null 
                     && this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                 this.source = select;

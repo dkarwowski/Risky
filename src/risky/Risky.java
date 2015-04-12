@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 
 import risky.common.Board;
@@ -15,7 +16,6 @@ import risky.common.Spot;
 import risky.common.StateContext;
 import risky.common.StatePlayer;
 import risky.common.Statelike;
-
 import risky.ui.RiskyGUI;
 
 public class Risky {
@@ -29,6 +29,9 @@ public class Risky {
     private int currentState;
 
     private Player playerWon = null;
+
+    // Random number generation for combat
+    private Random rand;
 
     // TODO(david): see about moving this out
     private int move;
@@ -44,6 +47,7 @@ public class Risky {
 
     public Risky(boolean console) {
         this.move = NONE;
+        this.rand = new Random();
         if(console)
             this.consoleInit();
         else
@@ -294,7 +298,18 @@ public class Risky {
                 this.board.getSpot(dest).addResources(resources);
             }
             else if (this.board.getSpot(dest).getPlayer() != null) {
-                // combat dealt with here
+                int srcLost = this.rand.nextInt(resources + 1);
+                int destLost = this.rand.nextInt(resources + 1);
+                int destResources = this.board.getSpot(dest).getResources();
+                if (destLost < destResources) {
+                    this.board.getSpot(src).addResources(-srcLost);
+                    this.board.getSpot(dest).addResources(-destLost);
+                }
+                else {
+                    this.board.getSpot(src).addResources(-srcLost);
+                    this.board.getSpot(dest).setPlayer(this.stateContext.getPlayer());
+                    this.board.getSpot(dest).setResources(1);
+                }
             }
             else {
                 // player placing of his own accord
@@ -313,8 +328,10 @@ public class Risky {
 
     public void setPlayNext() {
         this.move += 1;
-        if (this.move > Risky.PLAY_ATTK)
+        if (this.move > Risky.PLAY_ATTK) {
+            this.move = Risky.PLAY_GAIN;
             this.switchPlayer();
+        }
     }
 
     public boolean isPlayGain() {
@@ -344,6 +361,10 @@ public class Risky {
             numResources += c.getResources();
 
         this.stateContext.getPlayer().addResources(numResources);
+    }
+
+    public void newGame() {
+        this.guiInit();
     }
 
     public static void main(String[] args) throws IOException {

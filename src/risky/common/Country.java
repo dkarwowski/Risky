@@ -78,6 +78,6 @@ public class Country {
         if (!(object instanceof Country))
             return false;
         Country other = (Country)object;
-        return (this.getName() == other.getName());
+        return (this.getName().equals(other.getName()));
     }
 }
