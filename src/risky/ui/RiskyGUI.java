@@ -52,7 +52,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.setVisible(true);
     }
 
-    // TODO(david): create players with colors?
     public void createPlayers() {
         String dialogInput = JOptionPane.showInputDialog(
                 this,
@@ -79,7 +78,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
 
     public void boardRepaint() {
-        // TODO(david): start using this properly again
+        // TODO(david): check if this is necessary for the GUI
         this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
         this.boardPanel.repaint();
     }
@@ -164,7 +163,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         }
     }
 
-    // TODO(david): place this properly
     public void endGame() {
         int option = JOptionPane.showConfirmDialog(
                 this, 

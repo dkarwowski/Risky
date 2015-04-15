@@ -14,18 +14,39 @@ public class Board {
 
     private ArrayList<Coords> freeSpots;
 
+    /**
+     * Initialize the board with no dimensions
+     */
     public Board() {
         this(0, 0);
     }
 
+    /**
+     * Initialize the board to be empty with specific dimensions
+     * @param setWidth the determined width
+     * @param setHeight the determined height
+     */
     public Board(int setWidth, int setHeight) {
         this("Generic", setWidth, setHeight);
     }
 
+    /**
+     * Initialize the board with a name and dimensions
+     * @param setName the name of the board
+     * @param setWidth the determined width
+     * @param setHeight the determined height
+     */
     public Board(String setName, int setWidth, int setHeight) {
         this(setName, setWidth, setHeight, new Spot[setWidth * setHeight]);
     }
 
+    /**
+     * Initialize the board with specific spots
+     * @param setName the name of the board
+     * @param setWidth the width of the board
+     * @param setHeight the height of the board
+     * @param setSpots the spots to be initialized
+     */
     public Board(String setName, int setWidth, int setHeight, Spot[] setSpots){
         this.name = setName;
         this.width = setWidth;
@@ -50,6 +71,11 @@ public class Board {
         this.setCountries();
     }
 
+    /**
+     * Set a spot on the board (from empty to not)
+     * TODO(david): make this able to work with setting a position to empty
+     * @param spot what to set the position on the board to
+     */
     public void setSpot(Spot spot) {
         Coords coords = spot.getCoords();
         int x = coords.getXCart();
@@ -64,46 +90,93 @@ public class Board {
 
     //--Getters Start----------------------------------------------------------
 
+    /**
+     * Get the name of the board
+     * @return String with the name
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Get the width of the board
+     * @return integer width
+     */
     public int getWidth(){
         return this.width;
     }
 
+    /**
+     * Get the height of the board
+     * @return integer height
+     */
     public int getHeight(){
         return this.height;
     }
 
+    /**
+     * Get a spot at specified coordinates
+     * @param c Coords to grab
+     * @return the Spot or null
+     */
     public Spot getSpot(Coords c) {
         return getSpot(c.getXCart(), c.getYCart());
     }
 
+    /**
+     * Get a spot with x, y values. Cartesian only
+     * @param x integer of Cartesian X Coordinate
+     * @param y integer of Cartesian Y Coordinate
+     * @return Spot located there
+     */
     public Spot getSpot(int x, int y) {
         if (contains(x, y))
             return this.spots[x + y * this.width];
         return null;
     }
     
+    /**
+     * Get the board of all spots
+     * @return Array of every spot
+     */
     public Spot[] getAllSpots() {
         return this.spots;
     }
 
+    /**
+     * Get the country with a specific spot inside of it
+     * @param s Spot in said country
+     * @return Country
+     */
     public Country getCountry(Spot s) {
         return s.getCountry();
     }
 
+    /**
+     * Get a country with specific coordinates
+     * @param x integer of Cartesian X coordinate
+     * @param y integer of Cartesian Y coordinate
+     * @return Country
+     */
     public Country getCountry(int x, int y) {
         if (this.getSpot(x, y) != null)
             return this.getCountry(this.getSpot(x, y));
         return null;
     }
 
+    /**
+     * Get a country based on its coordinates
+     * @param c Coords in country
+     * @return Country
+     */
     public Country getCountry(Coords c) {
         return this.getCountry(c.getXCart(), c.getYCart());
     }
 
+    /**
+     * Get the number of spots on the board
+     * @return integer of spots
+     */
     public int getNumSpots() {
         return (this.numSpots);
     }
@@ -226,7 +299,6 @@ public class Board {
 
     /**
      * Check if a spot has been claimed already based on Cartesian Coordinates
-     * TODO(david): deal with combat
      * @param x Cartesian X
      * @param y Cartesian Y
      * @return whether the spot is empty
@@ -255,6 +327,10 @@ public class Board {
             c.claimCountry();
     }
 
+    /**
+     * Check if the setup is done by if there are any empty spots
+     * @return boolean regarding state of spots
+     */
     public boolean isSetupDone() {
         boolean result = this.freeSpots.isEmpty();
         return (result);

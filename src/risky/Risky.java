@@ -45,6 +45,10 @@ public class Risky {
     //TODO(david): remove this
     private Scanner in;
 
+    /**
+     * Initialize the game and several of its variables
+     * @param console Whether the game should be started with console or GUI
+     */
     public Risky(boolean console) {
         this.move = NONE;
         this.rand = new Random();
@@ -54,6 +58,12 @@ public class Risky {
             this.guiInit(); // replace this with riskygui when working
     }
 
+    /**
+     * Initialize the game with a predetermined board. May be useful for game loading?
+     * TODO(david): remove this if unused
+     * @param _board the loaded board
+     * @param _playerStates the game's player states
+     */
     public Risky(Board _board, Statelike[] _playerStates) {
         this.board = _board;
         this.playerStates = _playerStates;
@@ -61,11 +71,19 @@ public class Risky {
         this.currentState = 0;
     }
 
+    /**
+     * Check if the game is over (a single player owns everything)
+     * @return True or false, if there is a player who has won
+     */
     public boolean checkPlayerWon() {
         playerWon = this.board.playerOwnsAll();
         return (playerWon != null);
     }
 
+    /**
+     * Get the winner if there is one
+     * @return Player
+     */
     public Player getWinner() {
         return playerWon;
     }
@@ -77,8 +95,11 @@ public class Risky {
         return (result);
     }
 
-    // TODO(david): generalize this to load a random board/player chosen board
-    // TODO(david): create spots that connect intercontinentally
+    /**
+     * Load a specific board
+     * TODO(david): generalize this to load a random board/player chosen board
+     * TODO(david): create spots that connect intercontinentally
+     */
     private void loadBoard() {
         String boardName;
         int width, height;
@@ -101,7 +122,6 @@ public class Risky {
 
             loadBoard.close();
         } catch (FileNotFoundException e) {
-            // TODO(david): Auto-generated catch block
             e.printStackTrace();
             this.in.close();
             return;
@@ -141,7 +161,10 @@ public class Risky {
         }
     }
 
-    // TODO(david): fix this to work with other gui
+    /**
+     * Initializes the GUI, by creating the various information it needs to run
+     * TODO(david): fix this to work with other gui
+     */
     public void guiInit() {
         this.loadBoard();
 
@@ -150,14 +173,16 @@ public class Risky {
         // TODO(david): make this dynamic?
         this.loadBoard();
 
-        // TODO(david): find a better solution
+        // TODO(david): find a better solution for player stages
         this.move = FIRST;
     }
 
+    /**
+     * Initialize the game through the console, everything runs in here
+     */
     public void consoleInit() {
         this.in = new Scanner(System.in);
 
-        // TODO(david): replace this with UI version
         System.out.print("Enter Player 1 Name: ");
         Player p1 = new Player(this.in.next(), 0);
         System.out.print("Enter Player 2 Name: ");
@@ -175,7 +200,10 @@ public class Risky {
         in.nextLine();
     }
 
-    // TODO(david): move this properly.
+    /**
+     * Add any pre-made players to the game
+     * @param players Array of players of unknown size
+     */
     public void createPlayers(Player... players) {
         if (players instanceof Player[]) {
             this.playerStates = new Statelike[players.length];
@@ -191,6 +219,10 @@ public class Risky {
         this.currentState = 0;
     }
 
+    /**
+     * Run the game through the console
+     * @throws IOException if there is an issue reading from StdIn
+     */
     public void consoleRun() throws IOException {
         // TODO(david); find a way to clean this out after tests
         in = new Scanner(System.in);
@@ -198,8 +230,6 @@ public class Risky {
 
         boolean thisRunning = true;
         while (thisRunning) {
-            // TODO: make first move unique for both players
-            // TODO: make moves only possible to consecutive spots
             // TODO: determine how to connect disjointed countries
             System.out.println("Free resources: " + this.stateContext.getPlayer().getAvailableResources());
             System.out .print("Player "
@@ -234,50 +264,63 @@ public class Risky {
             if (!this.board.containsSpot(c))
                 continue;
 
-            // TODO: deal with combat
+            // TODO: implement combat from UI
             if (!this.board.spotFree(c))
                 continue;
 
-            // TODO: make player lose resources
-            // TODO: give player resources every turn
+            // TODO: implement resource management from UI
             this.board.claimSpot(this.stateContext.getPlayer(), c, r);
             this.board.claimCountries();
 
-            // TODO: test that this works
+            // TODO: test that winning works
             if (this.checkPlayerWon())
                 thisRunning = false;
 
             System.out.println(this.toString());
 
             this.switchPlayer();
-
-            // TODO(david): remove this
-            this.guiTest.boardRepaint();
         }
     }
 
-    //TODO(david): remove this temporary testing functions
+    /**
+     * Get the board from the game
+     * @return
+     */
     public Board getBoard() {
         return this.board;
     }
 
-    // TODO(david): move this properly
+    /**
+     * Check whether the game is in the initial setup stage
+     * @return
+     */
     public boolean isSetup() {
         return (this.move == Risky.FIRST);
     }
 
-    // TODO(david): move this properly
+    /**
+     * Get the player whose turn it currently is
+     * @return Player who is going
+     */
     public Player getCurrentPlayer() {
         return (this.stateContext.getPlayer());
     }
 
+    /**
+     * Move on to the next player state
+     */
     public void switchPlayer() {
         this.currentState = (this.currentState + 1) % this.playerStates.length;
         this.stateContext.setState(this.playerStates[this.currentState]);
     }
 
-    // TODO(david): make player change a setting?
-    // TODO(david): ensure this is actually changing the board
+    /**
+     * Complete a move based on selected coordinates
+     * @param src The player's coordinates
+     * @param dest The coordinates where the player is moving/attacking
+     * @param resources the number of resources being used
+     * @return the new board after applying all moves
+     */
     public Board makeMove(Coords src, Coords dest, int resources) {
         if (this.move == Risky.FIRST || this.move == Risky.PLAY_PUTS) {
             // assume dest is null
@@ -321,11 +364,17 @@ public class Risky {
         return (this.board);
     }
 
+    /**
+     * Check if the setup is done and move on if possible
+     */
     public void checkSetup() {
         if (this.board.isSetupDone() && this.playersFinishedSetup())
             this.move = Risky.PLAY_GAIN;
     }
 
+    /**
+     * Set the next playing stage
+     */
     public void setPlayNext() {
         this.move += 1;
         if (this.move > Risky.PLAY_ATTK) {
@@ -334,18 +383,35 @@ public class Risky {
         }
     }
 
+    /**
+     * Check if the game is in the Gain stage
+     * @return boolean regarding state
+     */
     public boolean isPlayGain() {
         return (this.move == Risky.PLAY_GAIN);
     }
 
+    /**
+     * Check if the game is in the Placing stage
+     * @return boolean regarding state
+     */
     public boolean isPlayPuts() {
         return (this.move == Risky.PLAY_PUTS);
     }
 
+    /**
+     * Check if the game is in the attacking stage
+     * @return boolean regarding stage
+     */
     public boolean isPlayAttk() {
         return (this.move == Risky.PLAY_ATTK);
     }
 
+    /**
+     * Check if the setup stage is finished
+     * TODO(david): is this a duplicate function?
+     * @return boolean regarding setup being finished
+     */
     public boolean playersFinishedSetup() {
         boolean result = true;
         for (Statelike state : this.playerStates)
@@ -353,6 +419,9 @@ public class Risky {
         return result;
     }
 
+    /**
+     * Add resources to the state, calculates inside of function
+     */
     public void addStateResources() {
         int numSpots = this.stateContext.getPlayer().getSpotsOwned().size();
         int numResources = numSpots / 3;
@@ -363,6 +432,10 @@ public class Risky {
         this.stateContext.getPlayer().addResources(numResources);
     }
 
+    /**
+     * Start a new game by initializing the GUI again
+     * TODO(david): see if this is really necessary
+     */
     public void newGame() {
         this.guiInit();
     }
@@ -375,7 +448,7 @@ public class Risky {
             game.consoleRun();
         }
         else {
-            Risky game = new Risky(false);// TODO(david): testing gui
+            Risky game = new Risky(false);
 //            game.consoleRun();
         }
     }

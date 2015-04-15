@@ -24,7 +24,6 @@ public class InfoPanel extends JPanel {
         textBox.setEditable(false);
         this.add(textBox);
 
-        // TODO(david): add proper button listeners
         enterButton = new JButton("Enter");
         enterButton.setActionCommand("userCommandEnter");
         enterButton.addActionListener(listener);

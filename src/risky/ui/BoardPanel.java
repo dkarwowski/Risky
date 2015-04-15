@@ -54,8 +54,8 @@ public class BoardPanel extends JPanel {
                 Polygon p = createPolygon(x, y);
                 
                 // color of the square
-                // TODO(david): make squares highlight per player properly
-                // TODO(david): highlight squares based on player's colors
+                // TODO: outline current players spots in some color
+                // TODO: show resources as number on spots
                 if (spot == null)
                     g.setColor(new Color(0.3f, 0.3f, 0.9f));
                 else {
@@ -82,7 +82,6 @@ public class BoardPanel extends JPanel {
             }
         }
 
-        // TODO(david): see about moving polygon drawing elsewhere
         // draw the selected square's outline only if land
         if (this.board.containsSpot(this.selected)) {
             g.setColor(Color.YELLOW);
@@ -96,7 +95,6 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    // TODO(david): clean this out with proper board functionality?
     public void boardUpdate(Board board, Player player) {
         this.board = board;
         this.currPlayer = player;
@@ -104,7 +102,6 @@ public class BoardPanel extends JPanel {
         this.source = null;
     }
 
-    // TODO(david): move this properly?
     public Polygon createPolygon(int x, int y) {
         Polygon result = new Polygon();
         int sx = 9;

@@ -80,6 +80,10 @@ public class Coords {
         return(this.getX(true));
     }
     
+    /**
+     * Get the Cartesian X Value
+     * @return integer value for Cartesian X
+     */
     public int getXCart() {
         return (this.getX(false));
     }
@@ -103,6 +107,10 @@ public class Coords {
         return(this.getY(true));
     }
     
+    /**
+     * Get the Cartesian Y Value
+     * @return integer value for Cartesian Y
+     */
     public int getYCart() {
         return (this.getY(false));
     }
