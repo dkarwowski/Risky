@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class InfoBar extends JFrame {
+public class InfoBar extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
     private JButton saveButton;
+    private JButton startButton;
     private JButton cancelButton;
 
     public InfoBar(ActionListener listener) {
@@ -19,8 +20,13 @@ public class InfoBar extends JFrame {
         saveButton.addActionListener(listener);
         this.add(saveButton);
 
-        cancelButton = new JButton("Cancel");
-        cancelButton.setActionCommand("userCommandCancel");
+        startButton = new JButton("Start");
+        startButton.setActionCommand("userCommandStart");
+        startButton.addActionListener(listener);
+        this.add(startButton);
+
+        cancelButton = new JButton("Quit");
+        cancelButton.setActionCommand("userCommandQuit");
         cancelButton.addActionListener(listener);
         this.add(cancelButton);
     }
