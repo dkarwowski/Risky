@@ -1,5 +1,7 @@
 package risky.ui.menu;
 
+import risky.Risky;
+import risky.ui.RiskyGUI;
 import risky.ui.menu.InfoBar;
 
 import javax.swing.*;
@@ -11,18 +13,20 @@ import java.awt.event.ActionListener;
 
 public class MenuGUI extends JFrame implements ActionListener{
 
+    private RiskyGUI gameGUI;
     private InfoBar infoBar;
 
-    public MenuGUI() {
+    public MenuGUI(RiskyGUI GUI) {
         super("Risky Main Menu"); // initialize with name
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Risky Main Menu");
+        this.gameGUI = GUI;
 
         this.infoBar = new InfoBar(this);
         this.add(this.infoBar, BorderLayout.SOUTH);
 
-        this.setSize(200, this.infoBar.getHeight() + 9);
+        this.setSize(400, 300);
         this.setVisible(true);
 
     }
@@ -30,12 +34,20 @@ public class MenuGUI extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("userCommandCancel")) {
+        if (e.getActionCommand().equals("userCommandQuit")) {
             this.setVisible(false);
             this.dispose();
+            System.exit(0);
         }
 
-        if (e.getActionCommand().equals("userCommandEnter")) {
+        if (e.getActionCommand().equals("userCommandStart")) {
+            this.setVisible(false);
+            this.dispose();
+            this.gameGUI.setVisible(true);
+            this.gameGUI.createPlayers();
+        }
+
+        if (e.getActionCommand().equals("userCommandSave")) {
             // TODO(adam): save menu selections
         }
     }

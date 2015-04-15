@@ -15,11 +15,14 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
 import risky.common.Spot;
+import risky.ui.menu.MenuGUI;
 
 public class RiskyGUI extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
 
     private Risky game;
+
+    private MenuGUI menuGuiTest;
     
     private BoardPanel boardPanel;
     private InfoPanel infoPanel;
@@ -30,6 +33,8 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Risky");
+
+        this.menuGuiTest = new MenuGUI(this); // start with main menu
 
         this.game = risky;
 
@@ -49,7 +54,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 this.boardPanel.getPanelDimension().height 
                 + this.infoPanel.getHeight() 
                 + this.playerPanel.getHeight() + 9);
-        this.setVisible(true);
+        // this.setVisible(true); hidden for testing main menu
     }
 
     public void createPlayers() {

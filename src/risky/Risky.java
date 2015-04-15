@@ -17,6 +17,7 @@ import risky.common.StateContext;
 import risky.common.StatePlayer;
 import risky.common.Statelike;
 import risky.ui.RiskyGUI;
+import risky.ui.menu.MenuGUI;
 
 public class Risky {
     // TODO(david): remove this
@@ -169,7 +170,7 @@ public class Risky {
         this.loadBoard();
 
         this.guiTest = new RiskyGUI(this);
-        this.guiTest.createPlayers();
+        // this.guiTest.createPlayers(); moved to menuGUI
         // TODO(david): make this dynamic?
         this.loadBoard();
 
