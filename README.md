@@ -89,9 +89,6 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
     ui/menu/MenuGUI.java        |12 col 4| // TODO(adam): Legit everything. Why did you even push this?
     ui/menu/MenuGUI.java        |51 col 16| // TODO(adam): save menu selections
     
-## TODOS
-    
-    
 Future Aspects
 --------------
 
