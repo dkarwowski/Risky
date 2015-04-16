@@ -17,6 +17,10 @@ public class InfoPanel extends JPanel {
 
     private String constMessage;
     
+    /**
+     * Construct the Info Panel
+     * @param listener ActionListener for the buttons
+     */
     public InfoPanel(ActionListener listener) {
         this.setLayout(new FlowLayout());
 
@@ -44,11 +48,19 @@ public class InfoPanel extends JPanel {
         this.constMessage = "";
     }
 
+    /**
+     * Write a message into the panel's textbox
+     * @param message String to write
+     */
     public void writeToPanel(String message) {
         this.constMessage = message;
         this.textBox.setText(message);
     }
 
+    /**
+     * Message that can change appending to the constant message (for hover)
+     * @param message String to append
+     */
     public void appendToPanel(String message) {
         this.textBox.setText(this.constMessage + " " + message);
     }

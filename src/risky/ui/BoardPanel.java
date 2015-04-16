@@ -27,6 +27,12 @@ public class BoardPanel extends JPanel {
     private Coords selected;
     private Coords source;
 
+    /**
+     * Construct the Board Panel with it's listeners and board
+     * @param listener MouseListener for selecting positions
+     * @param listener2 MouseMotionListener for hover over information
+     * @param setBoard board to use at first
+     */
     public BoardPanel(MouseListener listener, MouseMotionListener listener2, Board setBoard) {
         this.addMouseListener(listener);
         this.addMouseMotionListener(listener2);
@@ -95,6 +101,11 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Update the board in the panel and the player whose turn it is
+     * @param board Board to set new
+     * @param player Player whose turn it is
+     */
     public void boardUpdate(Board board, Player player) {
         this.board = board;
         this.currPlayer = player;
@@ -102,6 +113,12 @@ public class BoardPanel extends JPanel {
         this.source = null;
     }
 
+    /**
+     * Create the hexagon for drawing
+     * @param x Cartesian X to set to
+     * @param y Cartesian Y to set to
+     * @return Polygon that determines exact location of the hexagon
+     */
     public Polygon createPolygon(int x, int y) {
         Polygon result = new Polygon();
         int sx = 9;
@@ -117,6 +134,11 @@ public class BoardPanel extends JPanel {
         return (result);
     }
 
+    /**
+     * Update the location where the player has things selected
+     * @param playerSelect new selection from the player
+     * @return boolean whether the select was successful
+     */
     public boolean boardUpdate(Coords playerSelect) {
         boolean result = false;
         if (this.board.containsSpot(playerSelect) || playerSelect == null) {
@@ -131,6 +153,12 @@ public class BoardPanel extends JPanel {
         return (result);
     }
 
+    /**
+     * Better version of selecting a position on the board
+     * TODO: see if this can fully replace the above function
+     * @param select Coords to select
+     * @param type integer determining what the select is for
+     */
     public void select(Coords select, int type) {
         if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS) {
             if (this.board.isSetupDone()) {
@@ -153,6 +181,11 @@ public class BoardPanel extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Check if the board has finished selecting
+     * @param type integer determining what kind of selection
+     * @return boolean that says if the type has been selected
+     */
     public boolean isSelected(int type) {
         if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS)
             return (this.selected != null);
@@ -163,14 +196,28 @@ public class BoardPanel extends JPanel {
         return (false);
     }
 
+    /**
+     * Get the current selection
+     * @return Coords of the selection
+     */
     public Coords getSelected() {
         return (this.selected);
     }
 
+    /**
+     * Get the current source selection
+     * @return Coords of the source selection
+     */
     public Coords getSource() {
         return (this.source);
     }
 
+    /**
+     * Get the coordinates from a position
+     * @param x boardPanel position
+     * @param y boardPanel position
+     * @return Coords of hexagon position
+     */
     public Coords coordsFromPosition(int x, int y) {
         int squareX = (int)((x - 13) / 28);
         int squareY = (int)((y - 9 - ((squareX % 2 == 0) ? 0 : 16)) / 32);

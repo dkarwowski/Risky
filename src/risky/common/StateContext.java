@@ -20,10 +20,18 @@ public class StateContext {
         myState = newState;
     }
 
+    /**
+     * Get the Player who is currently active
+     * @return Player who is active
+     */
     public Player getPlayer() {
         return (this.myState.getPlayer());
     }
 
+    /**
+     * Remove resources from the current player
+     * @param resources Integer of resources to remove
+     */
     public void removeResources(int resources) {
         this.myState.removeResources(resources);
     }

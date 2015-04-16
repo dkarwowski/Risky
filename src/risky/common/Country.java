@@ -10,6 +10,11 @@ public class Country {
 
     private ArrayList<Spot> spotsInCountry;
 
+    /**
+     * Initialize the Country with just a name.
+     * TODO: create country creator that specifies resources
+     * @param setName String with the Country's name
+     */
     public Country(String setName){
         this.name = setName;
 
@@ -23,18 +28,34 @@ public class Country {
 
     //--Getters Start------------------------------------------------------------
 
+    /**
+     * Get the name of the country
+     * @return String with the name
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Get the player who owns the country (if any)
+     * @return Player object or null
+     */
     public Player getOwner(){
         return this.owner;
     }
 
+    /**
+     * Get the Spots found in the country
+     * @return ArrayList of all spots
+     */
     public ArrayList<Spot> getSpotsInCountry() {
         return spotsInCountry;
     }
 
+    /**
+     * Get the number of resources this country can grant per turn
+     * @return integer with resource
+     */
     public int getResources(){
         return this.resources;
     }
@@ -42,10 +63,17 @@ public class Country {
     //--Getters End---------------------------------------------------------------     
     //--Game Related Functions Start----------------------------------------------
 
+    /**
+     * Add a spot to the country
+     * @param spot Spot instance to add
+     */
     public void addSpot(Spot spot) {
         this.spotsInCountry.add(spot);
     }
 
+    /**
+     * Check and set if the country is owned by someone
+     */
     public void claimCountry(){
         if(doesPlayerOwnAllSpots() == true){
             this.owner = spotsInCountry.get(0).getPlayer();
@@ -53,6 +81,10 @@ public class Country {
         }
     }
 
+    /**
+     * Go through the country's spots and check if a single player owns them all
+     * @return boolean regarding the player owning all
+     */
     public boolean doesPlayerOwnAllSpots(){
         Player player = spotsInCountry.get(0).getPlayer();
         int counter = 0;

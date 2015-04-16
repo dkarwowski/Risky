@@ -449,7 +449,7 @@ public class Risky {
             game.consoleRun();
         }
         else {
-            Risky game = new Risky(false);
+            new Risky(false);
 //            game.consoleRun();
         }
     }

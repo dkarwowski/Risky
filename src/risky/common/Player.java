@@ -42,6 +42,7 @@ public class Player {
         this.countriesOwned = new ArrayList<Country>();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o)
             return (true);
@@ -55,22 +56,44 @@ public class Player {
 
     //--Getters Start-------------------------------------------------------------
 
+    /**
+     * Get the ID of the player
+     * @return integer id
+     */
     public int getID() {
         return this.id;
     }
 
+    /**
+     * Get the name of the player
+     * @return String with name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Get the resources this player can use
+     * @return integer with resource amount
+     */
     public int getAvailableResources() {
         return this.availableResources;
     }
 
+    /**
+     * Get all of the spots this player owns
+     * TODO: check if we need to keep track of this here
+     * @return ArrayList of spots belonging to the player
+     */
     public ArrayList<Spot> getSpotsOwned() {
         return this.spotsOwned;
     }
 
+    /**
+     * Get all of the countries owned by the player
+     * TODO: check if we need to keep track of this here
+     * @return ArrayList of the countries owned
+     */
     public ArrayList<Country> getCountriesOwned() {
         return this.countriesOwned;
     }
@@ -86,15 +109,26 @@ public class Player {
     //--Debugging Functions End---------------------------------------------------
     //--Game Related Functions Start----------------------------------------------
 
-    // should add default 
+    /**
+     * Add a specific number of resources to the player
+     * @param resources Number of resources the game determines should be added
+     */
     public void addResources(int resources) {
         this.availableResources += resources;
     }
 
+    /**
+     * Add a country to the list of owned
+     * @param c Country to add
+     */
     public void addCountry(Country c) {
         this.countriesOwned.add(c);
     }
 
+    /**
+     * Add a spot to the list of owned Spots
+     * @param s Spots to be owned
+     */
     public void addSpot(Spot s) {
         this.spotsOwned.add(s);
     }
