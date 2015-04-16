@@ -137,9 +137,15 @@ public class FileIO
 	{
 		String name = country.getName();
 		Player player = country.getOwner();	//Will have to convert back to player
-		String owner = player.getName();
 		int resources = country.getResources();
-		String string = "[CONT]" + name + "#" + owner + "#" + resources;
+		String string;
+		if(player == null) {
+			string = "[CONT]" + name + "#" + "NoOwner" + "#" + resources;
+		}
+		else {
+			String owner = player.getName();
+			string = "[CONT]" + name + "#" + owner + "#" + resources;
+		}
 		return string;
 	}
 	
