@@ -19,12 +19,28 @@ public class FileIO
 {
 	
 	Board _board;
-	Player[] _players = new Player[4];
+	Player[] _players;
 	Country[] _countries;
 	Spot[] _spots;
 	
-	public void setBoard(Board board) {
+	public void setBoard(Board board) 
+	{
 		_board = board;
+	}
+	
+	public void setPlayers(Player[] players)
+	{
+		_players = players;
+	}
+	
+	public void setCountries(Country[] countries)
+	{
+		_countries = countries;
+	}
+	
+	public void setSpots(Spot[] spots)
+	{
+		_spots = spots;
 	}
 	
 	public void createFile(String name)
@@ -35,23 +51,19 @@ public class FileIO
 			File file = new File(name);
 			output = new BufferedWriter(new FileWriter(file));
 			
-			//output.write("" + _board.getName() + '\n');		//Board Name
-			//output.write("" + _board.getWidth() + '\n'); 	//Board Width
-			//output.write("" + _board.getHeight()+ '\n'); 	//Board Height
-			
 			output.write(stringFromBoard(_board) + '\n');
-			
+
 			for(Player player : _players) {
 				output.write(stringFromPlayer(player) + '\n');
 			}
 			
-			for(Country country : _countries) {
-				output.write(stringFromCountry(country) + '\n');
-			}
+			//for(Country country : _countries) {
+			//	output.write(stringFromCountry(country) + '\n');
+			//}
 			
-			for(Spot spot : _spots) {
-				output.write(stringFromSpot(spot) + '\n');
-			}
+			//for(Spot spot : _spots) {
+			//	output.write(stringFromSpot(spot) + '\n');
+			//}
 			
 			output.close();
 			
@@ -99,7 +111,7 @@ public class FileIO
 		String name = board.getName();
 		int width = board.getWidth();
 		int height = board.getHeight();
-		String string = "" + name + "#" + width + "#" + height;
+		String string = "[BORD]" + name + "#" + width + "#" + height;
 		return string;
 	}
 	
@@ -109,7 +121,7 @@ public class FileIO
 		int id = player.getID();
 		int availableResources = player.getAvailableResources();
 	    int resourcesPerTurn = player.getResoucesPerTurn();
-	    String string = "" + name + "#" + id + "#" + availableResources + "#" + resourcesPerTurn;
+	    String string = "[PLYR]" + name + "#" + id + "#" + availableResources + "#" + resourcesPerTurn;
 		return string;
 	}
 	
@@ -119,7 +131,7 @@ public class FileIO
 		Player player = country.getOwner();	//Will have to convert back to player
 		String owner = player.getName();
 		int resources = country.getResources();
-		String string = "" + name + "#" + owner + "#" + resources;
+		String string = "[CONT]" + name + "#" + owner + "#" + resources;
 		return string;
 	}
 	
@@ -133,7 +145,8 @@ public class FileIO
 		Coords coords = spot.getCoords();
 		int x = coords.getX();
 		int y = coords.getY();
-		String string = "" + player + "#" + country + "#" + resources + "#" + x + "," + y;
+		String string = "[SPOT]" + player + "#" + country + "#" + resources + "#" + x + "," + y;
+		//[SPOT]playername#country#numResources#x,y
 		return string;
 	}
 	
@@ -143,7 +156,7 @@ public class FileIO
 	
 	public Board boardFromString(String line)
 	{
-		String r = "(.+)#(\\d+)#(\\d+)";
+		String r = "[BORD](.+)#(\\d+)#(\\d+)";
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -172,7 +185,7 @@ public class FileIO
 	
 	public Player playerFromString(String line)
 	{
-		String r = "(.+)#(\\d+)#(\\d+)#(\\d+)";
+		String r = "[PLYR](.+)#(\\d+)#(\\d+)#(\\d+)";
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -204,7 +217,7 @@ public class FileIO
 	
 	public Country countryFromString(String line) 
 	{
-		String r = "(.+)#(\\d+)#(\\d+)";
+		String r = "[CONT](.+)#(\\d+)#(\\d+)";
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -213,7 +226,7 @@ public class FileIO
 	
 	public Spot spotFromString(String line)	//Needs work
 	{
-		String r = "(.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
+		String r = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
 		Pattern namepat = Pattern.compile(r);
 		Matcher m = namepat.matcher(line);
 		

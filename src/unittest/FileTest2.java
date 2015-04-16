@@ -1,24 +1,29 @@
 package unittest;
 
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Country;
 import risky.common.Player;
 import risky.common.Spot;
-import risky.fileio.FileIO;
 
-public class FileTest 
-{
-	//Eventually I'll make these into tests, however, 
-	//working testing this way works better for me in
-	//the short term.
-	private static Country[] countries;
-	private static Spot[] spots;
-	private static Board board;
-	private static Player[] players;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
 
-	public static void main(String[] args)
-	{
+public class FileTest2 {
+
+	private Country[] countries;
+	private Spot[] spots;
+	private Board board;
+	private Player[] players;
+	
+	@Before
+    public void setUp() throws Exception 
+    {
 		//Creating Test Board
 		Country america = new Country("America");
 		Country canada = new Country("Canada");
@@ -32,19 +37,21 @@ public class FileTest
 		Player player2 = new Player("Pam", 2);
 		players = new Player[]{player1,player2};
 		board = new Board("Test!!", 1, 2, spots);
-		
-		FileIO f = new FileIO();
-		f.setBoard(board);
-		f.setPlayers(players);
-		f.setCountries(countries);
-		f.setSpots(spots);
-		f.createFile("test.txt");	
-		//f.loadFromFile("test.txt");
-		
-		//String testspot = "Player 1#America#45#1,2";
-		//f.spotFromString(testspot);
-		
-		//String countryString = f.stringFromBoard(board);
-		//f.boardFromString(countryString);
-	}	
+    }
+
+    @After
+    public void tearDown() throws Exception
+    {
+        
+    }
+
+    @Test
+    public void addResourcesTest()
+    {
+        System.out.println("SpotTest::addResourceTest()");
+        System.out.println("SpotTest::addResourceTest()::Current Resources: "); 
+        
+    }
+	
+	
 }
