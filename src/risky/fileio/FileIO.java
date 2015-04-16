@@ -23,6 +23,14 @@ public class FileIO
 	Country[] _countries;
 	Spot[] _spots;
 	
+	public FileIO(Board board, Player[] players, Country[] countries, Spot[] spots)
+	{
+		_board = board;
+		_players = players;
+		_countries = countries;
+		_spots = spots;
+	}
+	
 	public void setBoard(Board board) 
 	{
 		_board = board;

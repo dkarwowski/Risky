@@ -9,6 +9,7 @@ import risky.common.Coords;
 import risky.common.Country;
 import risky.common.Player;
 import risky.common.Spot;
+import risky.fileio.FileIO;
 
 import org.junit.Before;
 import org.junit.After;
@@ -20,6 +21,7 @@ public class FileTest2 {
 	private Spot[] spots;
 	private Board board;
 	private Player[] players;
+	private FileIO file;
 	
 	@Before
     public void setUp() throws Exception 
@@ -37,6 +39,7 @@ public class FileTest2 {
 		Player player2 = new Player("Pam", 2);
 		players = new Player[]{player1,player2};
 		board = new Board("Test!!", 1, 2, spots);
+		file = new FileIO(board, players, countries, spots);
     }
 
     @After
@@ -46,12 +49,28 @@ public class FileTest2 {
     }
 
     @Test
-    public void addResourcesTest()
+    public void boardToStringTest()
     {
-        System.out.println("SpotTest::addResourceTest()");
-        System.out.println("SpotTest::addResourceTest()::Current Resources: "); 
+        System.out.println("SpotTest::boardToStringTest()");
+        String string1 = "[BORD]Test!!#1#2";
+        String string2 = file.stringFromBoard(board);
+        System.out.println("SpotTest::boardToStringTest::" + string2);
+        assertEquals(string1, string2);
         
     }
+    
+    @Test
+    public void playersToStringTest()
+    {
+    	
+    }
+    
+    @Test
+    public void countryToStringTest()
+    {
+    	
+    }
+    
 	
 	
 }

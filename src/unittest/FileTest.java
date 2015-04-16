@@ -33,11 +33,7 @@ public class FileTest
 		players = new Player[]{player1,player2};
 		board = new Board("Test!!", 1, 2, spots);
 		
-		FileIO f = new FileIO();
-		f.setBoard(board);
-		f.setPlayers(players);
-		f.setCountries(countries);
-		f.setSpots(spots);
+		FileIO f = new FileIO(board, players, countries, spots);
 		f.createFile("test.txt");	
 		//f.loadFromFile("test.txt");
 		

@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
 	CountryTest.class, 
 	SpotTest.class, 
 	BoardTest.class,
-	CoordsTest.class})
+	CoordsTest.class,
+	FileTest2.class})
 public class JunitTestSuite {
 
 }
