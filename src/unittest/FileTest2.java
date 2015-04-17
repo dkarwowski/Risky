@@ -41,6 +41,7 @@ public class FileTest2 {
 		player1.addCountry(america);
 		player1.addSpot(spot01);
 		america.addSpot(spot01);
+		spot01.setExit(spot02, 0);
 		board = new Board("Test!!", 1, 2, spots);
 		file = new FileIO(board, players, countries, spots);
     }
@@ -86,7 +87,7 @@ public class FileTest2 {
     public void spotToStringTest()
     {
     	System.out.println("FileTest::spotToStringTest()");
-        String string1 = "[SPOT]NoOwner#America#0#0,0";
+        String string1 = "[SPOT]NoOwner#America#0#0,0#1|0|0|0|0|0|";
         Spot spot = spots[0];
         String string2 = file.stringFromSpot(spot);
         System.out.println("FileTest::spotToStringTest::" + string2);

@@ -35,12 +35,6 @@ public class FileTest
 		
 		FileIO f = new FileIO(board, players, countries, spots);
 		f.createFile("test.txt");	
-		//f.loadFromFile("test.txt");
-		
-		//String testspot = "Player 1#America#45#1,2";
-		//f.spotFromString(testspot);
-		
-		//String countryString = f.stringFromBoard(board);
-		//f.boardFromString(countryString);
+		f.loadFromFile("test.txt");
 	}	
 }

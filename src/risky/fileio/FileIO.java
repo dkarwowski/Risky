@@ -17,11 +17,15 @@ import risky.common.Spot;
 
 public class FileIO 
 {
+	private final String BORD_REGEX = "[BORD](.+)#(\\d+)#(\\d+)";
+	private final String PLYR_REGEX = "[PLYR](.+)#(\\d+)#(\\d+)#(\\d+)";
+	private final String CONT_REGEX = "[CONT](.+)#(\\d+)#(\\d+)";
+	private final String SPOT_REGEX = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
 	
-	Board _board;
-	Player[] _players;
-	Country[] _countries;
-	Spot[] _spots;
+	private Board _board;
+	private Player[] _players;
+	private Country[] _countries;
+	private Spot[] _spots;
 	
 	public FileIO(Board board, Player[] players, Country[] countries, Spot[] spots)
 	{
@@ -65,13 +69,13 @@ public class FileIO
 				output.write(stringFromPlayer(player) + '\n');
 			}
 			
-			//for(Country country : _countries) {
-			//	output.write(stringFromCountry(country) + '\n');
-			//}
+			for(Country country : _countries) {
+				output.write(stringFromCountry(country) + '\n');
+			}
 			
-			//for(Spot spot : _spots) {
-			//	output.write(stringFromSpot(spot) + '\n');
-			//}
+			for(Spot spot : _spots) {
+				output.write(stringFromSpot(spot) + '\n');
+			}
 			
 			output.close();
 			
@@ -93,7 +97,7 @@ public class FileIO
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line;
 		    while ((line = br.readLine()) != null) {
-		       System.out.println(line);
+		       System.out.println(line); //Iterates line by line
 		    }
 		}
 		catch (Exception e) {
@@ -165,8 +169,15 @@ public class FileIO
 		Coords coords = spot.getCoords();
 		int x = coords.getX();
 		int y = coords.getY();
-		String string = "[SPOT]" + owner + "#" + countryIn + "#" + resources + "#" + x + "," + y;
-		//[SPOT]playername#country#numResources#x,y
+		String string = "[SPOT]" + owner + "#" + countryIn + "#" + resources + "#" + x + "," + y  + "#";
+		Spot[] exits = spot.getExits();
+		for(int i = 0; i < exits.length; i++) {
+			if(exits[i] == null)
+				string = string + "0|";
+			else
+				string = string + "1|";
+		}
+		//[SPOT]playername#country#numResources#x,y#0|0|0|0|0|0| <-0 if no exit, 1 if exit
 		return string;
 	}
 	
@@ -176,7 +187,7 @@ public class FileIO
 	
 	public Board boardFromString(String line)
 	{
-		String r = "[BORD](.+)#(\\d+)#(\\d+)";
+		String r = BORD_REGEX;
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -205,7 +216,7 @@ public class FileIO
 	
 	public Player playerFromString(String line)
 	{
-		String r = "[PLYR](.+)#(\\d+)#(\\d+)#(\\d+)";
+		String r = PLYR_REGEX;
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -237,7 +248,7 @@ public class FileIO
 	
 	public Country countryFromString(String line) 
 	{
-		String r = "[CONT](.+)#(\\d+)#(\\d+)";
+		String r = CONT_REGEX;
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
@@ -246,7 +257,7 @@ public class FileIO
 	
 	public Spot spotFromString(String line)	//Needs work
 	{
-		String r = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
+		String r = SPOT_REGEX;
 		Pattern namepat = Pattern.compile(r);
 		Matcher m = namepat.matcher(line);
 		
