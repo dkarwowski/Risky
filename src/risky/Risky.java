@@ -170,9 +170,10 @@ public class Risky {
         this.loadBoard();
 
         this.guiTest = new RiskyGUI(this);
-        // this.guiTest.createPlayers(); moved to menuGUI
+         this.guiTest.createPlayers();
         // TODO(david): make this dynamic?
         this.loadBoard();
+        this.guiTest.setVisible(true);
 
         // TODO(david): find a better solution for player stages
         this.move = FIRST;

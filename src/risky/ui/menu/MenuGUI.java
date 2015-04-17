@@ -1,40 +1,33 @@
 package risky.ui.menu;
 
 import risky.Risky;
-import risky.ui.RiskyGUI;
-import risky.ui.menu.InfoBar;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO(adam): Legit everything. Why did you even push this?
+public class MenuGUI extends JFrame implements ActionListener {
 
-public class MenuGUI extends JFrame implements ActionListener{
-
-    private RiskyGUI gameGUI;
     private InfoBar infoBar;
 
-    public MenuGUI(RiskyGUI GUI) {
+    public MenuGUI() {
         super("Risky Main Menu"); // initialize with name
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Risky Main Menu");
-        this.gameGUI = GUI;
 
         this.infoBar = new InfoBar(this);
         this.add(this.infoBar, BorderLayout.SOUTH);
 
-        this.setSize(400, 300);
+        this.setSize(300, 400);
         this.setVisible(true);
 
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("userCommandQuit")) {
+        if (e.getActionCommand().equals("userCommandExit")) {
             this.setVisible(false);
             this.dispose();
             System.exit(0);
@@ -42,13 +35,15 @@ public class MenuGUI extends JFrame implements ActionListener{
 
         if (e.getActionCommand().equals("userCommandStart")) {
             this.setVisible(false);
-            this.dispose();
-            this.gameGUI.setVisible(true);
-            this.gameGUI.createPlayers();
+            new Risky(false);
         }
 
-        if (e.getActionCommand().equals("userCommandSave")) {
-            // TODO(adam): save menu selections
+        if (e.getActionCommand().equals("userCommandSettings")) {
+            // TODO(adam): settings menu
         }
+    }
+
+    public static void main(String[] args) {
+        new MenuGUI();
     }
 }
