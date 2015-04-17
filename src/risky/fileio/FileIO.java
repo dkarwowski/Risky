@@ -152,14 +152,20 @@ public class FileIO
 	public String stringFromSpot(Spot spot)
 	{
 		Player player = spot.getPlayer();
-		String owner = player.getName();
+		String owner;
+		if(player == null) {
+			owner = "NoOwner";
+		}
+		else {
+			owner = player.getName();
+		}
 		Country country = spot.getCountry();
 		String countryIn = country.getName();
 		int resources = spot.getResources();
 		Coords coords = spot.getCoords();
 		int x = coords.getX();
 		int y = coords.getY();
-		String string = "[SPOT]" + player + "#" + country + "#" + resources + "#" + x + "," + y;
+		String string = "[SPOT]" + owner + "#" + countryIn + "#" + resources + "#" + x + "," + y;
 		//[SPOT]playername#country#numResources#x,y
 		return string;
 	}
