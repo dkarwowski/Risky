@@ -15,6 +15,7 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
 import risky.common.Spot;
+import risky.ui.menu.MenuGUI;
 
 public class RiskyGUI extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
@@ -86,7 +87,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         if (e.getActionCommand().equals("userCommandQuit")) {
             this.setVisible(false);
             this.dispose();
-            System.exit(0);
+            new MenuGUI();
         }
 
         if (e.getActionCommand().equals("userCommandEndTurn")) {
