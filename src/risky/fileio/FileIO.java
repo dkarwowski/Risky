@@ -20,7 +20,7 @@ public class FileIO
 	private final String BORD_REGEX = "[BORD](.+)#(\\d+)#(\\d+)";
 	private final String PLYR_REGEX = "[PLYR](.+)#(\\d+)#(\\d+)#(\\d+)";
 	private final String CONT_REGEX = "[CONT](.+)#(\\d+)#(\\d+)";
-	private final String SPOT_REGEX = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)";
+	private final String SPOT_REGEX = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|";
 	
 	private Board _board;
 	private Player[] _players;
@@ -53,6 +53,26 @@ public class FileIO
 	public void setSpots(Spot[] spots)
 	{
 		_spots = spots;
+	}
+	
+	public Player getPlayer(String name)
+	{
+		for(int i = 0; i < _players.length; i++) {
+			if(_players[i].getName() == name)
+				return _players[i];
+		}
+		System.out.println("Player does not exist");
+		return null;
+	}
+	
+	public Country getCountry(String name)
+	{
+		for(int i = 0; i < _countries.length; i++) {
+			if(_countries[i].getName() == name)
+				return _countries[i];
+		}
+		System.out.println("Country does not exist");
+		return null;
 	}
 	
 	public void createFile(String name)
@@ -252,20 +272,51 @@ public class FileIO
 		Pattern p = Pattern.compile(r);
 		Matcher m = p.matcher(line);
 		
-		return null;
+		String name = "";
+		String playerName = "";
+	    Player owner = null;
+	    int resources;
+	    
+	    if(m.find()) 
+		{
+			name = m.group(1);
+			playerName = m.group(2);
+			resources= Integer.parseInt(m.group(3));
+			
+			System.out.println(name);
+			System.out.println(playerName);
+			System.out.println(resources);
+		}
+		else
+		{
+			System.out.println("Not found");
+		}
+		owner = this.getPlayer(playerName);
+		Country country = new Country(name);
+		if(owner != null)
+			owner.addCountry(country);
+		//Set resources?  Can't find function
+		return country;
 	}
 	
-	public Spot spotFromString(String line)	//Needs work
+	public Spot spotFromString(String line)	//Needs work with Exits
 	{
 		String r = SPOT_REGEX;
 		Pattern namepat = Pattern.compile(r);
 		Matcher m = namepat.matcher(line);
 		
-		String name;
-		String country;
-		int resources;
+		String name = "";
+		String country = "";
+		int resources = 0;
 		int x = -1;
 		int y = -1;
+		//Need Exits
+		int exit1 = 0;
+		int exit2 = 0;
+		int exit3 = 0;
+		int exit4 = 0;
+		int exit5 = 0;
+		int exit6 = 0;
 		
 		if(m.find()) 
 		{
@@ -274,12 +325,19 @@ public class FileIO
 			resources = Integer.parseInt(m.group(3));
 			x = Integer.parseInt(m.group(4));
 			y = Integer.parseInt(m.group(5));
+			exit1 = Integer.parseInt(m.group(6));
+			exit2 = Integer.parseInt(m.group(7));
+			exit3 = Integer.parseInt(m.group(8));
+			exit4 = Integer.parseInt(m.group(9));
+			exit5 = Integer.parseInt(m.group(10));
+			exit6 = Integer.parseInt(m.group(11));
 			
 			System.out.println(name);
 			System.out.println(country);
 			System.out.println(resources);
 			System.out.println(x);
 			System.out.println(y);
+			System.out.println(exit1 + exit2 + exit3 + exit4 + exit5 + exit6);
 		}
 		else
 		{
@@ -287,8 +345,19 @@ public class FileIO
 		}
 		
 		Coords coords = new Coords(x, y);
+		Country countryObj = this.getCountry(country);
 		
 		Spot spot = new Spot();
+		
+		int[] exitInts = new int[]{exit1,exit2,exit3,exit4,exit5,exit6};
+		for(int i = 0; i < exitInts.length; i++) {
+			if(exitInts[i] == 1) {
+				Coords newCoords = coords.hexInDir(i);
+				
+			}
+		}
+		
+		
 		return spot;	
 	}
 	

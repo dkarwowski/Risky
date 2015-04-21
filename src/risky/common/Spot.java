@@ -80,7 +80,7 @@ public class Spot {
     public void setCoords(Coords coords) {
         _coordinates = coords;
     }
-
+    
     public void setExit(Spot other, int direction) {
         //Direction = int 0-5, as shown in Coords.java
         this._exits[direction] = other;
