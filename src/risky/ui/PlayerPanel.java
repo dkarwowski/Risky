@@ -1,6 +1,7 @@
 package risky.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,13 +19,14 @@ public class PlayerPanel extends JPanel {
      * Construct the Player Panel
      * TODO: add action listener
      */
-    public PlayerPanel() {
+    public PlayerPanel(ActionListener listener) {
         this.textBox = new JTextArea(1, 40);
         this.textBox.setEditable(false);
         this.add(this.textBox);
 
         this.finishTurn = new JButton("End Turn");
         this.finishTurn.setActionCommand("userCommandEndTurn");
+        this.finishTurn.addActionListener(listener);
         this.add(this.finishTurn);
 
         this.setSize(max(this.textBox.getMinimumSize(), this.finishTurn.getMinimumSize()));

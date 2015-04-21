@@ -235,9 +235,12 @@ public class Board {
      * @return whether a player has won or not
      */
     public Player playerOwnsAll() {
+        this.claimCountries();
+
         boolean singlePlayerOwnsAll = true;
+        Player player = countries[0].getOwner();
         for (Country country : countries) {
-            singlePlayerOwnsAll &= country.doesPlayerOwnAllSpots();
+            singlePlayerOwnsAll &= (country.getOwner().equals(player));
         }
 
         if (singlePlayerOwnsAll)

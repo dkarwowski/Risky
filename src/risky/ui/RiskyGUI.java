@@ -15,7 +15,6 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
 import risky.common.Spot;
-import risky.ui.menu.MenuGUI;
 
 public class RiskyGUI extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
@@ -42,7 +41,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.infoPanel = new InfoPanel(this);
         this.add(this.infoPanel, BorderLayout.SOUTH);
 
-        this.playerPanel = new PlayerPanel();
+        this.playerPanel = new PlayerPanel(this);
         this.add(this.playerPanel, BorderLayout.NORTH);
 
         this.setSize(
@@ -121,7 +120,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                         this.game.setPlayNext();
                     }
                     // - Stage two   (place gained resources)
-                    if (this.game.isPlayPuts()) {
+                    else if (this.game.isPlayPuts()) {
                         int input = getResourcesBox(false);
                         this.game.makeMove(
                                 this.boardPanel.getSelected(),
@@ -130,7 +129,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                         this.game.setPlayNext();
                     }
                     // - Stage three attack/move placed resources
-                    if (this.game.isPlayAttk()) {
+                    else if (this.game.isPlayAttk()) {
                         // TODO(david): end turn if not enough resources in spots
                         int input = getResourcesBox(true);
                         this.game.makeMove(
@@ -139,11 +138,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                                 input);
                     }
                 }
-
-                if (this.game.checkPlayerWon())
-                    this.endGame();
             }
             else {
+                if (this.game.checkPlayerWon())
+                    this.endGame();
                 JOptionPane.showMessageDialog(this, "You need to select properly!");
             }
             

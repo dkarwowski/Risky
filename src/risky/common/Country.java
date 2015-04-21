@@ -77,7 +77,6 @@ public class Country {
     public void claimCountry(){
         if(doesPlayerOwnAllSpots() == true){
             this.owner = spotsInCountry.get(0).getPlayer();
-            // once turns are in place, add resource distribution
         }
     }
 

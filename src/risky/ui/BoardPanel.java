@@ -148,6 +148,10 @@ public class BoardPanel extends JPanel {
                 this.source = this.selected;
             this.selected = playerSelect;
         }
+        if (playerSelect == null) {
+            this.source = null;
+            this.selected = null;
+        }
         this.repaint();
 
         return (result);
@@ -172,7 +176,8 @@ public class BoardPanel extends JPanel {
         }
         else if (type == BoardPanel.BOARD_PLAY_ATTK) {
             if (this.source == null 
-                    && this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
+                    && this.currPlayer.equals(this.board.getSpot(select).getPlayer())
+                    && this.board.getSpot(select).getResources() > 1)
                 this.source = select;
             else if (this.board.getSpot(select).connectedTo(this.source))
                 this.selected = select;
