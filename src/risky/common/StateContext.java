@@ -35,4 +35,31 @@ public class StateContext {
     public void removeResources(int resources) {
         this.myState.removeResources(resources);
     }
+
+    /**
+     * Force the game to move on to its next stage
+     */
+    public void progressGame() {
+        if (this.myState.isThisState(Statelike.SETUP_BOARD))
+            this.myState.finishSetup();
+        else if (this.myState.getPlayerState() > Statelike.SETUP_BOARD)
+            this.myState.cycleGame();
+    }
+
+    /**
+     * Check whether the game is in a specific state
+     * @param testState Statelike state to check against
+     * @return boolean if the state matches
+     */
+    public boolean isGameInState(int testState) {
+        return (this.myState.isThisState(testState));
+    }
+
+    /**
+     * Get the current state from the context
+     * @return Statelike variable
+     */
+    public int getPlayerState() {
+        return (this.myState.getPlayerState());
+    }
 }

@@ -73,7 +73,6 @@ public class Board {
 
     /**
      * Set a spot on the board (from empty to not)
-     * TODO(david): make this able to work with setting a position to empty
      * @param spot what to set the position on the board to
      */
     public void setSpot(Spot spot) {

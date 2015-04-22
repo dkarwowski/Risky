@@ -15,6 +15,7 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
 import risky.common.Spot;
+import risky.common.Statelike;
 import risky.ui.menu.MenuGUI;
 
 public class RiskyGUI extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
@@ -91,22 +92,16 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         }
 
         if (e.getActionCommand().equals("userCommandEndTurn")) {
-            if (this.game.isPlayAttk())
-                this.game.setPlayNext();
+            if (this.game.getStateContext().isGameInState(Statelike.PLAY_ATTK))
+                this.game.getStateContext().progressGame();
         }
         
         // the user has pressed enter to end the specific decision in their turn
         if (e.getActionCommand().equals("userCommandEnter")) {
             // check if the the selections have been made properly based on stage in game
             // TODO(david): simplify this call?
-            if (this.boardPanel.isSelected((this.game.isSetup() ? 
-                            BoardPanel.BOARD_SETUP : 
-                            ((this.game.isPlayGain()) ?
-                                BoardPanel.BOARD_PLAY_GAIN : 
-                                ((this.game.isPlayPuts()) ?
-                                    BoardPanel.BOARD_PLAY_PUTS :
-                                    BoardPanel.BOARD_PLAY_ATTK))))) {
-                if (this.game.isSetup()) {
+            if (this.boardPanel.isSelected(this.game.getStateContext().getPlayerState())) {
+                if (this.game.getStateContext().isGameInState(Statelike.SETUP_BOARD)) {
                     // if the spot is free, we're in setup 1; just place a single resource there
                     this.game.makeMove(this.boardPanel.getSelected(), null, 1);
                     this.game.switchPlayer();
@@ -116,21 +111,21 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 }
                 else {
                     // - Stage one   (gain new resources)
-                    if (this.game.isPlayGain()) {
+                    if (this.game.getStateContext().isGameInState(Statelike.PLAY_GAIN)) {
                         this.game.addStateResources();
-                        this.game.setPlayNext();
+                        this.game.getStateContext().progressGame();
                     }
                     // - Stage two   (place gained resources)
-                    else if (this.game.isPlayPuts()) {
+                    else if (this.game.getStateContext().isGameInState(Statelike.PLAY_PUTS)) {
                         int input = getResourcesBox(false);
                         this.game.makeMove(
                                 this.boardPanel.getSelected(),
                                 null,
                                 input);
-                        this.game.setPlayNext();
+                        this.game.getStateContext().progressGame();
                     }
                     // - Stage three attack/move placed resources
-                    else if (this.game.isPlayAttk()) {
+                    else if (this.game.getStateContext().isGameInState(Statelike.PLAY_ATTK)) {
                         // TODO(david): end turn if not enough resources in spots
                         int input = getResourcesBox(true);
                         this.game.makeMove(
@@ -229,13 +224,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
 
         // have the boardpanel determine whether the spot is valid for the turn
         // setup state where the players are establishing positions
-        if (this.game.isSetup())
-            this.boardPanel.select(temp, BoardPanel.BOARD_SETUP);
-        else if (this.game.isPlayPuts())
-            this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_PUTS);
-        // TODO(david): ensure you can't select without enough resources!
-        else if (this.game.isPlayAttk())
-            this.boardPanel.select(temp, BoardPanel.BOARD_PLAY_ATTK);
+        this.boardPanel.select(temp, this.game.getStateContext().getPlayerState());
 
         if (e.getClickCount() == 2) {
             this.actionPerformed(new ActionEvent(

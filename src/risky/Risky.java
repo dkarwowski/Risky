@@ -34,15 +34,6 @@ public class Risky {
     // Random number generation for combat
     private Random rand;
 
-    // TODO(david): see about moving this out
-    private int move;
-
-    private final static int NONE = 0;
-    private final static int FIRST = 1;
-    private final static int PLAY_GAIN = 2;
-    private final static int PLAY_PUTS = 3;
-    private final static int PLAY_ATTK = 4;
-
     //TODO(david): remove this
     private Scanner in;
 
@@ -51,7 +42,6 @@ public class Risky {
      * @param console Whether the game should be started with console or GUI
      */
     public Risky(boolean console) {
-        this.move = NONE;
         this.rand = new Random();
         if(console)
             this.consoleInit();
@@ -87,6 +77,14 @@ public class Risky {
      */
     public Player getWinner() {
         return playerWon;
+    }
+
+    /**
+     * Get the state context from the game
+     * @return StateContext instance
+     */
+    public StateContext getStateContext() {
+        return (this.stateContext);
     }
 
     @Override
@@ -174,9 +172,6 @@ public class Risky {
         // TODO(david): make this dynamic?
         this.loadBoard();
         this.guiTest.setVisible(true);
-
-        // TODO(david): find a better solution for player stages
-        this.move = FIRST;
     }
 
     /**
@@ -293,14 +288,6 @@ public class Risky {
     }
 
     /**
-     * Check whether the game is in the initial setup stage
-     * @return
-     */
-    public boolean isSetup() {
-        return (this.move == Risky.FIRST);
-    }
-
-    /**
      * Get the player whose turn it currently is
      * @return Player who is going
      */
@@ -324,7 +311,8 @@ public class Risky {
      * @return the new board after applying all moves
      */
     public Board makeMove(Coords src, Coords dest, int resources) {
-        if (this.move == Risky.FIRST || this.move == Risky.PLAY_PUTS) {
+        if (this.stateContext.isGameInState(Statelike.SETUP_BOARD) 
+                || this.stateContext.isGameInState(Statelike.PLAY_PUTS)) {
             // assume dest is null
             if (this.board.spotFree(src)) {
                 this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
@@ -371,42 +359,7 @@ public class Risky {
      */
     public void checkSetup() {
         if (this.board.isSetupDone() && this.playersFinishedSetup())
-            this.move = Risky.PLAY_GAIN;
-    }
-
-    /**
-     * Set the next playing stage
-     */
-    public void setPlayNext() {
-        this.move += 1;
-        if (this.move > Risky.PLAY_ATTK) {
-            this.move = Risky.PLAY_GAIN;
-            this.switchPlayer();
-        }
-    }
-
-    /**
-     * Check if the game is in the Gain stage
-     * @return boolean regarding state
-     */
-    public boolean isPlayGain() {
-        return (this.move == Risky.PLAY_GAIN);
-    }
-
-    /**
-     * Check if the game is in the Placing stage
-     * @return boolean regarding state
-     */
-    public boolean isPlayPuts() {
-        return (this.move == Risky.PLAY_PUTS);
-    }
-
-    /**
-     * Check if the game is in the attacking stage
-     * @return boolean regarding stage
-     */
-    public boolean isPlayAttk() {
-        return (this.move == Risky.PLAY_ATTK);
+            this.stateContext.progressGame();
     }
 
     /**

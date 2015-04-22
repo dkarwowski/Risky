@@ -13,14 +13,10 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Spot;
 import risky.common.Player;
+import risky.common.Statelike;
 
 public class BoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-
-    public static final int BOARD_SETUP = 0;
-    public static final int BOARD_PLAY_GAIN = 1;
-    public static final int BOARD_PLAY_PUTS = 2;
-    public static final int BOARD_PLAY_ATTK = 3;
 
     private Board board;
     private Player currPlayer;
@@ -60,8 +56,6 @@ public class BoardPanel extends JPanel {
                 Polygon p = createPolygon(x, y);
                 
                 // color of the square
-                // TODO: outline current players spots in some color
-                // TODO: show resources as number on spots
                 if (spot == null)
                     g.setColor(new Color(0.3f, 0.3f, 0.9f));
                 else {
@@ -72,12 +66,6 @@ public class BoardPanel extends JPanel {
                         mod = 1.0f - mod;
                         g.setColor(new Color(mod * 0.9f, mod * mod * 0.9f, mod * 0.9f));
                     }
-                    /*
-                    else if (spot.getPlayer() == this.currPlayer)
-                        g.setColor(new Color(0.1f, 0.9f, 0.9f));
-                    else
-                        g.setColor(new Color(0.6f, 0.1f, 0.2f));
-                    */
                 }
                 
                 g.fillPolygon(p);
@@ -87,7 +75,14 @@ public class BoardPanel extends JPanel {
                 g.drawPolygon(p);
                 if (spot != null) {
                 	if (spot.getPlayer() != null) {
-                		g.setColor(new Color(0.0f, 0.0f, 0.0f));
+                        if (spot != null) {
+                            if (spot.getPlayer() == this.currPlayer)
+                                g.setColor(new Color(0.9f, 0.2f, 0.2f));
+                            else
+                                g.setColor(Color.BLACK);
+                        }
+                        else
+                            g.setColor(Color.BLACK);
                 		g.drawString(String.format("%d",spot.getResources()),
                 				24 + 28 * x,
                 				((x % 2 == 0) ? 30 : 46) + 32 * y);
@@ -172,7 +167,7 @@ public class BoardPanel extends JPanel {
      * @param type integer determining what the select is for
      */
     public void select(Coords select, int type) {
-        if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS) {
+        if (type == Statelike.SETUP_BOARD || type == Statelike.PLAY_PUTS) {
             if (this.board.isSetupDone()) {
                 if (this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                     this.selected = select;
@@ -182,7 +177,7 @@ public class BoardPanel extends JPanel {
                     this.selected = select;
             }
         }
-        else if (type == BoardPanel.BOARD_PLAY_ATTK) {
+        else if (type == Statelike.PLAY_ATTK) {
             if (this.source == null 
                     && this.currPlayer.equals(this.board.getSpot(select).getPlayer())
                     && this.board.getSpot(select).getResources() > 1)
@@ -200,11 +195,11 @@ public class BoardPanel extends JPanel {
      * @return boolean that says if the type has been selected
      */
     public boolean isSelected(int type) {
-        if (type == BoardPanel.BOARD_SETUP || type == BoardPanel.BOARD_PLAY_PUTS)
+        if (type == Statelike.SETUP_BOARD || type == Statelike.PLAY_PUTS)
             return (this.selected != null);
-        else if (type == BoardPanel.BOARD_PLAY_ATTK)
+        else if (type == Statelike.PLAY_ATTK)
             return (this.selected != null && this.source != null);
-        else if (type == BoardPanel.BOARD_PLAY_GAIN)
+        else if (type == Statelike.PLAY_GAIN)
             return (true);
         return (false);
     }

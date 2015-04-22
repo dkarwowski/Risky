@@ -17,7 +17,6 @@ public class PlayerPanel extends JPanel {
 
     /**
      * Construct the Player Panel
-     * TODO: add action listener
      */
     public PlayerPanel(ActionListener listener) {
         this.textBox = new JTextArea(1, 40);
