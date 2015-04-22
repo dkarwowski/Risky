@@ -20,7 +20,7 @@ public class MplayClient {
 		outputStream.writeObject(client_cmd);
 		
 		while(true) {
-			
+			//use serialization to send client_cmd
 		}
 	}
 
