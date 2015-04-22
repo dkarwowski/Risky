@@ -5,7 +5,6 @@ public class Spot {
     private int _resources;
     private Country _country;
     private Coords _coordinates;
-    private Spot[] _exits;
 
     //--Constructors Start-------------------------------------------------------
 
@@ -17,7 +16,6 @@ public class Spot {
         _resources = 0;
         _country = null;
         _coordinates = new Coords(0,0); //Default Coords of 0,0
-        _exits = new Spot[6];
     }
 
     /**
@@ -28,9 +26,8 @@ public class Spot {
     public Spot(Country country, Coords coords) {
         this.setPlayer(null);
         this.setResources(0);
-        this.setCountry(country);
-        this.setCoords(coords);
-        _exits = new Spot[6];
+        this._country = country;
+        this._coordinates = coords;
     }
 
     //--Constructors End---------------------------------------------------------
@@ -87,23 +84,6 @@ public class Spot {
         return _coordinates.getY(!cartesian);
     }
 
-    /**
-     * Get the connected spots that are exits
-     * @return Spot array of the 6 exits
-     */
-    public Spot[] getExits() {
-        return _exits;
-    }
-
-    /**
-     * Get an exit in a specific direction
-     * @param direction a 0-5 integer direction relating to spot
-     * @return Spot in that direction
-     */
-    public Spot getExitInDirection(int direction) {
-        return _exits[direction];
-    }
-
     //--Getters End---------------------------------------------------------------     
 
     //--Setters Start-------------------------------------------------------------     
@@ -124,57 +104,6 @@ public class Spot {
         _resources = resources;
     }
 
-    /**
-     * Set the country who owns the spot
-     * TODO: see if this is used, remove it properly
-     * @param country Country that owns it
-     */
-    public void setCountry(Country country) {
-        _country = country;
-    }
-
-    /**
-     * Set the coordinates of the spot
-     * TODO: see if this is used, remove it properly
-     * @param coords Coords that determine new location
-     */
-    public void setCoords(Coords coords) {
-        _coordinates = coords;
-    }
-
-    /**
-     * Set the exits for the spot
-     * TODO: see if this is used, remove is properly
-     * @param other Spot to set the exit to
-     * @param direction 0-5 integer that determines where to set
-     */
-    public void setExit(Spot other, int direction) {
-        //Direction = int 0-5, as shown in Coords.java
-        this._exits[direction] = other;
-        if(direction < 3)
-            other._exits[direction + 3] = this;
-        else if(direction < 6)
-            other._exits[direction - 3] = this;
-        else
-            System.out.println("Invalid direction.");
-        /* 	
-    	if(direction == 0)
-    		other._exits[3] = this;
-    	else if(direction == 1)
-    		other._exits[4] = this;
-    	else if(direction == 2)
-    		other._exits[5] = this;
-    	else if(direction == 3)
-    		other._exits[0] = this;
-    	else if(direction == 4)
-    		other._exits[1] = this;
-    	else if(direction == 5)
-    		other._exits[2] = this;
-    	else
-    		System.out.println("Invalid direction.");
-         */
-    }
-
     //--Setters End---------------------------------------------------------------     
 
     //--To String Functions Start-------------------------------------------------
@@ -185,13 +114,6 @@ public class Spot {
         System.out.println("Located in " + this.getCountry());
         System.out.println("Has " + this.getResources() + " resources");
         System.out.println("Has Coordinates of (" + this.getX(false) + this.getY(false) + ")");
-        System.out.println("Exits:");
-        for(int i = 0; i < 6; i++) {
-            if(this._exits[i] == null)
-                System.out.println("Exit " + i + ": No exit");
-            else
-                System.out.println("Exit " + i + ": " + this.getExitInDirection(i));
-        }
     }
 
     public String simpleString() {
@@ -216,20 +138,7 @@ public class Spot {
     //--To String Functions End---------------------------------------------------
 
     //--Game Functions Start------------------------------------------------------
-
-    /**
-     * check if a spot can exit in a specific direction
-     * TODO: check if used anywhere and remove properly
-     * @param direction where to try moving
-     * @return boolean that determines whether the spot is free
-     */
-    public boolean exitInDirection(int direction) {
-        if(_exits[direction] != null)
-            return true;
-        else
-            return false;
-    }
-
+    
     /**
      * Add resources to the spot
      * @param resources integer of resources to add

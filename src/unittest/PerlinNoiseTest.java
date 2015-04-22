@@ -26,6 +26,6 @@ public class PerlinNoiseTest {
         }
        
         // if testing, change file location to wherever you'd like
-        ImageIO.write(image, "png", new File("/home/david/noise.png"));
+        ImageIO.write(image, "png", new File("D:\\noise.png"));
     }
 }

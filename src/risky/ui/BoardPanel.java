@@ -85,6 +85,14 @@ public class BoardPanel extends JPanel {
                 // draw the outline
                 g.setColor(Color.BLACK);
                 g.drawPolygon(p);
+                if (spot != null) {
+                	if (spot.getPlayer() != null) {
+                		g.setColor(new Color(0.0f, 0.0f, 0.0f));
+                		g.drawString(String.format("%d",spot.getResources()),
+                				24 + 28 * x,
+                				((x % 2 == 0) ? 30 : 46) + 32 * y);
+                	}
+                }
             }
         }
 
