@@ -75,14 +75,11 @@ public class BoardPanel extends JPanel {
                 g.drawPolygon(p);
                 if (spot != null) {
                 	if (spot.getPlayer() != null) {
-                        if (spot != null) {
-                            if (spot.getPlayer() == this.currPlayer)
-                                g.setColor(new Color(0.9f, 0.2f, 0.2f));
-                            else
-                                g.setColor(Color.BLACK);
-                        }
+                        if (spot.getPlayer() == this.currPlayer)
+                            g.setColor(new Color(0.9f, 0.2f, 0.2f));
                         else
                             g.setColor(Color.BLACK);
+                        
                 		g.drawString(String.format("%d",spot.getResources()),
                 				24 + 28 * x,
                 				((x % 2 == 0) ? 30 : 46) + 32 * y);
