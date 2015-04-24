@@ -22,6 +22,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         this.add(this.infoBar, BorderLayout.SOUTH);
 
         this.setSize(300, 400);
+        this.getContentPane().setBackground(Color.green);
         this.setVisible(true);
 
     }
@@ -40,7 +41,9 @@ public class MenuGUI extends JFrame implements ActionListener {
         }
 
         if (e.getActionCommand().equals("userCommandSettings")) {
-            // TODO(adam): settings menu
+            // TODO: settings menu
+            JOptionPane.showMessageDialog(this, "Oops! This feature is missing. Check back in feature versions!",
+                    "Error", JOptionPane.PLAIN_MESSAGE);
         }
     }
 

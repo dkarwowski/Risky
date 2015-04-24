@@ -15,6 +15,8 @@ public class InfoBar extends JPanel {
     public InfoBar(ActionListener listener) {
         this.setLayout(new FlowLayout());
 
+        this.setBackground(Color.blue);
+
         startButton = new JButton("Start");
         startButton.setActionCommand("userCommandStart");
         startButton.addActionListener(listener);
