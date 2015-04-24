@@ -72,16 +72,9 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
 
             this.game.createPlayers(players);
             this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             createPlayers();
         }
-    }
-
-    public void boardRepaint() {
-        // TODO(david): check if this is necessary for the GUI
-        this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
-        this.boardPanel.repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
