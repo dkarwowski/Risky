@@ -86,7 +86,11 @@ public class Board {
     public Country getCountry(Coords c) {
         return this.getCountry(c.getXCart(), c.getYCart());
     }
-
+    
+    public int getNumSpots() {
+    	return spots.length;
+    }
+    
     //--Getters End------------------------------------------------------------
 
     //--Game Related Functions Start------------------------------------------------------------

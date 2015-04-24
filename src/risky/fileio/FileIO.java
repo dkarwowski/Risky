@@ -27,6 +27,8 @@ public class FileIO
 	private Country[] _countries;
 	private Spot[] _spots;
 	private int[][] _exitInts;
+	private int _nextSpotIndex = 0;
+	private int _numSpots;
 	
 	public FileIO(Board board, Player[] players, Country[] countries, Spot[] spots)
 	{
@@ -34,6 +36,7 @@ public class FileIO
 		_players = players;
 		_countries = countries;
 		_spots = spots;
+		_numSpots = board.getNumSpots();
 	}
 	
 	public void setBoard(Board board) 
@@ -91,8 +94,6 @@ public class FileIO
 		System.out.println("Spot does not exist");
 		return null;
 	}
-		
-	
 	
 	public void createFile(String name)
 	{
@@ -362,28 +363,30 @@ public class FileIO
 		{
 			System.out.println("Not found");
 		}
-		
 		Coords coords = new Coords(x, y);
 		Country countryObj = this.getCountry(country);
 		Player playerObj = this.getPlayer(name);
 		Spot spot = new Spot(countryObj, coords);
 		spot.setResources(resources);
 		spot.setPlayer(playerObj);
-		
-		
 		int[] exitInts = new int[]{exit1,exit2,exit3,exit4,exit5,exit6};
-		
-		//Do Exits After doing all spots
-		for(int i = 0; i < exitInts.length; i++) {
-			if(exitInts[i] == 1) {
-				Coords newCoords = coords.hexInDir(i);
-				
-			}
-		}
-		
-		
+		_exitInts[_nextSpotIndex] = exitInts;
+		_nextSpotIndex++;
 		return spot;	
 	}
+	
+	public void setUpExits() {
+		for(int[] exitInts : _exitInts) {
+			for(int direction = 0; direction < exitInts.length; direction++) {
+				Coords coords = _spots[direction].getCoords();
+				if(exitInts[direction] == 1) {
+					Coords newCoords = coords.hexInDir(direction);
+					_spots[direction].setExit(this.getSpot(newCoords), direction); ;
+				}
+			}
+		}
+	}
+	
 	
 	//--End Object from String methods-------------------------------------------
 }
