@@ -13,7 +13,7 @@ import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Spot;
 import risky.common.Player;
-import risky.common.Statelike;
+import risky.common.StateContext;
 
 public class BoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -74,16 +74,16 @@ public class BoardPanel extends JPanel {
                 g.setColor(Color.BLACK);
                 g.drawPolygon(p);
                 if (spot != null) {
-                	if (spot.getPlayer() != null) {
+                    if (spot.getPlayer() != null) {
                         if (spot.getPlayer() == this.currPlayer)
                             g.setColor(new Color(0.9f, 0.2f, 0.2f));
                         else
                             g.setColor(Color.BLACK);
                         
-                		g.drawString(String.format("%d",spot.getResources()),
-                				24 + 28 * x,
-                				((x % 2 == 0) ? 30 : 46) + 32 * y);
-                	}
+                        g.drawString(String.format("%d",spot.getResources()),
+                                24 + 28 * x,
+                                ((x % 2 == 0) ? 30 : 46) + 32 * y);
+                    }
                 }
             }
         }
@@ -164,7 +164,7 @@ public class BoardPanel extends JPanel {
      * @param type integer determining what the select is for
      */
     public void select(Coords select, int type) {
-        if (type == Statelike.SETUP_BOARD || type == Statelike.PLAY_PUTS) {
+        if (type == StateContext.SETUP_BOARD || type == StateContext.PLAY_PUTS) {
             if (this.board.isSetupDone()) {
                 if (this.currPlayer.equals(this.board.getSpot(select).getPlayer()))
                     this.selected = select;
@@ -174,7 +174,7 @@ public class BoardPanel extends JPanel {
                     this.selected = select;
             }
         }
-        else if (type == Statelike.PLAY_ATTK) {
+        else if (type == StateContext.PLAY_ATTK) {
             if (this.source == null 
                     && this.currPlayer.equals(this.board.getSpot(select).getPlayer())
                     && this.board.getSpot(select).getResources() > 1)
@@ -192,11 +192,11 @@ public class BoardPanel extends JPanel {
      * @return boolean that says if the type has been selected
      */
     public boolean isSelected(int type) {
-        if (type == Statelike.SETUP_BOARD || type == Statelike.PLAY_PUTS)
+        if (type == StateContext.SETUP_BOARD || type == StateContext.PLAY_PUTS)
             return (this.selected != null);
-        else if (type == Statelike.PLAY_ATTK)
+        else if (type == StateContext.PLAY_ATTK)
             return (this.selected != null && this.source != null);
-        else if (type == Statelike.PLAY_GAIN)
+        else if (type == StateContext.PLAY_GAIN)
             return (true);
         return (false);
     }

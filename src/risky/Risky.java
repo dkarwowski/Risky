@@ -167,7 +167,7 @@ public class Risky {
         this.loadBoard();
 
         this.guiTest = new RiskyGUI(this);
-         this.guiTest.createPlayers();
+        this.guiTest.createPlayers();
         // TODO(david): make this dynamic?
         this.loadBoard();
         this.guiTest.setVisible(true);
@@ -310,8 +310,8 @@ public class Risky {
      * @return the new board after applying all moves
      */
     public Board makeMove(Coords src, Coords dest, int resources) {
-        if (this.stateContext.isGameInState(Statelike.SETUP_BOARD) 
-                || this.stateContext.isGameInState(Statelike.PLAY_PUTS)) {
+        if (this.stateContext.gameStateEquals(StateContext.SETUP_BOARD) 
+                || this.stateContext.gameStateEquals(StateContext.PLAY_PUTS)) {
             // assume dest is null
             if (this.board.spotFree(src)) {
                 this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
@@ -384,6 +384,30 @@ public class Risky {
             numResources += c.getResources();
 
         this.stateContext.getPlayer().addResources(numResources);
+    }
+
+    /**
+     * Interface with statecontext
+     * @param compare comparing int
+     * @return boolean that matches
+     */
+    public boolean gameStateEquals(int compare) {
+        return (this.stateContext.gameStateEquals(compare));
+    }
+
+    /**
+     * Interface with statecontext
+     * @return game state
+     */
+    public int getGameState() {
+        return (this.stateContext.getPlayerState());
+    }
+
+    /**
+     * Interface with game state
+     */
+    public void progressGame() {
+        this.stateContext.progressGame();
     }
 
     /**
