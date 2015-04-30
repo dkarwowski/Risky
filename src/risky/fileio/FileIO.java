@@ -17,10 +17,10 @@ import risky.common.Spot;
 
 public class FileIO 
 {
-	private final String BORD_REGEX = "[BORD](.+)#(\\d+)#(\\d+)";
-	private final String PLYR_REGEX = "[PLYR](.+)#(\\d+)#(\\d+)#(\\d+)";
-	private final String CONT_REGEX = "[CONT](.+)#(\\d+)#(\\d+)";
-	private final String SPOT_REGEX = "[SPOT](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|";
+	private final String BORD_REGEX = "\\[BORD\\](.+)#(\\d+)#(\\d+)";
+	private final String PLYR_REGEX = "\\[PLYR\\](.+)#(\\d+)#(\\d+)#(\\d+)";
+	private final String CONT_REGEX = "\\[CONT\\](.+)#(\\w+)#(\\d+)";
+	private final String SPOT_REGEX = "\\[SPOT\\](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|";
 	
 	private Board _board;
 	private Player[] _players;
@@ -67,6 +67,16 @@ public class FileIO
 		}
 		System.out.println("Player does not exist");
 		return null;
+	}
+	
+	public int getPlayerIndex(String name)
+	{
+		for(int i = 0; i < _players.length; i++) {
+			if(_players[i].getName() == name)
+				return i;
+		}
+		System.out.println("Player does not exist");
+		return -1;
 	}
 	
 	public Country getCountry(String name)
@@ -172,7 +182,7 @@ public class FileIO
 		String name = player.getName();
 		int id = player.getID();
 		int availableResources = player.getAvailableResources();
-	    int resourcesPerTurn = player.getResoucesPerTurn();
+	    int resourcesPerTurn = player.getResourcesPerTurn();
 	    String string = "[PLYR]" + name + "#" + id + "#" + availableResources + "#" + resourcesPerTurn;
 		return string;
 	}
@@ -294,7 +304,6 @@ public class FileIO
 		
 		String name = "";
 		String playerName = "";
-	    Player owner = null;
 	    int resources;
 	    
 	    if(m.find()) 
@@ -302,19 +311,18 @@ public class FileIO
 			name = m.group(1);
 			playerName = m.group(2);
 			resources= Integer.parseInt(m.group(3));
-			
-			System.out.println(name);
-			System.out.println(playerName);
-			System.out.println(resources);
+			//System.out.println(name);
+			//System.out.println(playerName);
+			//System.out.println(resources);
 		}
 		else
 		{
 			System.out.println("Not found");
 		}
-		owner = this.getPlayer(playerName);
+		int ownerIndex = getPlayerIndex(playerName);
 		Country country = new Country(name);
-		if(owner != null)
-			owner.addCountry(country);
+		if(ownerIndex != -1)
+			_players[ownerIndex].addCountry(country);
 		//Set resources?  Can't find function
 		return country;
 	}

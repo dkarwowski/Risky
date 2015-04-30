@@ -49,9 +49,13 @@ public class FileTest2 {
     @After
     public void tearDown() throws Exception
     {
-        
+    	countries = null;
+    	spots = null;
+    	board = null;
+    	players = null;
+    	file = null;
     }
-
+    
     @Test
     public void boardToStringTest()
     {
@@ -94,5 +98,67 @@ public class FileTest2 {
         assertEquals(string1, string2);
     }
     
+    @Test
+    public void stringToBoardTest()
+    {
+    	System.out.println("FileTest::stringToBoardTest()");
+    	String string1 = "[BORD]Test!!#1#2";
+    	Board testBoard = file.boardFromString(string1);
+    	assertEquals(board.getName(), testBoard.getName());
+    	System.out.println("FileTest::stringToBoardTest::" + testBoard.getName());
+    	assertEquals(board.getHeight(), testBoard.getHeight());
+    	System.out.println("FileTest::stringToBoardTest::" + testBoard.getHeight());
+    	assertEquals(board.getWidth(), testBoard.getWidth());
+    	System.out.println("FileTest::stringToBoardTest::" + testBoard.getWidth());
+    }
+    
+    @Test
+    public void stringToPlayerTest()
+    {
+    	System.out.println("FileTest::stringToPlayerTest()");
+    	String string1 = "[PLYR]Jim#1#10#10";
+    	Player testPlayer = file.playerFromString(string1);
+    	assertEquals(players[0].getName(), testPlayer.getName());
+    	System.out.println("FileTest::stringToPlayerTest::" + testPlayer.getName());
+    	assertEquals(players[0].getID(), testPlayer.getID());
+    	System.out.println("FileTest::stringToPlayerTest::" + testPlayer.getID());
+    	assertEquals(players[0].getAvailableResources(), testPlayer.getAvailableResources());
+    	System.out.println("FileTest::stringToPlayerTest::" + testPlayer.getAvailableResources());
+    	assertEquals(players[0].getResourcesPerTurn(), testPlayer.getResourcesPerTurn());
+    	System.out.println("FileTest::stringToPlayerTest::" + testPlayer.getResourcesPerTurn());
+    }
+   
+    @Test
+    public void stringToCountryTest()
+    {
+    	System.out.println("-------------------");
+    	System.out.println("FileTest::stringToCountryTest()");
+    	String string1 = "[CONT]America#Jim#5";
+    	Country testCountry = file.countryFromString(string1);
+    	assertEquals(countries[0].getName(), testCountry.getName());
+    	System.out.println("FileTest::stringToCountryTest::" + testCountry.getName());
+    	
+    	Player testPlayer = players[0];
+    	String playerName = testPlayer.getName();
+    	Player testPlayer2 = testCountry.getOwner();
+    	String playerName2 = testPlayer2.getName();
+    	System.out.println(playerName);
+    	//assertEquals(playerName, playerName2);
+    	
+    	System.out.println("FileTest::stringToCountryTest::" + testPlayer.getName());
+    	System.out.println("-------------------");
+    }
+    
+    @Test
+    public void stringToSpotTest()
+    {
+    	
+    }
+    
+    @Test
+    public void setExitsTest()
+    {
+    	
+    }
 	
 }

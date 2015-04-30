@@ -58,7 +58,7 @@ public class Player {
         return this.availableResources;
     }
     
-    public int getResoucesPerTurn() {
+    public int getResourcesPerTurn() {
     	return this.availableResources;
     }
 
