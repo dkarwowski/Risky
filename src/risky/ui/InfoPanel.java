@@ -15,7 +15,14 @@ public class InfoPanel extends JPanel {
     private JButton cancelButton;
     private JButton quitButton;
 
-    private String constMessage;
+    public static final String[] setupLoop = {
+        "Take turns placing resources in empty spots, then your own"};
+    public static final String[] gameLoop = {
+        "Hit Enter to gain resources for the turn",
+        "Place your gained resources on any red lettered spot",
+        "Attack or adjust resource placement, hit End Game when done"};
+    private String[] currentLoop;
+    private int currentPos;
     
     /**
      * Construct the Info Panel
@@ -45,23 +52,22 @@ public class InfoPanel extends JPanel {
         
         this.setSize(this.enterButton.getMinimumSize());
 
-        this.constMessage = "";
+        this.currentLoop = InfoPanel.setupLoop;
+        this.currentPos = 0;
+        this.textBox.setText(this.currentLoop[this.currentPos]);
     }
 
     /**
-     * Write a message into the panel's textbox
-     * @param message String to write
+     * Progress the tooltip text
      */
-    public void writeToPanel(String message) {
-        this.constMessage = message;
-        this.textBox.setText(message);
-    }
+    public void progressText() {
+        if (++this.currentPos == this.currentLoop.length) {
+            if (this.currentLoop.length == InfoPanel.setupLoop.length) {
+                this.currentLoop = InfoPanel.gameLoop;
+            }
+            this.currentPos = 0;
+        }
 
-    /**
-     * Message that can change appending to the constant message (for hover)
-     * @param message String to append
-     */
-    public void appendToPanel(String message) {
-        this.textBox.setText(this.constMessage + " " + message);
+        this.textBox.setText(this.currentLoop[this.currentPos]);
     }
 }

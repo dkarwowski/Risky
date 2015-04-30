@@ -1,5 +1,6 @@
 package risky;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -167,10 +168,17 @@ public class Risky {
         this.loadBoard();
 
         this.guiTest = new RiskyGUI(this);
-        this.guiTest.createPlayers();
+        if (this.guiTest.createPlayers()) {
         // TODO(david): make this dynamic?
-        this.loadBoard();
-        this.guiTest.setVisible(true);
+            this.loadBoard();
+            this.guiTest.setVisible(true);
+        }
+        else {
+            this.guiTest.actionPerformed(new ActionEvent(
+                        this.guiTest, 
+                        ActionEvent.ACTION_PERFORMED, 
+                        "userCommandQuit"));
+        }
     }
 
     /**
@@ -358,7 +366,7 @@ public class Risky {
      */
     public void checkSetup() {
         if (this.board.isSetupDone() && this.playersFinishedSetup())
-            this.stateContext.progressGame();
+            this.guiTest.progressGame();
     }
 
     /**

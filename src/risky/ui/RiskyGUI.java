@@ -14,7 +14,6 @@ import risky.Risky;
 import risky.common.Board;
 import risky.common.Coords;
 import risky.common.Player;
-import risky.common.Spot;
 import risky.common.StateContext;
 import risky.ui.menu.MenuGUI;
 
@@ -53,7 +52,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 + this.playerPanel.getHeight() + 9);
     }
 
-    public void createPlayers() {
+    public boolean createPlayers() {
         String dialogInput = JOptionPane.showInputDialog(
                 this,
                 "Enter number of players");
@@ -63,18 +62,39 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 throw (new NumberFormatException("num out of bounds"));
 
             Player[] players = new Player[numPlayers];
-            for (int i = 0; i < numPlayers; ++i) {
+            int i = 0;
+            while (i < numPlayers) {
                 dialogInput = JOptionPane.showInputDialog(
                         this,
                         String.format("Enter Player %d Name", (i + 1)));
-                players[i] = new Player(dialogInput, i);
+                if (dialogInput != null)
+                    players[i++] = new Player(dialogInput, i);
             }
 
             this.game.createPlayers(players);
             this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
-        } catch (NumberFormatException e) {
+        } 
+        catch (NumberFormatException e) {
+            if (dialogInput == null)
+                return (false);
             createPlayers();
         }
+
+        return (true);
+    }
+
+    public void progressGame() {
+        this.game.progressGame();
+        this.infoPanel.progressText();
+    }
+
+    public void boardUpdate() {
+        this.playerPanel.writeToPanel(
+                "Player: " + this.game.getCurrentPlayer().getName() + 
+                " with " + this.game.getCurrentPlayer().getAvailableResources() +
+                " resources");
+        this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
+        this.boardPanel.repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -86,15 +106,15 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
 
         if (e.getActionCommand().equals("userCommandEndTurn")) {
             if (this.game.gameStateEquals(StateContext.PLAY_ATTK)) {
-                this.game.progressGame();
+                this.progressGame();
                 this.game.switchPlayer();
+                this.boardUpdate();
             }
         }
         
         // the user has pressed enter to end the specific decision in their turn
         if (e.getActionCommand().equals("userCommandEnter")) {
             // check if the the selections have been made properly based on stage in game
-            // TODO(david): simplify this call?
             if (this.boardPanel.isSelected(this.game.getGameState())) {
                 if (this.game.gameStateEquals(StateContext.SETUP_BOARD)) {
                     // if the spot is free, we're in setup 1; just place a single resource there
@@ -108,25 +128,29 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                     // - Stage one   (gain new resources)
                     if (this.game.gameStateEquals(StateContext.PLAY_GAIN)) {
                         this.game.addStateResources();
-                        this.game.progressGame();
+                        this.progressGame();
                     }
                     // - Stage two   (place gained resources)
                     else if (this.game.gameStateEquals(StateContext.PLAY_PUTS)) {
                         int input = getResourcesBox(false);
-                        this.game.makeMove(
-                                this.boardPanel.getSelected(),
-                                null,
-                                input);
-                        this.game.progressGame();
+                        if (input != -1) {
+                            this.game.makeMove(
+                                    this.boardPanel.getSelected(),
+                                    null,
+                                    input);
+                            this.progressGame();
+                        }
                     }
                     // - Stage three attack/move placed resources
                     else if (this.game.gameStateEquals(StateContext.PLAY_ATTK)) {
                         // TODO(david): end turn if not enough resources in spots
                         int input = getResourcesBox(true);
-                        this.game.makeMove(
-                                this.boardPanel.getSource(),
-                                this.boardPanel.getSelected(),
-                                input);
+                        if (input != -1) {
+                            this.game.makeMove(
+                                    this.boardPanel.getSource(),
+                                    this.boardPanel.getSelected(),
+                                    input);
+                        }
                     }
                 }
             }
@@ -136,14 +160,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 JOptionPane.showMessageDialog(this, "You need to select properly!");
             }
             
-            // properly update things
-            // TODO(david): move these back to their own function?
-            this.playerPanel.writeToPanel(
-                    "Player: " + this.game.getCurrentPlayer().getName() + 
-                    " with " + this.game.getCurrentPlayer().getAvailableResources() +
-                    " resources");
-            this.boardPanel.boardUpdate(this.game.getBoard(), this.game.getCurrentPlayer());
-            this.boardPanel.repaint();
+            this.boardUpdate();
         }
         
         if (e.getActionCommand().equals("userCommandCancel")) {
@@ -174,8 +191,15 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         int input = 0;
         do {
             try {
-                input = Integer.parseInt(JOptionPane.showInputDialog(
-                            this, "Number of Resources to Use"));
+                String dialogInput = JOptionPane.showInputDialog(
+                            this, "Number of Resources to Use");
+                // exit with a negative value if the player hits cancel
+                if (dialogInput == null) {
+                    input = -1;
+                    break;
+                }
+
+                input = Integer.parseInt(dialogInput);
                 int t = this.game.getCurrentPlayer().getAvailableResources();
                 if (attack) {
                     // TODO(david): limit resources properly in attack mode
@@ -231,12 +255,6 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     }
 
     public void mouseMoved(MouseEvent e) {
-        // displays information for the last spot that was hovered over
-        // TODO(david): have each spot display number of resources on it?
-        Coords position = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
-        Spot temp = this.game.getBoard().getSpot(position);
-        if (temp != null) 
-            this.infoPanel.appendToPanel(temp.toString());
     }
 
     public void mouseDragged(MouseEvent e) {
