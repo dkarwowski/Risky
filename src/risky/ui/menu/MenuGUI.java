@@ -42,7 +42,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("userCommandSettings")) {
             // TODO: settings menu
-            JOptionPane.showMessageDialog(this, "Oops! This feature is missing. Check back in feature versions!",
+            JOptionPane.showMessageDialog(this, "Oops! This feature is missing. Check back in future versions!",
                     "Error", JOptionPane.PLAIN_MESSAGE);
         }
     }
