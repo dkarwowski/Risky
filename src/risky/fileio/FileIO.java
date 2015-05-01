@@ -20,7 +20,7 @@ public class FileIO
 	private final String BORD_REGEX = "\\[BORD\\](.+)#(\\d+)#(\\d+)";
 	private final String PLYR_REGEX = "\\[PLYR\\](.+)#(\\d+)#(\\d+)#(\\d+)";
 	private final String CONT_REGEX = "\\[CONT\\](.+)#(\\w+)#(\\d+)";
-	private final String SPOT_REGEX = "\\[SPOT\\](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|(1|0)|";
+	private final String SPOT_REGEX = "\\[SPOT\\](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|";
 	
 	private Board _board;
 	private Player[] _players;
@@ -89,6 +89,15 @@ public class FileIO
 		return null;
 	}
 	
+	public int getCountryIndex(String name) {
+		for(int i = 0; i < _countries.length; i++) {
+			if(_countries[i].getName() == name)
+				return i;
+		}
+		System.out.println("Country does not exist");
+		return -1;
+	}
+	
 	public Spot getSpot(Coords coords) {
 		for(int i = 0; i < _spots.length; i++) {
 			Spot spot = _spots[i];
@@ -103,6 +112,22 @@ public class FileIO
 		}
 		System.out.println("Spot does not exist");
 		return null;
+	}
+	
+	public int getSpotInd(Coords coords) {
+		for(int i = 0; i < _spots.length; i++) {
+			Spot spot = _spots[i];
+			Coords coords2 = spot.getCoords();
+			int x1 = coords.getX();
+			int y1 = coords.getY();
+			int x2 = coords2.getX();
+			int y2 = coords2.getY();
+			if(x1 == x2 && y1 == y2) {
+				return i;
+			}				
+		}
+		System.out.println("Spot does not exist");
+		return -1;
 	}
 	
 	public void createFile(String name)
@@ -251,9 +276,9 @@ public class FileIO
 			width = Integer.parseInt(m.group(2));
 			height = Integer.parseInt(m.group(3));
 			
-			System.out.println(name);
-			System.out.println(width);
-			System.out.println(height);
+			//System.out.println(name);
+			//System.out.println(width);
+			//System.out.println(height);
 		}
 		else
 		{
@@ -282,10 +307,10 @@ public class FileIO
 			availableResources = Integer.parseInt(m.group(3));
 			resourcesPerTurn = Integer.parseInt(m.group(4));
 			
-			System.out.println(name);
-			System.out.println(id);
-			System.out.println(availableResources);
-			System.out.println(resourcesPerTurn);
+			//System.out.println(name);
+			//System.out.println(id);
+			//System.out.println(availableResources);
+			//System.out.println(resourcesPerTurn);
 		}
 		else
 		{
@@ -304,7 +329,7 @@ public class FileIO
 		
 		String name = "";
 		String playerName = "";
-	    int resources;
+	    int resources = 0;
 	    
 	    if(m.find()) 
 		{
@@ -319,10 +344,15 @@ public class FileIO
 		{
 			System.out.println("Not found");
 		}
-		int ownerIndex = getPlayerIndex(playerName);
-		Country country = new Country(name);
-		if(ownerIndex != -1)
-			_players[ownerIndex].addCountry(country);
+	    Country country = new Country(name);
+	    if(playerName != "NoOwner") {
+	    	int ownerIndex = getPlayerIndex(playerName);
+	    	System.out.println(_players[ownerIndex].getName());
+	    	if(ownerIndex != -1) {
+	    		_players[ownerIndex].addCountry(country);
+	    		country.claimedBy(_players[ownerIndex]);
+	    	}
+	    }
 		//Set resources?  Can't find function
 		return country;
 	}

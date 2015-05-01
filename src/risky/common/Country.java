@@ -69,6 +69,10 @@ public class Country {
             return false;
         }
     }
+    
+    public void claimedBy(Player owner) {
+    	this.owner = owner;
+    }
     //--Game Related Functions End------------------------------------------------ 
 
     @Override

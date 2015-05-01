@@ -39,6 +39,7 @@ public class FileTest2 {
 		Player player2 = new Player("Pam", 2);
 		players = new Player[]{player1,player2};
 		player1.addCountry(america);
+		america.claimedBy(player1);
 		player1.addSpot(spot01);
 		america.addSpot(spot01);
 		spot01.setExit(spot02, 0);
@@ -80,7 +81,7 @@ public class FileTest2 {
     public void countryToStringTest()
     {
     	System.out.println("FileTest::countryToStringTest()");
-        String string1 = "[CONT]America#NoOwner#5";
+        String string1 = "[CONT]America#Jim#5";
         Country country = countries[0];
         String string2 = file.stringFromCountry(country);
         System.out.println("FileTest::countryToStringTest::" + string2);
@@ -138,23 +139,26 @@ public class FileTest2 {
     	assertEquals(countries[0].getName(), testCountry.getName());
     	System.out.println("FileTest::stringToCountryTest::" + testCountry.getName());
     	
-    	Player testPlayer = players[0];
-    	String playerName = testPlayer.getName();
-    	Player testPlayer2 = testCountry.getOwner();
-    	String playerName2 = testPlayer2.getName();
-    	System.out.println(playerName);
-    	//assertEquals(playerName, playerName2);
+    	String ownerName = testCountry.getOwner().getName();
+    	System.out.println(ownerName);
+    	assertEquals(ownerName, "Jim");
     	
-    	System.out.println("FileTest::stringToCountryTest::" + testPlayer.getName());
+    	//System.out.println("FileTest::stringToCountryTest::" + testPlayer.getName());
     	System.out.println("-------------------");
     }
-    
+
+/*
     @Test
     public void stringToSpotTest()
     {
-    	
+    	System.out.println("FileTest::stringToSpotTest()");
+    	String string1 = "[SPOT]NoOwner#America#0#0,0#0|0|0|0|0|0|";
+    	Spot testSpot = file.spotFromString(string1);
+    	Coords coords = new Coords(0,0);
+    	assertEquals(testSpot.getCoords(), coords);
+    	System.out.println("FileTest::stringToSpotTest::0,0");
     }
-    
+*/   
     @Test
     public void setExitsTest()
     {
