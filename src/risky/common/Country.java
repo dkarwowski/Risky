@@ -75,8 +75,9 @@ public class Country {
      * Check and set if the country is owned by someone
      */
     public void claimCountry(){
-        if(doesPlayerOwnAllSpots() == true){
-            this.owner = spotsInCountry.get(0).getPlayer();
+        if(this.doesPlayerOwnAllSpots() == true){
+            this.owner = this.spotsInCountry.get(0).getPlayer();
+            this.spotsInCountry.get(0).getPlayer().addCountry(this);
         }
     }
 

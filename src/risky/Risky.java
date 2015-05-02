@@ -24,6 +24,7 @@ public class Risky {
     private RiskyGUI guiTest;
 
     private Board board;
+    private String mapName;
     private StateContext stateContext;
 
     private Statelike[] playerStates;
@@ -43,10 +44,17 @@ public class Risky {
      */
     public Risky(boolean console) {
         this.rand = new Random();
+        this.mapName = "test3.map";
         if(console)
             this.consoleInit();
         else
-            this.guiInit(); // replace this with riskygui when working
+            this.guiInit();
+    }
+    
+    public Risky(String boardName) {
+        this.rand = new Random();
+        this.mapName = boardName;
+        this.guiInit();
     }
 
     /**
@@ -107,7 +115,7 @@ public class Risky {
         // TODO(david): consolidate the board loops
         try {
             // TODO(david): make more options
-            Scanner loadBoard = new Scanner(new File("data/test3.map"));
+            Scanner loadBoard = new Scanner(new File("data/" + this.mapName));
             boardName = loadBoard.next();
             width = loadBoard.nextInt();
             height = loadBoard.nextInt();
@@ -162,7 +170,6 @@ public class Risky {
 
     /**
      * Initializes the GUI, by creating the various information it needs to run
-     * TODO(david): fix this to work with other gui
      */
     public void guiInit() {
         this.loadBoard();
@@ -170,7 +177,6 @@ public class Risky {
         this.guiTest = new RiskyGUI(this);
         if (this.guiTest.createPlayers()) {
         // TODO(david): make this dynamic?
-            this.loadBoard();
             this.guiTest.setVisible(true);
         }
         else {
@@ -324,6 +330,7 @@ public class Risky {
             if (this.board.spotFree(src)) {
                 this.board.claimSpot(this.stateContext.getPlayer(), src, 1);
                 this.board.claimCountries();
+                this.stateContext.getPlayer().addSpot(this.board.getSpot(src));
                 this.stateContext.removeResources(1);
             }
             else {

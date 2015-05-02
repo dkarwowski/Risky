@@ -60,6 +60,8 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             int numPlayers = Integer.parseInt(dialogInput);
             if (numPlayers < 2 || numPlayers > 6)
                 throw (new NumberFormatException("num out of bounds"));
+            
+            int startResources = (int)(((this.game.getBoard().getNumSpots()/3)*4)/numPlayers);
 
             Player[] players = new Player[numPlayers];
             int i = 0;
@@ -67,8 +69,11 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 dialogInput = JOptionPane.showInputDialog(
                         this,
                         String.format("Enter Player %d Name", (i + 1)));
-                if (dialogInput != null)
-                    players[i++] = new Player(dialogInput, i);
+
+                if (dialogInput != null) {
+                    players[i] = new Player(dialogInput, i, startResources);
+                    i++;
+                }
             }
 
             this.game.createPlayers(players);
@@ -118,7 +123,14 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
             if (this.boardPanel.isSelected(this.game.getGameState())) {
                 if (this.game.gameStateEquals(StateContext.SETUP_BOARD)) {
                     // if the spot is free, we're in setup 1; just place a single resource there
-                    this.game.makeMove(this.boardPanel.getSelected(), null, 1);
+                    if (this.game.getBoard().isSetupDone()) {
+                        int input = getResourcesBox(false);
+                        if (input != -1) {
+                            this.game.makeMove(this.boardPanel.getSelected(), null, input);
+                        }
+                    }
+                    else
+                        this.game.makeMove(this.boardPanel.getSelected(), null, 1);
                     this.game.switchPlayer();
                     
                     // check if setup is done
@@ -155,8 +167,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 }
             }
             else {
-                if (this.game.checkPlayerWon())
+                if (this.game.checkPlayerWon()) {
                     this.endGame();
+                    return;
+                }
                 JOptionPane.showMessageDialog(this, "You need to select properly!");
             }
             
