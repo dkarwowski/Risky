@@ -14,6 +14,33 @@
 An unofficial Risk-like game where players place Resources/Troops on spaces on a map, attempting to gain control of Countries in order to end up in control of the entire Map.
 
 
+## How to Play
+
+Start the game by running from src/risky.ui.menu.MenuGUI
+
+![Menu - Hit Start](docs/menu-01.PNG)
+
+![Menu - Pick Board](docs/menu-02.PNG)
+
+![Menu - Player Input](docs/menu-03.PNG)
+
+![Game - Claim Empty Spaces](docs/game-01.PNG)
+
+![Game - Gain New Resources](docs/game-02.PNG)
+
+![Game - Place Gained Resources](docs/game-04.PNG)
+
+![Game - Enter Num Resources](docs/game-05.PNG)
+
+![Game - Pick Spots for Moving](docs/game-06.PNG)
+
+![Game - Change in Turn After End Turn](docs/game-07.PNG)
+
+![Game - Enter for End Game](docs/game-08.PNG)
+
+![Game - Choose to Play Again](docs/game-09.PNG)
+
+
 ## Currently working
 
 
