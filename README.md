@@ -20,25 +20,51 @@ Start the game by running from src/risky.ui.menu.MenuGUI
 
 ![Menu - Hit Start](docs/menu-01.PNG)
 
+Hit the start button to begin a new game
+
 ![Menu - Pick Board](docs/menu-02.PNG)
+
+Pick a board from the dropdown and hit OK
 
 ![Menu - Player Input](docs/menu-03.PNG)
 
+Enter number of players, then player names
+
 ![Game - Claim Empty Spaces](docs/game-01.PNG)
 
-![Game - Gain New Resources](docs/game-02.PNG)
+Choose any green space to claim spaces, bottom bar shows tooltip
+
+![Game - Continue placing until running out](docs/game-02.PNG)
+
+Continue choosing empty green spaces, player shown in top bar
+
+![Game - Gain New Resources](docs/game-03.PNG)
+
+Hit enter to gain new resources as shown in bottom bar
 
 ![Game - Place Gained Resources](docs/game-04.PNG)
 
+Select any red lettered space for placement
+
 ![Game - Enter Num Resources](docs/game-05.PNG)
+
+Enter the number of resources, must be 1 <= x <= num resources at the top
 
 ![Game - Pick Spots for Moving](docs/game-06.PNG)
 
+Choose a source spot, and a final spot to move/attack resources. Attacking is random
+
 ![Game - Change in Turn After End Turn](docs/game-07.PNG)
+
+After hitting Enter, turns change and red letters switch
 
 ![Game - Enter for End Game](docs/game-08.PNG)
 
+Once all spots claimed, hit enter without selecting
+
 ![Game - Choose to Play Again](docs/game-09.PNG)
+
+Choose to play on same board or not
 
 
 ## Currently working
