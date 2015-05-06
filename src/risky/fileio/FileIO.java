@@ -17,9 +17,9 @@ import risky.common.Spot;
 
 public class FileIO 
 {
-	private final String BORD_REGEX = "\\[BORD\\](.+)#(\\d+)#(\\d+)";
-	private final String PLYR_REGEX = "\\[PLYR\\](.+)#(\\d+)#(\\d+)#(\\d+)";
-	private final String CONT_REGEX = "\\[CONT\\](.+)#(\\w+)#(\\d+)";
+	private final String BORD_REGEX = "\\[BORD\\](.+)#(\\d+)#(\\d+)"; 		//Board Name # Height # Width
+	private final String PLYR_REGEX = "\\[PLYR\\](.+)#(\\d+)#(\\d+)#(\\d+)";//PlayerName # ID # Resources # ResourcesPerTurn
+	private final String CONT_REGEX = "\\[CONT\\](.+)#(.+)#(\\d+)";			//CountryName # PlayerName # Resources
 	private final String SPOT_REGEX = "\\[SPOT\\](.+)#(\\w+)#(\\d+)#(\\d+),(\\d+)#(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|(1|0)\\|";
 	
 	private Board _board;
@@ -29,6 +29,7 @@ public class FileIO
 	private int[][] _exitInts;
 	private int _nextSpotIndex = 0;
 	private int _numSpots;
+	private File file;
 	
 	public FileIO(Board board, Player[] players, Country[] countries, Spot[] spots)
 	{
@@ -130,12 +131,12 @@ public class FileIO
 		return -1;
 	}
 	
-	public void createFile(String name)
+	public void createFile(String fileName)
 	{
 		try
 		{
 			Writer output = null;
-			File file = new File(name);
+			file = new File(fileName);
 			output = new BufferedWriter(new FileWriter(file));
 			
 			output.write(stringFromBoard(_board) + '\n');
@@ -166,13 +167,60 @@ public class FileIO
 		
 	}
 	
-	public void loadFromFile(String name)
+	public void loadFromFile(String fileName)
 	{
-		File file = new File(name);
+		ClassLoader classLoader = getClass().getClassLoader();
+		try {
+			File file = new File(classLoader.getResource(fileName).getFile());
+		}
+		catch (Exception e) {
+			System.out.println("Error reading file");
+		}
+		String r = "";
+		Pattern p;// = Pattern.compile(r);
+		Matcher m;// = p.matcher(line);
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line;
+			int playerCounter = 0;
+			int countryCounter = 0;
+			int spotCounter = 0;
 		    while ((line = br.readLine()) != null) {
-		       System.out.println(line); //Iterates line by line, add objects to arrays
+		    	r = BORD_REGEX;
+		    	p = Pattern.compile(r);
+		    	m = p.matcher(line);
+		    	if(m.find()) {
+		    		_board = boardFromString(line);
+		    		//break;
+		    	}
+		    	r = PLYR_REGEX;
+		    	p = Pattern.compile(r);
+		    	m = p.matcher(line);
+		    	if(m.find()) {
+		    		
+		    		//break;
+		    	}
+		    	r = CONT_REGEX;
+		    	p = Pattern.compile(r);
+		    	m = p.matcher(line);
+		    	if(m.find()) {
+		    		
+		    		//break;
+		    	}
+		    	r = SPOT_REGEX;
+		    	p = Pattern.compile(r);
+		    	m = p.matcher(line);
+		    	if(m.find()) {
+		    		
+		    		//break;
+		    	}
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	//System.out.println(line);
+		       
+		       System.out.println(m.group());
 		    }
 		}
 		catch (Exception e) {
@@ -344,17 +392,18 @@ public class FileIO
 		{
 			System.out.println("Not found");
 		}
+	    
 	    Country country = new Country(name);
-	    if(playerName != "NoOwner") {
-	    	int ownerIndex = getPlayerIndex(playerName);
-	    	System.out.println(_players[ownerIndex].getName());
-	    	if(ownerIndex != -1) {
-	    		_players[ownerIndex].addCountry(country);
-	    		country.claimedBy(_players[ownerIndex]);
-	    	}
+	    //Set resources?  Can't find function
+	    if(playerName == "NoOwner") {
+	    	return country;
 	    }
-		//Set resources?  Can't find function
-		return country;
+	    else {
+	    	int ownerIndex = getPlayerIndex(playerName);
+	    	_players[ownerIndex].addCountry(country);
+	    	country.claimedBy(_players[ownerIndex]);
+	    	return country;
+	    }		
 	}
 	
 	public Spot spotFromString(String line)	//Needs work with Exits
@@ -424,7 +473,6 @@ public class FileIO
 			}
 		}
 	}
-	
-	
+
 	//--End Object from String methods-------------------------------------------
 }

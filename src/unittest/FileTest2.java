@@ -139,12 +139,12 @@ public class FileTest2 {
     	assertEquals(countries[0].getName(), testCountry.getName());
     	System.out.println("FileTest::stringToCountryTest::" + testCountry.getName());
     	
-    	String ownerName = testCountry.getOwner().getName();
+    	Player testPlayer = testCountry.getOwner();
+    	String ownerName = testPlayer.getName();
     	System.out.println(ownerName);
     	assertEquals(ownerName, "Jim");
     	
-    	//System.out.println("FileTest::stringToCountryTest::" + testPlayer.getName());
-    	System.out.println("-------------------");
+    	//System.out.println("FileTest::stringToCountryTest::" + );
     }
 
 /*
