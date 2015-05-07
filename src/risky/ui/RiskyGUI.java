@@ -26,6 +26,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
     private InfoPanel infoPanel;
     private PlayerPanel playerPanel;
 
+    /**
+     * Create the pieces of the GUI individualy
+     * @param risky instance of the game
+     */
     public RiskyGUI(Risky risky) {
         super("Risky"); // initialize with name
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +56,10 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
                 + this.playerPanel.getHeight() + 9);
     }
 
+    /**
+     * Create the players through dialog boxes
+     * @return whether the player was created properly or not
+     */
     public boolean createPlayers() {
         String dialogInput = JOptionPane.showInputDialog(
                 this,
@@ -88,11 +96,17 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         return (true);
     }
 
+    /**
+     * Have the game progress move forward properly
+     */
     public void progressGame() {
         this.game.progressGame();
         this.infoPanel.progressText();
     }
 
+    /**
+     * Update the view information on the board
+     */
     public void boardUpdate() {
         this.playerPanel.writeToPanel(
                 "Player: " + this.game.getCurrentPlayer().getName() + 
@@ -102,6 +116,7 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         this.boardPanel.repaint();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("userCommandQuit")) {
             this.setVisible(false);
@@ -183,6 +198,9 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         }
     }
 
+    /**
+     * Dialog box after ending the game
+     */
     public void endGame() {
         int option = JOptionPane.showConfirmDialog(
                 this, 
@@ -200,6 +218,11 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         }
     }
 
+    /**
+     * Get a resource box for the game
+     * @param attack whether the person is attacking or moving/placing resources
+     * @return number of resources or -1 if cancelled
+     */
     public int getResourcesBox(boolean attack) {
         boolean outOfBounds = false;
         int input = 0;
@@ -238,18 +261,23 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         return (input);
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
-    
+
+    @Override
     public void mouseClicked(MouseEvent e) {
         // ensure the clicked spot is a valid spot
         Coords temp = this.boardPanel.coordsFromPosition(e.getX(), e.getY());
@@ -268,9 +296,11 @@ public class RiskyGUI extends JFrame implements MouseListener, ActionListener, M
         }
     }
 
+    @Override
     public void mouseMoved(MouseEvent e) {
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
     }
 }
