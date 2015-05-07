@@ -87,6 +87,8 @@ public class Country {
      */
     public boolean doesPlayerOwnAllSpots(){
         Player player = spotsInCountry.get(0).getPlayer();
+        if (player == null) return (false); // fixes problem with claiming
+        
         int counter = 0;
         for(int i = 0; i < spotsInCountry.size(); i++){
             if(spotsInCountry.get(i).getPlayer() == player){
