@@ -18,7 +18,7 @@ public class SetupScene extends GridPane {
     private final SetupController setupController;
 
     public SetupScene(SetupController controller) {
-        setupController = controller;
+        this.setupController = controller;
 
         // General settings
         setHgap(5);
@@ -31,7 +31,7 @@ public class SetupScene extends GridPane {
         ComboBox<String> mapSelection = new ComboBox<>();
         mapSelection.getItems().addAll("test.map", "test2.map", "test3.map");
         mapSelection.valueProperty().addListener(
-                (observable, oldValue, newValue) -> setupController.setMapSelect(newValue)
+                (observable, oldValue, newValue) -> this.setupController.setMapSelect(newValue)
         );
         setConstraints(mapSelection, 0, 1, 1, 1);
         // TODO: automate map selection
@@ -55,16 +55,16 @@ public class SetupScene extends GridPane {
         numberPlayersSlider.setSnapToTicks(true);
         numberPlayersSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    setupController.setNumberOfPlayers(newValue.intValue());
+                    this.setupController.setNumberOfPlayers(newValue.intValue());
                 }
         );
         setConstraints(numberPlayersSlider, 2, 1, 1, 1);
 
         // Move on or return to main menu
         Button continueButton = new Button("Continue");
-        continueButton.setOnAction(event -> setupController.setSetupFinished());
+        continueButton.setOnAction(event -> this.setupController.setSetupFinished());
         Button cancelButton = new Button("Cancel");
-        cancelButton.setOnAction(event -> setupController.quitToMenu());
+        cancelButton.setOnAction(event -> this.setupController.quitToMenu());
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setAlignment(Pos.CENTER_RIGHT);

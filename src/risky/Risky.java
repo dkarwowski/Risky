@@ -25,26 +25,35 @@ public class Risky extends Application {
         // TODO: create pieces of the game to be placed here
         // TODO: add stylesheet loading here
 
-        menu();
+        this.menu();
 
-        stage.setTitle("Risky");
-        stage.show();
+        this.stage.setTitle("Risky");
+        this.stage.show();
     }
 
+    /**
+     * Instantiate and set the menu up
+     */
     public void menu() {
         MenuScene menuScene = new MenuScene(this);
 
         Scene scene = new Scene(menuScene);
-        stage.setScene(scene);
+        this.stage.setScene(scene);
     }
 
+    /**
+     * Instantiate and setup a new game
+     */
     public void newGame() {
         GameManager manager = new GameManager(this);
 
         Scene scene = manager.getScene();
-        stage.setScene(scene);
+        this.stage.setScene(scene);
     }
 
+    /**
+     * Exit the application entirely
+     */
     public void quitAll() {
         Platform.exit();
     }

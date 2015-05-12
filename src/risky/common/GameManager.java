@@ -12,23 +12,34 @@ import risky.model.Setup;
 public class GameManager {
     private Risky app;
     private Scene scene;
-    private Setup setup;
+    private Setup setup; // TODO: see about removing the setup class from here?
 
+    /**
+     * Create the game manager
+     *
+     * @param app reference for quitting and the menu
+     */
     public GameManager(Risky app) {
         this.app = app;
         startSetup();
     }
 
+    /**
+     * Setup a new game using the setup view and controller
+     */
     public void startSetup() {
-        setup = new Setup();
-        SetupController setupController = new SetupController(this, setup);
+        this.setup = new Setup();
+        SetupController setupController = new SetupController(this, this.setup);
 
-        if (scene == null)
-            scene = new Scene(setupController.getScene());
+        if (this.scene == null)
+            this.scene = new Scene(setupController.getScene());
         else
-            scene.setRoot(setupController.getScene());
+            this.scene.setRoot(setupController.getScene());
     }
 
+    /**
+     * Initialize a game and have it ready to start running
+     */
     public void initGame() {
         // get data from the setup (player names, map file)
         // apply data into structure for the new game
@@ -36,11 +47,19 @@ public class GameManager {
         // game(controller|view|) handles user input and controls
     }
 
+    /**
+     * Get the scene currently being used
+     *
+     * @return Scene being used
+     */
     public Scene getScene() {
         return this.scene;
     }
 
+    /**
+     * Quit the app to the menu again
+     */
     public void quitToMenu() {
-        app.menu();
+        this.app.menu();
     }
 }

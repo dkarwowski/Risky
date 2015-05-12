@@ -13,24 +13,37 @@ public class SetupController {
     private final SetupScene setupScene;
     private final Setup setup;
 
+    /**
+     * Input controller setup for the game.
+     *
+     * @param manager Game Manager for reference when returning
+     * @param setup Model for the controller
+     */
     public SetupController(GameManager manager, Setup setup) {
-        setupScene = new SetupScene(this);
-        gameManager = manager;
+        this.setupScene = new SetupScene(this);
+        this.gameManager = manager;
         this.setup = setup;
+
+        // TODO: see if this is necessary
+        this.setNumberOfPlayers(2);
     }
 
-    public SetupController(GameManager manager, SetupScene scene, Setup setup) {
-        gameManager = manager;
-        setupScene = scene;
-        this.setup = setup;
-    }
-
+    /**
+     * Set the map in the model, called by the setup scene
+     *
+     * @param newValue the new map file name
+     */
     public void setMapSelect(String newValue) {
-        setup.setMapFileName(newValue);
+        this.setup.setMapFileName(newValue);
     }
 
+    /**
+     * Set the number of players in the model, called by setup scene
+     *
+     * @param numberOfPlayers the number of players used
+     */
     public void setNumberOfPlayers(int numberOfPlayers) {
-        setup.setNumberOfPlayers(numberOfPlayers);
+        this.setup.setNumberOfPlayers(numberOfPlayers);
 
         // TODO: create a name chooser
         String[] names = new String[numberOfPlayers];
@@ -38,18 +51,30 @@ public class SetupController {
             names[i] = String.format("Player %d", i + 1);
         }
 
-        setup.setNamesOfPlayers(names);
+        this.setup.setNamesOfPlayers(names);
     }
 
+    /**
+     * Set the game that setup is completely done
+     * TODO: see if model has correct values
+     */
     public void setSetupFinished() {
-        gameManager.initGame();
+        this.gameManager.initGame();
     }
 
+    /**
+     * Quit the game back to the menu (When cancelled)
+     */
     public void quitToMenu() {
-        gameManager.quitToMenu();
+        this.gameManager.quitToMenu();
     }
 
+    /**
+     * Get the scene for the main app to be fixed
+     *
+     * @return SetupScene being used at the moment
+     */
     public SetupScene getScene() {
-        return setupScene;
+        return this.setupScene;
     }
 }
