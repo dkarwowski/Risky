@@ -1,36 +1,36 @@
 package risky.controller;
 
 import risky.common.GameManager;
-import risky.model.GameSetup;
-import risky.view.GameSetupScene;
+import risky.model.Setup;
+import risky.view.SetupScene;
 
 /**
  * Handles the buttons and choices made in the Setup Menu
  * Created by davidkarwowski on 5/11/15.
  */
-public class GameSetupController {
+public class SetupController {
     private final GameManager gameManager;
-    private final GameSetupScene setupScene;
-    private final GameSetup gameSetup;
+    private final SetupScene setupScene;
+    private final Setup setup;
 
-    public GameSetupController(GameManager manager, GameSetup setup) {
-        setupScene = new GameSetupScene(this);
+    public SetupController(GameManager manager, Setup setup) {
+        setupScene = new SetupScene(this);
         gameManager = manager;
-        gameSetup = setup;
+        this.setup = setup;
     }
 
-    public GameSetupController(GameManager manager, GameSetupScene scene, GameSetup setup) {
+    public SetupController(GameManager manager, SetupScene scene, Setup setup) {
         gameManager = manager;
         setupScene = scene;
-        gameSetup = setup;
+        this.setup = setup;
     }
 
     public void setMapSelect(String newValue) {
-        gameSetup.setMapFileName(newValue);
+        setup.setMapFileName(newValue);
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
-        gameSetup.setNumberOfPlayers(numberOfPlayers);
+        setup.setNumberOfPlayers(numberOfPlayers);
 
         // TODO: create a name chooser
         String[] names = new String[numberOfPlayers];
@@ -38,7 +38,7 @@ public class GameSetupController {
             names[i] = String.format("Player %d", i + 1);
         }
 
-        gameSetup.setNamesOfPlayers(names);
+        setup.setNamesOfPlayers(names);
     }
 
     public void setSetupFinished() {
@@ -49,7 +49,7 @@ public class GameSetupController {
         gameManager.quitToMenu();
     }
 
-    public GameSetupScene getScene() {
+    public SetupScene getScene() {
         return setupScene;
     }
 }

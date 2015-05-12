@@ -7,17 +7,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import risky.controller.GameSetupController;
+import risky.controller.SetupController;
 
 
 /**
  * Has the Player setup number of players, player names, and board choosing
  * Created by davidkarwowski on 5/11/15.
  */
-public class GameSetupScene extends GridPane {
-    private final GameSetupController setupController;
+public class SetupScene extends GridPane {
+    private final SetupController setupController;
 
-    public GameSetupScene(GameSetupController controller) {
+    public SetupScene(SetupController controller) {
         setupController = controller;
 
         // General settings
@@ -29,11 +29,13 @@ public class GameSetupScene extends GridPane {
         setConstraints(boardLabel, 0, 0);
         // Board Selection - Chooser
         ComboBox<String> mapSelection = new ComboBox<>();
-        mapSelection.getItems().addAll("test.map", "test2.map", "test3.map"); // TODO: automate map selection
+        mapSelection.getItems().addAll("test.map", "test2.map", "test3.map");
         mapSelection.valueProperty().addListener(
                 (observable, oldValue, newValue) -> setupController.setMapSelect(newValue)
         );
         setConstraints(mapSelection, 0, 1, 1, 1);
+        // TODO: automate map selection
+        // TODO: preview of map?
 
         // Player Selection -
         Label playerLabel = new Label("Players");

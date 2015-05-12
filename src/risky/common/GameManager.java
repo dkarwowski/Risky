@@ -2,8 +2,8 @@ package risky.common;
 
 import javafx.scene.Scene;
 import risky.Risky;
-import risky.controller.GameSetupController;
-import risky.model.GameSetup;
+import risky.controller.SetupController;
+import risky.model.Setup;
 
 /**
  * Manages the scenes and the menu states
@@ -12,6 +12,7 @@ import risky.model.GameSetup;
 public class GameManager {
     private Risky app;
     private Scene scene;
+    private Setup setup;
 
     public GameManager(Risky app) {
         this.app = app;
@@ -19,8 +20,8 @@ public class GameManager {
     }
 
     public void startSetup() {
-        GameSetup setup = new GameSetup();
-        GameSetupController setupController = new GameSetupController(this, setup);
+        setup = new Setup();
+        SetupController setupController = new SetupController(this, setup);
 
         if (scene == null)
             scene = new Scene(setupController.getScene());
@@ -29,7 +30,10 @@ public class GameManager {
     }
 
     public void initGame() {
-        System.out.println("Initializing Game");
+        // get data from the setup (player names, map file)
+        // apply data into structure for the new game
+        // set the scene from the new game
+        // game(controller|view|) handles user input and controls
     }
 
     public Scene getScene() {

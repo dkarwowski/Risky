@@ -23,6 +23,8 @@ public class MenuScene extends GridPane {
         newGameButton.setOnAction(event -> game.newGame());
         setConstraints(newGameButton, 0, 1);
 
+        // TODO: create a load game feature
+
         Button quitButton = new Button("Quit");
         quitButton.setCancelButton(true);
         quitButton.setOnAction(event -> game.quitAll());
