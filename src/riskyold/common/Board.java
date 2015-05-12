@@ -1,4 +1,4 @@
-package risky.common;
+package riskyold.common;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,8 @@ public class Board {
 
     /**
      * Initialize the board to be empty with specific dimensions
-     * @param setWidth the determined width
+     *
+     * @param setWidth  the determined width
      * @param setHeight the determined height
      */
     public Board(int setWidth, int setHeight) {
@@ -32,8 +33,9 @@ public class Board {
 
     /**
      * Initialize the board with a name and dimensions
-     * @param setName the name of the board
-     * @param setWidth the determined width
+     *
+     * @param setName   the name of the board
+     * @param setWidth  the determined width
      * @param setHeight the determined height
      */
     public Board(String setName, int setWidth, int setHeight) {
@@ -42,16 +44,17 @@ public class Board {
 
     /**
      * Initialize the board with specific spots
-     * @param setName the name of the board
-     * @param setWidth the width of the board
+     *
+     * @param setName   the name of the board
+     * @param setWidth  the width of the board
      * @param setHeight the height of the board
-     * @param setSpots the spots to be initialized
+     * @param setSpots  the spots to be initialized
      */
-    public Board(String setName, int setWidth, int setHeight, Spot[] setSpots){
+    public Board(String setName, int setWidth, int setHeight, Spot[] setSpots) {
         this.name = setName;
         this.width = setWidth;
         this.height = setHeight;
-        this.freeSpots = new ArrayList<Coords>();
+        this.freeSpots = new ArrayList<>();
         this.numSpots = 0;
 
         this.spots = new Spot[this.width * this.height];
@@ -73,6 +76,7 @@ public class Board {
 
     /**
      * Set a spot on the board (from empty to not)
+     *
      * @param spot what to set the position on the board to
      */
     public void setSpot(Spot spot) {
@@ -91,30 +95,34 @@ public class Board {
 
     /**
      * Get the name of the board
+     *
      * @return String with the name
      */
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
     /**
      * Get the width of the board
+     *
      * @return integer width
      */
-    public int getWidth(){
+    public int getWidth() {
         return this.width;
     }
 
     /**
      * Get the height of the board
+     *
      * @return integer height
      */
-    public int getHeight(){
+    public int getHeight() {
         return this.height;
     }
 
     /**
      * Get a spot at specified coordinates
+     *
      * @param c Coords to grab
      * @return the Spot or null
      */
@@ -124,6 +132,7 @@ public class Board {
 
     /**
      * Get a spot with x, y values. Cartesian only
+     *
      * @param x integer of Cartesian X Coordinate
      * @param y integer of Cartesian Y Coordinate
      * @return Spot located there
@@ -133,9 +142,10 @@ public class Board {
             return this.spots[x + y * this.width];
         return null;
     }
-    
+
     /**
      * Get the board of all spots
+     *
      * @return Array of every spot
      */
     public Spot[] getAllSpots() {
@@ -144,6 +154,7 @@ public class Board {
 
     /**
      * Get the country with a specific spot inside of it
+     *
      * @param s Spot in said country
      * @return Country
      */
@@ -153,6 +164,7 @@ public class Board {
 
     /**
      * Get a country with specific coordinates
+     *
      * @param x integer of Cartesian X coordinate
      * @param y integer of Cartesian Y coordinate
      * @return Country
@@ -165,6 +177,7 @@ public class Board {
 
     /**
      * Get a country based on its coordinates
+     *
      * @param c Coords in country
      * @return Country
      */
@@ -174,6 +187,7 @@ public class Board {
 
     /**
      * Get the number of spots on the board
+     *
      * @return integer of spots
      */
     public int getNumSpots() {
@@ -186,6 +200,7 @@ public class Board {
 
     /**
      * Checks if the spot is within bounds based on Cartesian Coordinates
+     *
      * @param x Cartesian X
      * @param y Cartesian Y
      * @return whether the spot is within bounds
@@ -196,41 +211,38 @@ public class Board {
 
     /**
      * Check if the coordinates exist
+     *
      * @param c The coordinates of the space
      * @return whether the spot is within bounds
      */
     public boolean contains(Coords c) {
-        if (c == null) {
-            return false;
-        }
-        return contains(c.getXCart(), c.getYCart());
+        return c != null && contains(c.getXCart(), c.getYCart());
     }
-    
+
     /**
      * Check if a spot is playable based on Cartesian Coordinates
+     *
      * @param x Cartesian X
      * @param y Cartesian Y
      * @return whether the spot exists
      */
     public boolean containsSpot(int x, int y) {
-        if (!this.contains(x,y))
-            return (false);
-        return (this.spots[x + y * this.width] != null);
+        return this.contains(x, y) && (this.spots[x + y * this.width] != null);
     }
-    
+
     /**
      * Check if a spot is playable based on coordinates
+     *
      * @param c Coordinates of the spot
      * @return whether the spot exists
      */
     public boolean containsSpot(Coords c) {
-        if (c == null)
-            return (false);
-        return (this.containsSpot(c.getXCart(), c.getYCart()));
+        return c != null && (this.containsSpot(c.getXCart(), c.getYCart()));
     }
 
     /**
      * Check if a single player owns the whole board
+     *
      * @return whether a player has won or not
      */
     public Player playerOwnsAll() {
@@ -252,7 +264,7 @@ public class Board {
      * Used to update the board.
      */
     private void setCountries() {
-        ArrayList<Country> toSet = new ArrayList<Country>();
+        ArrayList<Country> toSet = new ArrayList<>();
         for (Spot spot : this.spots) {
             if (spot == null) continue;
             boolean shouldSkip = false;
@@ -264,7 +276,7 @@ public class Board {
             }
 
             if (shouldSkip) continue;
-            if (spot != null) toSet.add(spot.getCountry());
+            toSet.add(spot.getCountry());
         }
 
         this.countries = new Country[toSet.size()];
@@ -275,20 +287,22 @@ public class Board {
 
     /**
      * Claim a spot for a player based on cartesian coordinates
-     * @param player who is claiming
-     * @param x Cartesian X
-     * @param y Cartesian Y
+     *
+     * @param player    who is claiming
+     * @param x         Cartesian X
+     * @param y         Cartesian Y
      * @param resources number of resources being placed
      */
     public void claimSpot(Player player, int x, int y, int resources) {
         Coords coords = new Coords(x, y, false);
         this.claimSpot(player, coords, resources);
     }
-    
+
     /**
      * Claim a spot based on the coordinates of the space
-     * @param player who is claiming
-     * @param coords the space being claimed
+     *
+     * @param player    who is claiming
+     * @param coords    the space being claimed
      * @param resources number being placed
      */
     public void claimSpot(Player player, Coords coords, int resources) {
@@ -301,6 +315,7 @@ public class Board {
 
     /**
      * Check if a spot has been claimed already based on Cartesian Coordinates
+     *
      * @param x Cartesian X
      * @param y Cartesian Y
      * @return whether the spot is empty
@@ -309,16 +324,15 @@ public class Board {
         Coords coords = new Coords(x, y, false);
         return (this.spotFree(coords));
     }
-    
+
     /**
      * Check if a spot has been claimed already
+     *
      * @param c coordinates of the space
      * @return whether the spot is empty
      */
     public boolean spotFree(Coords c) {
-        if (this.contains(c))
-            return (this.getSpot(c).getPlayer() == null);
-        return false;
+        return this.contains(c) && (this.getSpot(c).getPlayer() == null);
     }
 
     /**
@@ -331,11 +345,11 @@ public class Board {
 
     /**
      * Check if the setup is done by if there are any empty spots
+     *
      * @return boolean regarding state of spots
      */
     public boolean isSetupDone() {
-        boolean result = this.freeSpots.isEmpty();
-        return (result);
+        return (this.freeSpots.isEmpty());
     }
 
     //--Game Related Functions End------------------------------------------------------------	 
@@ -351,19 +365,19 @@ public class Board {
 
         for (int y = 0; y < this.height; ++y) {
             for (int x = 0; x < this.width; ++x) {
-                String spotName = (this.spots[x + y * this.width] != null) ? 
+                String spotName = (this.spots[x + y * this.width] != null) ?
                         this.spots[x + y * this.width].simpleString() : " ";
-                        result += (x % 2 == 0) ? 
-                                String.format("/ %s", spotName)  : "\\__";
+                result += (x % 2 == 0) ?
+                        String.format("/ %s", spotName) : "\\__";
             }
 
             result += "/\n";
 
             for (int x = 0; x < this.width; ++x) {
-                String spotName = (this.spots[x + y * this.width] != null) ? 
+                String spotName = (this.spots[x + y * this.width] != null) ?
                         this.spots[x + y * this.width].simpleString() : " ";
-                        result += (x % 2 == 0) ? 
-                                "\\__" : String.format("/ %s", spotName);
+                result += (x % 2 == 0) ?
+                        "\\__" : String.format("/ %s", spotName);
             }
 
             result += "\\\n";

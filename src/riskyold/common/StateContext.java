@@ -1,13 +1,12 @@
-package risky.common;
+package riskyold.common;
 
 public class StateContext {
-    private Statelike myState;
-    private int gameState;
-
     public final static int SETUP_BOARD = 1;
     public final static int PLAY_GAIN = 2;
     public final static int PLAY_PUTS = 3;
     public final static int PLAY_ATTK = 4;
+    private Statelike myState;
+    private int gameState;
 
     public StateContext() {
         this(null);
@@ -21,6 +20,7 @@ public class StateContext {
     /**
      * Setter method for state
      * Normally only called by classes implementing the State interface.
+     *
      * @param newState the new state of this context
      */
     public void setState(Statelike newState) {
@@ -29,6 +29,7 @@ public class StateContext {
 
     /**
      * Get the Player who is currently active
+     *
      * @return Player who is active
      */
     public Player getPlayer() {
@@ -37,6 +38,7 @@ public class StateContext {
 
     /**
      * Remove resources from the current player
+     *
      * @param resources Integer of resources to remove
      */
     public void removeResources(int resources) {
@@ -45,6 +47,7 @@ public class StateContext {
 
     /**
      * Check if the game state matches a test
+     *
      * @param compare integer that should fit in the statecontext parameters
      * @return boolean value of matching or not
      */
@@ -64,6 +67,7 @@ public class StateContext {
 
     /**
      * Get the current state from the context
+     *
      * @return StateContext variable
      */
     public int getPlayerState() {

@@ -1,9 +1,9 @@
-package risky.common;
+package riskyold.common;
 
-public class StatePlayer implements Statelike{
+public class StatePlayer implements Statelike {
     private Player player;
 
-    public StatePlayer(Player plyr){
+    public StatePlayer(Player plyr) {
         this.player = plyr;
     }
 

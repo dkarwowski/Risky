@@ -1,12 +1,11 @@
 package unittest;
 
-import static org.junit.Assert.*;
-
-import risky.common.Coords;
-
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import riskyold.common.Coords;
+
+import static org.junit.Assert.assertEquals;
 
 public class CoordsTest {
     private Coords coords;
@@ -29,13 +28,13 @@ public class CoordsTest {
     @Test
     public void getCoordsTest() {
         System.out.println("CoordsTest::getCoordsTest()");
-        for(int x = 0; x < 3; x++) {
+        for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 coords = new Coords(x, y);
                 Coords[] answersInDir = {new Coords(x, y - 1), new Coords(x + 1, y - 1), new Coords(x + 1, y),
-                                         new Coords(x, y + 1), new Coords(x - 1, y + 1), new Coords(x - 1, y)}; 
+                        new Coords(x, y + 1), new Coords(x - 1, y + 1), new Coords(x - 1, y)};
                 System.out.println("\nCoordsTest::getCoordsTest():  hex: \t\t" + coords.toString());
-                for(int i = 0; i < answersInDir.length; i++) {
+                for (int i = 0; i < answersInDir.length; i++) {
                     assertEquals(answersInDir[i], coords.hexInDir(i));
                     System.out.println("CoordsTest::getCoordsTest():  hexInDir: " + i + " \t" + coords.hexInDir(i).toString());
                 }
@@ -47,7 +46,7 @@ public class CoordsTest {
     public void getCartesianTest() {
         System.out.println("CoordsTest::getCartesianTest()");
         int[] yValuesCartesian = {0, 0, 1, 1, 2, 2};
-        for(int x = 0; x < yValuesCartesian.length; x++) {
+        for (int x = 0; x < yValuesCartesian.length; x++) {
             coords = new Coords(x, 0);
             assertEquals(coords.getY(false), yValuesCartesian[x]);
             System.out.println("CoordsTest::getCartesianTest   yCart: " + coords.getY(false) + " yAxial: " + coords.getY(true));

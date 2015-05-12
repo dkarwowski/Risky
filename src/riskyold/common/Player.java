@@ -1,4 +1,4 @@
-package risky.common;
+package riskyold.common;
 
 import java.util.ArrayList;
 
@@ -15,8 +15,9 @@ public class Player {
 
     /**
      * Initialize a player with just a name and ID, sets the resources to defaults of 10&10
+     *
      * @param setName name of the player
-     * @param setID id of the player for the game
+     * @param setID   id of the player for the game
      */
     public Player(String setName, int setID) {
         // TODO(david): set initial resources to be based on number of players
@@ -25,8 +26,9 @@ public class Player {
 
     /**
      * Initialize the player with all of the information necessary
-     * @param setName name of the player
-     * @param setID id of the player for the game
+     *
+     * @param setName        name of the player
+     * @param setID          id of the player for the game
      * @param startResources resources the game starts with
      */
     public Player(String setName, int setID, int startResources) {
@@ -38,8 +40,8 @@ public class Player {
 
         // spots Owned is initialized to be empty, first turn will add the first
         // spot(s)
-        this.spotsOwned = new ArrayList<Spot>();
-        this.countriesOwned = new ArrayList<Country>();
+        this.spotsOwned = new ArrayList<>();
+        this.countriesOwned = new ArrayList<>();
     }
 
     @Override
@@ -58,6 +60,7 @@ public class Player {
 
     /**
      * Get the ID of the player
+     *
      * @return integer id
      */
     public int getID() {
@@ -66,6 +69,7 @@ public class Player {
 
     /**
      * Get the name of the player
+     *
      * @return String with name
      */
     public String getName() {
@@ -74,6 +78,7 @@ public class Player {
 
     /**
      * Get the resources this player can use
+     *
      * @return integer with resource amount
      */
     public int getAvailableResources() {
@@ -83,6 +88,7 @@ public class Player {
     /**
      * Get all of the spots this player owns
      * TODO: check if we need to keep track of this here
+     *
      * @return ArrayList of spots belonging to the player
      */
     public ArrayList<Spot> getSpotsOwned() {
@@ -92,6 +98,7 @@ public class Player {
     /**
      * Get all of the countries owned by the player
      * TODO: check if we need to keep track of this here
+     *
      * @return ArrayList of the countries owned
      */
     public ArrayList<Country> getCountriesOwned() {
@@ -111,6 +118,7 @@ public class Player {
 
     /**
      * Add a specific number of resources to the player
+     *
      * @param resources Number of resources the game determines should be added
      */
     public void addResources(int resources) {
@@ -119,6 +127,7 @@ public class Player {
 
     /**
      * Add a country to the list of owned
+     *
      * @param c Country to add
      */
     public void addCountry(Country c) {
@@ -127,6 +136,7 @@ public class Player {
 
     /**
      * Add a spot to the list of owned Spots
+     *
      * @param s Spots to be owned
      */
     public void addSpot(Spot s) {

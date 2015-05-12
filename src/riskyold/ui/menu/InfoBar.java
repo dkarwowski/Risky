@@ -1,4 +1,4 @@
-package risky.ui.menu;
+package riskyold.ui.menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +22,11 @@ public class InfoBar extends JPanel {
         startButton.addActionListener(listener);
         this.add(startButton);
 /**
-        settingsButton = new JButton("Settings");
-        settingsButton.setActionCommand("userCommandSettings");
-        settingsButton.addActionListener(listener);
-        this.add(settingsButton);
-**/
+ settingsButton = new JButton("Settings");
+ settingsButton.setActionCommand("userCommandSettings");
+ settingsButton.addActionListener(listener);
+ this.add(settingsButton);
+ **/
         exitButton = new JButton("Exit");
         exitButton.setActionCommand("userCommandExit");
         exitButton.addActionListener(listener);

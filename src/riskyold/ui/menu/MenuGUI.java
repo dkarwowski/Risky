@@ -1,9 +1,8 @@
-package risky.ui.menu;
+package riskyold.ui.menu;
 
-import risky.Risky;
+import riskyold.Risky;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,12 +11,12 @@ import java.util.ArrayList;
 
 public class MenuGUI extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
-    
+
     private InfoBar infoBar;
 
     public MenuGUI() {
         super("Risky Main Menu"); // initialize with name
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Risky Main Menu");
 
@@ -29,18 +28,23 @@ public class MenuGUI extends JFrame implements ActionListener {
         this.setVisible(true);
 
     }
-    
+
+    public static void main(String[] args) {
+        new MenuGUI();
+    }
+
     public String chooseBoard() {
         File boardDirectory = new File("data");
-        
+
         File[] flist = boardDirectory.listFiles();
-        ArrayList<String> fnames = new ArrayList<String>();
+        ArrayList<String> fnames = new ArrayList<>();
+        assert flist != null;
         for (File f : flist) {
             if (f.getName().matches(".*\\.map"))
                 fnames.add(f.getName());
         }
-        
-        String dialogInput = (String)JOptionPane.showInputDialog(
+
+        String dialogInput = (String) JOptionPane.showInputDialog(
                 this,
                 "Choose a board from the following",
                 "Choose Board",
@@ -48,7 +52,7 @@ public class MenuGUI extends JFrame implements ActionListener {
                 null,
                 fnames.toArray(),
                 fnames.get(0));
-        
+
         if ((dialogInput != null) && (dialogInput.length() > 0))
             return (dialogInput);
         return (null);
@@ -71,15 +75,11 @@ public class MenuGUI extends JFrame implements ActionListener {
                 this.setVisible(true);
         }
 /**
-        if (e.getActionCommand().equals("userCommandSettings")) {
-            // TODO: settings menu
-            JOptionPane.showMessageDialog(this, "Oops! This feature is missing. Check back in feature versions!",
-                    "Error", JOptionPane.PLAIN_MESSAGE);
-        }
+ if (e.getActionCommand().equals("userCommandSettings")) {
+ // TODO: settings menu
+ JOptionPane.showMessageDialog(this, "Oops! This feature is missing. Check back in feature versions!",
+ "Error", JOptionPane.PLAIN_MESSAGE);
+ }
  **/
-    }
-
-    public static void main(String[] args) {
-        new MenuGUI();
     }
 }

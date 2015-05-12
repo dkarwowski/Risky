@@ -1,11 +1,8 @@
-package risky.ui;
+package riskyold.ui;
 
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class PlayerPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -34,6 +31,7 @@ public class PlayerPanel extends JPanel {
 
     /**
      * Write a message to the panel
+     *
      * @param message String to write
      */
     public void writeToPanel(String message) {
@@ -43,6 +41,7 @@ public class PlayerPanel extends JPanel {
 
     /**
      * Get the highest dimension
+     *
      * @param d1 first Dimension to compare
      * @param d2 second Dimension to compare
      * @return Dimension (either d1 or d2)

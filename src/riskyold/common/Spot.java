@@ -1,4 +1,4 @@
-package risky.common;
+package riskyold.common;
 
 public class Spot {
     private Player _player;
@@ -15,13 +15,14 @@ public class Spot {
         _player = null;
         _resources = 0;
         _country = null;
-        _coordinates = new Coords(0,0); //Default Coords of 0,0
+        _coordinates = new Coords(0, 0); //Default Coords of 0,0
     }
 
     /**
      * Construct spots with their Country and position
+     *
      * @param country Country to be set
-     * @param coords Coords of location
+     * @param coords  Coords of location
      */
     public Spot(Country country, Coords coords) {
         this.setPlayer(null);
@@ -36,6 +37,7 @@ public class Spot {
 
     /**
      * Get the player who owns the spot
+     *
      * @return Player instance or null
      */
     public Player getPlayer() {
@@ -43,7 +45,17 @@ public class Spot {
     }
 
     /**
+     * Set the player on the spot
+     *
+     * @param player Player who now owns the spot
+     */
+    public void setPlayer(Player player) {
+        _player = player;
+    }
+
+    /**
      * Get the resources placed on the spot
+     *
      * @return Integer value of resources
      */
     public int getResources() {
@@ -51,7 +63,17 @@ public class Spot {
     }
 
     /**
+     * Set the resources this spot has
+     *
+     * @param resources integer of resources the spot should have
+     */
+    public void setResources(int resources) {
+        _resources = resources;
+    }
+
+    /**
      * Get the country the spot belongs to
+     *
      * @return Country that contains this spot
      */
     public Country getCountry() {
@@ -60,14 +82,20 @@ public class Spot {
 
     /**
      * Get the location of the spot
+     *
      * @return Coords value specifying where the spot is
      */
     public Coords getCoords() {
         return _coordinates;
     }
 
+    //--Getters End---------------------------------------------------------------     
+
+    //--Setters Start-------------------------------------------------------------     
+
     /**
      * Get the X location of the spot
+     *
      * @param cartesian determines whether the X value should be cartesian
      * @return Integer of the X value
      */
@@ -77,31 +105,12 @@ public class Spot {
 
     /**
      * Get the Y location of the spot
+     *
      * @param cartesian determines whether the Y value should be cartesian
      * @return Integer of the Y value
      */
     public int getY(boolean cartesian) {
         return _coordinates.getY(!cartesian);
-    }
-
-    //--Getters End---------------------------------------------------------------     
-
-    //--Setters Start-------------------------------------------------------------     
-
-    /**
-     * Set the player on the spot
-     * @param player Player who now owns the spot
-     */
-    public void setPlayer(Player player) {
-        _player = player;
-    }
-
-    /**
-     * Set the resources this spot has
-     * @param resources integer of resources the spot should have
-     */
-    public void setResources(int resources) {
-        _resources = resources;
     }
 
     //--Setters End---------------------------------------------------------------     
@@ -138,9 +147,10 @@ public class Spot {
     //--To String Functions End---------------------------------------------------
 
     //--Game Functions Start------------------------------------------------------
-    
+
     /**
      * Add resources to the spot
+     *
      * @param resources integer of resources to add
      */
     public void addResources(int resources) {
@@ -149,6 +159,7 @@ public class Spot {
 
     /**
      * Check if a given position is directly attached to this spot
+     *
      * @param coords Coords of the position
      * @return boolean whether or not the position is directly attached
      */

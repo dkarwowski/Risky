@@ -1,13 +1,13 @@
 package unittest;
 
-import static org.junit.Assert.*;
-import risky.common.Country;
-import risky.common.Player;
-import risky.common.Spot;
-
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import riskyold.common.Country;
+import riskyold.common.Player;
+import riskyold.common.Spot;
+
+import static org.junit.Assert.assertEquals;
 
 public class CountryTest {
     Country country;

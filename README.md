@@ -4,7 +4,7 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
 
 ## How to Play
 
-Start the game by running from src/risky.ui.menu.MenuGUI
+Start the game by running from src/riskyold.ui.menu.MenuGUI
 
 ![Menu - Hit Start](docs/menu-01.PNG)
 
