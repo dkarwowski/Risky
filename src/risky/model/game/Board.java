@@ -6,11 +6,12 @@ package risky.model.game;
  * Created by davidkarwowski on 5/12/15.
  */
 public class Board {
+    private Spot[] spots;
+
     /**
      * Initialize the board variables
      */
     public Board() {
-
     }
 
     /**
