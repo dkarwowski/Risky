@@ -22,7 +22,7 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
 
 - [ ] Get a board loaded
     - [x] create a basic spot
-    - [ ] create a basic coordinate system
+    - [x] create a basic coordinate system
     - [ ] create a basic country
 - [ ] Get a basic player
     - [ ] create a resource system
