@@ -8,11 +8,14 @@ package risky.model.game;
 public class Board {
     // TODO: possibly make board hold country, country hold spots?
     private Spot[] spots;   // single dimensional array of spots
+    private Country[] countries;
 
     /**
      * Initialize the board variables
      */
     public Board() {
+        this.spots = null;
+        this.countries = null;
     }
 
     /**
