@@ -11,7 +11,7 @@ import risky.view.GameSkin;
  * Created by davidkarwowski on 5/12/15.
  */
 public class Game {
-    private GameSkin scene;
+    private GameSkin skin;
     // TODO: implement these
     private Board board;
     private Player[] players;
@@ -19,10 +19,10 @@ public class Game {
     /**
      * Initialize the new Game with its scene
      *
-     * @param scene the scene to draw to
+     * @param skin the scene to draw to
      */
-    public Game(GameSkin scene) {
-        this.scene = scene;
+    public Game(GameSkin skin) {
+        this.skin = skin;
 
         this.board = null;
         this.players = null;

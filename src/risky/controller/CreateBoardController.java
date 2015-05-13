@@ -13,14 +13,14 @@ import risky.view.CreateBoardSkin;
 public class CreateBoardController {
     private Risky app;
     private Scene scene;
-    private CreateBoardSkin boardSkin;
-    private CreateBoard board;
+    private CreateBoardSkin createBoardSkin;
+    private CreateBoard createBoard;
 
     public CreateBoardController(Risky app) {
         this.app = app;
-        this.boardSkin = new CreateBoardSkin();
-        this.board = new CreateBoard();
-        this.scene = new Scene(this.boardSkin);
+        this.createBoardSkin = new CreateBoardSkin(this);
+        this.createBoard = new CreateBoard(this.createBoardSkin);
+        this.scene = new Scene(this.createBoardSkin);
     }
 
     public Scene getScene() {
