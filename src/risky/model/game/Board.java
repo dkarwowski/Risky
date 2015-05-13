@@ -6,7 +6,8 @@ package risky.model.game;
  * Created by davidkarwowski on 5/12/15.
  */
 public class Board {
-    private Spot[] spots;
+    // TODO: possibly make board hold country, country hold spots?
+    private Spot[] spots;   // single dimensional array of spots
 
     /**
      * Initialize the board variables

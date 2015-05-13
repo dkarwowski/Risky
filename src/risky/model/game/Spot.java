@@ -11,17 +11,31 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 public class Spot {
     private static int nextID = 1;
 
-    private ReadOnlyIntegerWrapper id; // used to compare two spots
-    private ReadOnlyIntegerWrapper troops; // troops that have been placed
-    private ReadOnlyObjectWrapper<Player> player; // person who owns the Spot
+    private ReadOnlyIntegerWrapper id;              // used to compare two spots
+    private ReadOnlyIntegerWrapper troops;          // troops that have been placed
+    private ReadOnlyObjectWrapper<Player> player;   // person who owns the Spot
+    private ReadOnlyObjectWrapper<Coords> coords;   // coordinate location of the spot
 
     /**
-     * Create a new Spot for the player
+     * Create a new Spot for the board
+     *
+     * @param x integer x coordinate
+     * @param y integer y coordinate
      */
-    public Spot() {
+    public Spot(int x, int y) {
+        this(new Coords(x, y));
+    }
+
+    /**
+     * Create a new Spot for the board
+     *
+     * @param coords coordinates of the spot
+     */
+    public Spot(Coords coords) {
         this.id = new ReadOnlyIntegerWrapper(Spot.nextID++);
         this.troops = new ReadOnlyIntegerWrapper(0);
         this.player = new ReadOnlyObjectWrapper<>(null);
+        this.coords = new ReadOnlyObjectWrapper<>(coords);
     }
 
     /**
@@ -49,6 +63,15 @@ public class Spot {
      */
     public Player getPlayer() {
         return this.player.get();
+    }
+
+    /**
+     * Get the Coordinate location of the Spot
+     *
+     * @return Coordinates of where the spot is located
+     */
+    public Coords getCoords() {
+        return this.coords.get();
     }
 
     @Override
