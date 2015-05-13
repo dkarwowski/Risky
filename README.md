@@ -20,6 +20,19 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
         
 ## Goals
 
+- [ ] User board creation
+    - [ ] display a board on the screen
+    - [ ] gather input from clicking on board
+    - [ ] field user input to make new spots on a board
+    - [ ] create the board from the user input
+        - [ ] countries exist
+        - [ ] spots have coordinates
+        - [ ] spots have exits
+        - [ ] ensure spots are fully connected
+    - [ ] write information to a file
+        - [ ] board gets named
+        - [ ] board spots are written
+        - [ ] spots write exits
 - [ ] Get a board loaded
     - [x] create a basic spot
     - [x] create a basic coordinate system

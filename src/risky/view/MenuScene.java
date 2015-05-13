@@ -12,23 +12,28 @@ import risky.Risky;
  * Created by davidkarwowski on 5/11/15.
  */
 public class MenuScene extends GridPane {
-    public MenuScene(Risky game) {
+    public MenuScene(Risky app) {
         // TODO: add stylesheets
         Label nameLabel = new Label("Risky");
         nameLabel.setFont(new Font("Arial", 20));
-        setConstraints(nameLabel, 0, 0, 2, 1);
+        setConstraints(nameLabel, 0, 0, 3, 1);
 
         Button newGameButton = new Button("New Game");
         newGameButton.setDefaultButton(true);
-        newGameButton.setOnAction(event -> game.newGame());
+        newGameButton.setOnAction(event -> app.newGame());
         setConstraints(newGameButton, 0, 1);
 
-        // TODO: create a load game feature
+        // TODO: create a load app feature
+
+        // TODO: see about moving this to settings menu
+        Button createBoardButton = new Button("Create Board");
+        createBoardButton.setOnAction(event -> app.createBoard());
+        setConstraints(createBoardButton, 1, 1);
 
         Button quitButton = new Button("Quit");
         quitButton.setCancelButton(true);
-        quitButton.setOnAction(event -> game.quitAll());
-        setConstraints(quitButton, 1, 1);
+        quitButton.setOnAction(event -> app.quitAll());
+        setConstraints(quitButton, 2, 1);
 
         setHgap(5);
         setVgap(5);
