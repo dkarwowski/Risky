@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import risky.common.GameManager;
 import risky.controller.CreateBoardController;
-import risky.model.CreateBoard;
 import risky.view.MenuSkin;
 
 /**
@@ -57,7 +56,6 @@ public class Risky extends Application {
      * Setup view and controller for creating a new board
      */
     public void createBoard() {
-        CreateBoard board = new CreateBoard();
         CreateBoardController controller = new CreateBoardController(this);
 
         Scene scene = controller.getScene();

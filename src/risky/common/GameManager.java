@@ -7,12 +7,12 @@ import risky.model.Setup;
 
 /**
  * Manages the scenes and the menu states
+ *
  * Created by davidkarwowski on 5/11/15.
  */
 public class GameManager {
     private Risky app;
     private Scene scene;
-    private Setup setup; // TODO: see about removing the setup class from here?
 
     /**
      * Create the game manager
@@ -28,8 +28,8 @@ public class GameManager {
      * Setup a new game using the setup view and controller
      */
     public void startSetup() {
-        this.setup = new Setup();
-        SetupController setupController = new SetupController(this, this.setup);
+        Setup setup = new Setup();
+        SetupController setupController = new SetupController(this, setup);
 
         if (this.scene == null)
             this.scene = new Scene(setupController.getSkin());
