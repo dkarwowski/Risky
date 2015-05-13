@@ -2,7 +2,7 @@ package risky.controller;
 
 import risky.common.GameManager;
 import risky.model.Game;
-import risky.view.GameScene;
+import risky.view.GameSkin;
 
 /**
  * Controls the game, handles the user input from the view.
@@ -12,7 +12,7 @@ import risky.view.GameScene;
  */
 public class GameController {
     private final GameManager manager;
-    private final GameScene scene;
+    private final GameSkin skin;
     private final Game game;
 
     /**
@@ -22,8 +22,8 @@ public class GameController {
      */
     public GameController(GameManager manager) {
         this.manager = manager;
-        this.scene = new GameScene(this);
-        this.game = new Game(this.scene);
+        this.skin = new GameSkin(this);
+        this.game = new Game(this.skin);
     }
 
     /**

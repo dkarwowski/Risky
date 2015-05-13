@@ -11,8 +11,8 @@ import risky.Risky;
  * Handles the view of the first splash screen
  * Created by davidkarwowski on 5/11/15.
  */
-public class MenuScene extends GridPane {
-    public MenuScene(Risky app) {
+public class MenuSkin extends GridPane {
+    public MenuSkin(Risky app) {
         // TODO: add stylesheets
         Label nameLabel = new Label("Risky");
         nameLabel.setFont(new Font("Arial", 20));

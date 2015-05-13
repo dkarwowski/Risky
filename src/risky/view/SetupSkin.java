@@ -14,10 +14,10 @@ import risky.controller.SetupController;
  * Has the Player setup number of players, player names, and board choosing
  * Created by davidkarwowski on 5/11/15.
  */
-public class SetupScene extends GridPane {
+public class SetupSkin extends GridPane {
     private final SetupController setupController;
 
-    public SetupScene(SetupController controller) {
+    public SetupSkin(SetupController controller) {
         this.setupController = controller;
 
         // General settings

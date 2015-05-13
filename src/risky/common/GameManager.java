@@ -32,9 +32,9 @@ public class GameManager {
         SetupController setupController = new SetupController(this, this.setup);
 
         if (this.scene == null)
-            this.scene = new Scene(setupController.getScene());
+            this.scene = new Scene(setupController.getSkin());
         else
-            this.scene.setRoot(setupController.getScene());
+            this.scene.setRoot(setupController.getSkin());
     }
 
     /**

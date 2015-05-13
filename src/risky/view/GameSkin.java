@@ -7,7 +7,7 @@ import risky.controller.GameController;
  * Throws user input into the controller
  * Created by davidkarwowski on 5/12/15.
  */
-public class GameScene {
+public class GameSkin {
     private final GameController controller;
 
     /**
@@ -15,7 +15,7 @@ public class GameScene {
      *
      * @param controller the controller that will handle input
      */
-    public GameScene(GameController controller) {
+    public GameSkin(GameController controller) {
         this.controller = controller;
     }
 

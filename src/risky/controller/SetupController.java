@@ -2,7 +2,7 @@ package risky.controller;
 
 import risky.common.GameManager;
 import risky.model.Setup;
-import risky.view.SetupScene;
+import risky.view.SetupSkin;
 
 /**
  * Handles the buttons and choices made in the Setup Menu
@@ -10,7 +10,7 @@ import risky.view.SetupScene;
  */
 public class SetupController {
     private final GameManager gameManager;
-    private final SetupScene setupScene;
+    private final SetupSkin setupSkin;
     private final Setup setup;
 
     /**
@@ -20,7 +20,7 @@ public class SetupController {
      * @param setup Model for the controller
      */
     public SetupController(GameManager manager, Setup setup) {
-        this.setupScene = new SetupScene(this);
+        this.setupSkin = new SetupSkin(this);
         this.gameManager = manager;
         this.setup = setup;
 
@@ -74,7 +74,7 @@ public class SetupController {
      *
      * @return SetupScene being used at the moment
      */
-    public SetupScene getScene() {
-        return this.setupScene;
+    public SetupSkin getSkin() {
+        return this.setupSkin;
     }
 }

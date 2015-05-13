@@ -2,7 +2,7 @@ package risky.model;
 
 import risky.model.game.Board;
 import risky.model.game.Player;
-import risky.view.GameScene;
+import risky.view.GameSkin;
 
 /**
  * Model of the game. Holds the logic for the game and will handle
@@ -11,7 +11,7 @@ import risky.view.GameScene;
  * Created by davidkarwowski on 5/12/15.
  */
 public class Game {
-    private GameScene scene;
+    private GameSkin scene;
     // TODO: implement these
     private Board board;
     private Player[] players;
@@ -21,7 +21,7 @@ public class Game {
      *
      * @param scene the scene to draw to
      */
-    public Game(GameScene scene) {
+    public Game(GameSkin scene) {
         this.scene = scene;
 
         this.board = null;

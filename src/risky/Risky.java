@@ -6,7 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import risky.common.GameManager;
 import risky.controller.CreateBoardController;
-import risky.view.MenuScene;
+import risky.model.CreateBoard;
+import risky.view.MenuSkin;
 
 /**
  * Main Loop to run the game from
@@ -36,9 +37,9 @@ public class Risky extends Application {
      * Instantiate and set the menu up
      */
     public void menu() {
-        MenuScene menuScene = new MenuScene(this);
+        MenuSkin menuSkin = new MenuSkin(this);
 
-        Scene scene = new Scene(menuScene);
+        Scene scene = new Scene(menuSkin);
         this.stage.setScene(scene);
     }
 
@@ -56,7 +57,11 @@ public class Risky extends Application {
      * Setup view and controller for creating a new board
      */
     public void createBoard() {
-        // TODO: implement
+        CreateBoard board = new CreateBoard();
+        CreateBoardController controller = new CreateBoardController(this);
+
+        Scene scene = controller.getScene();
+        this.stage.setScene(scene);
     }
 
     /**
