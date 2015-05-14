@@ -16,6 +16,11 @@ public class CreateBoardController {
     private CreateBoardSkin createBoardSkin;
     private CreateBoard createBoard;
 
+    /**
+     * Instantiate new controller
+     *
+     * @param app the callback application
+     */
     public CreateBoardController(Risky app) {
         this.app = app;
         this.createBoardSkin = new CreateBoardSkin(this);
@@ -23,22 +28,47 @@ public class CreateBoardController {
         this.scene = new Scene(this.createBoardSkin);
     }
 
+    /**
+     * Set the width of the new board
+     *
+     * @param width integer width
+     */
     public void setWidth(int width) {
         this.createBoard.setWidth(width);
     }
 
+    /**
+     * Set the height of the new board
+     *
+     * @param height integer height
+     */
     public void setHeight(int height) {
         this.createBoard.setHeight(height);
     }
 
+    /**
+     * Callback from Skin, continue button hit
+     */
     public void sizeChosen() {
-        // TODO: implement
+        // create a blank board
+        this.createBoard.generateBoard();
+        // set up the new boardskin
+        this.createBoardSkin.switchView();
+        this.scene.setRoot(this.createBoardSkin); // assume scene already instantiated
     }
 
+    /**
+     * Callback from Skin, cancel button hit
+     */
     public void quitToMenu() {
         this.app.menu();
     }
 
+    /**
+     * Get the scene for the app itself
+     *
+     * @return Scene to be used
+     */
     public Scene getScene() {
         return this.scene;
     }

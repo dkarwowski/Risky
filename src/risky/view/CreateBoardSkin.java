@@ -81,4 +81,11 @@ public class CreateBoardSkin extends GridPane {
                 cancelButton
         );
     }
+
+    public void switchView() {
+        // grab the generated board
+        // create a board view
+        // throw boardview on grid
+        // throw buttons on grid
+    }
 }
