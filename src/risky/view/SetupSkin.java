@@ -1,5 +1,6 @@
 package risky.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,6 +24,7 @@ public class SetupSkin extends GridPane {
         // General settings
         setHgap(5);
         setVgap(5);
+        this.setPadding(new Insets(10, 10, 10, 10));
 
         // Board Selection -
         Label boardLabel = new Label("Select Map");

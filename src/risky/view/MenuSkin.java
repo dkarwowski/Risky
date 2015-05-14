@@ -1,5 +1,6 @@
 package risky.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,8 @@ import risky.Risky;
  */
 public class MenuSkin extends GridPane {
     public MenuSkin(Risky app) {
+        this.setPadding(new Insets(10, 10, 10, 10));
+
         // TODO: add stylesheets
         Label nameLabel = new Label("Risky");
         nameLabel.setFont(new Font("Arial", 20));
@@ -38,6 +41,6 @@ public class MenuSkin extends GridPane {
         setHgap(5);
         setVgap(5);
         setAlignment(Pos.BOTTOM_CENTER);
-        this.getChildren().addAll(nameLabel, newGameButton, quitButton);
+        this.getChildren().addAll(nameLabel, newGameButton, createBoardButton, quitButton);
     }
 }

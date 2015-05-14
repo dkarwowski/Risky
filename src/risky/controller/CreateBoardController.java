@@ -23,6 +23,22 @@ public class CreateBoardController {
         this.scene = new Scene(this.createBoardSkin);
     }
 
+    public void setWidth(int width) {
+        this.createBoard.setWidth(width);
+    }
+
+    public void setHeight(int height) {
+        this.createBoard.setHeight(height);
+    }
+
+    public void sizeChosen() {
+        // TODO: implement
+    }
+
+    public void quitToMenu() {
+        this.app.menu();
+    }
+
     public Scene getScene() {
         return this.scene;
     }

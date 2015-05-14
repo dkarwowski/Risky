@@ -21,7 +21,7 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
 ## Goals
 
 - [ ] User board creation
-    - [ ] ask for board size
+    - [x] ask for board size
     - [ ] display a board on the screen
         - [ ] display spots
         - [ ] display country border
