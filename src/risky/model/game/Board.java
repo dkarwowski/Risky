@@ -39,10 +39,20 @@ public class Board {
         this.countries = new ArrayList<>();
     }
 
+    /**
+     * Get the spots on the board
+     *
+     * @return array of spots
+     */
     public Spot[] getSpots() {
         return this.spots;
     }
 
+    /**
+     * Get the dimensions of the board
+     *
+     * @return dimensions {width, height}
+     */
     public int[] getDimensions() {
         return this.dimensions;
     }

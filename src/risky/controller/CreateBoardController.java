@@ -3,7 +3,6 @@ package risky.controller;
 import javafx.scene.Scene;
 import risky.Risky;
 import risky.model.CreateBoard;
-import risky.model.game.Board;
 import risky.view.CreateBoardSkin;
 
 /**
