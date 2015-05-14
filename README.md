@@ -23,7 +23,10 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
 - [ ] User board creation
     - [x] ask for board size
     - [ ] display a board on the screen
+        - [ ] display board outline
         - [ ] display spots
+            - [x] null spots
+            - [ ] empty spots
         - [ ] display country border
         - [ ] spot connections
     - [ ] gather input from clicking on board

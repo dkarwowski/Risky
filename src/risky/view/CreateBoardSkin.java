@@ -37,14 +37,12 @@ public class CreateBoardSkin extends StackPane {
         // Label
         Label boardSizeLabel = new Label("Select Board Size");
         GridPane.setConstraints(boardSizeLabel, 0, 0);
-        Label widthLabel = new Label("Width:  10");
+        Label widthLabel = new Label("Dim: 15x7");
         GridPane.setConstraints(widthLabel, 0, 1);
-        Label heightLabel = new Label("Height:  10");
-        GridPane.setConstraints(heightLabel, 0, 2);
         // Board Size Chooser
         Slider widthSlider = new Slider();
-        widthSlider.setMin(10);
-        widthSlider.setMax(30);
+        widthSlider.setMin(15);
+        widthSlider.setMax(25);
         widthSlider.setBlockIncrement(1);
         widthSlider.setMajorTickUnit(5);
         widthSlider.setMinorTickCount(4);
@@ -54,26 +52,13 @@ public class CreateBoardSkin extends StackPane {
         widthSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     this.controller.setWidth(newValue.intValue());
-                    widthLabel.setText(String.format("Width:  %d", newValue.intValue()));
+                    this.controller.setHeight(newValue.intValue() / 2);
+                    widthLabel.setText(
+                            String.format("Dim: %dx%d", newValue.intValue(), newValue.intValue()/2)
+                    );
                 }
         );
         GridPane.setConstraints(widthSlider, 1, 1, 2, 1);
-        Slider heightSlider = new Slider();
-        heightSlider.setMin(10);
-        heightSlider.setMax(30);
-        heightSlider.setBlockIncrement(1);
-        heightSlider.setMajorTickUnit(5);
-        heightSlider.setMinorTickCount(4);
-        heightSlider.setShowTickLabels(true);
-        heightSlider.setShowTickMarks(true);
-        heightSlider.setSnapToTicks(true);
-        heightSlider.valueProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    this.controller.setHeight(newValue.intValue());
-                    heightLabel.setText(String.format("Height:  %d", newValue.intValue()));
-                }
-        );
-        GridPane.setConstraints(heightSlider, 1, 2, 2, 1);
         // Buttons
         Button continueButton = new Button("Continue");
         continueButton.setOnAction(event -> this.controller.sizeChosen());
@@ -84,10 +69,8 @@ public class CreateBoardSkin extends StackPane {
 
         settingsPane.getChildren().addAll(
                 boardSizeLabel,
-                heightLabel,
                 widthLabel,
                 widthSlider,
-                heightSlider,
                 continueButton,
                 cancelButton
         );
@@ -138,38 +121,45 @@ public class CreateBoardSkin extends StackPane {
                     context.setLineWidth(2);
                     context.strokePolyline(
                             new double[]{
-                                    xOffset + 3 + 44.5 * x,
-                                    xOffset + 2 + 44.5 * x + 15,
-                                    xOffset - 2 + 44.5 * x + 45
+                                    xOffset + 44.5 * x + 1,
+                                    xOffset + 44.5 * x + 16,
+                                    xOffset + 44.5 * x + 44
                             },
                             new double[]{
-                                    yOffset + 52 * y - 2,
-                                    yOffset + 52 * y - 26 + 2,
-                                    yOffset + 52 * y - 26 + 2
+                                    yOffset + 52 * y,
+                                    yOffset + 52 * y - 25,
+                                    yOffset + 52 * y - 25
                             },
                             3
+                    );
+                    context.setLineWidth(1);
+                    context.strokeLine(
+                            xOffset + 44.5 * x + 44,
+                            yOffset + 52 * y - 25,
+                            xOffset + 44.5 * x + 59,
+                            yOffset + 52 * y + 1
                     );
                     context.setStroke(Color.color(0.1f, 0.1f, 0.5f, 0.3f));
                     context.setLineCap(StrokeLineCap.ROUND);
                     context.setLineWidth(2);
                     context.strokePolyline(
                             new double[]{
-                                    xOffset + 44.5 * x + 60 - 3,
-                                    xOffset + 44.5 * x + 45 - 2,
-                                    xOffset + 44.5 * x + 15 + 2
+                                    xOffset + 44.5 * x + 59,
+                                    xOffset + 44.5 * x + 44,
+                                    xOffset + 44.5 * x + 16
                             },
                             new double[]{
-                                    yOffset + 52 * y + 2,
-                                    yOffset + 52 * y + 26 - 2,
-                                    yOffset + 52 * y + 26 - 2
+                                    yOffset + 52 * y - 1,
+                                    yOffset + 52 * y + 25,
+                                    yOffset + 52 * y + 25
                             },
                             3
                     );
                     context.setLineWidth(1);
                     context.strokeLine(
-                            xOffset + 44.5 * x + 15 + 1,
-                            yOffset + 52 * y + 26 - 1,
-                            xOffset + 44.5 * x + 2,
+                            xOffset + 44.5 * x + 16,
+                            yOffset + 52 * y + 26,
+                            xOffset + 44.5 * x + 1,
                             yOffset + 52 * y
                     );
                 }
