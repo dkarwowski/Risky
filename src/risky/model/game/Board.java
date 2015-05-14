@@ -1,6 +1,7 @@
 package risky.model.game;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public class Board {
     // TODO: possibly make board hold country, country hold spots?
     private Spot[] spots;   // single dimensional array of spots
     private ArrayList<Country> countries;
+
+    private int[] dimensions = new int[2];
 
     /**
      * Initialize the board variables
@@ -31,8 +34,17 @@ public class Board {
      * @param height height of the new board
      */
     public Board(int width, int height) {
+        this.dimensions = new int[]{width, height};
         this.spots = new Spot[width * height];
         this.countries = new ArrayList<>();
+    }
+
+    public Spot[] getSpots() {
+        return this.spots;
+    }
+
+    public int[] getDimensions() {
+        return this.dimensions;
     }
 
     /**

@@ -63,6 +63,14 @@ public class Risky extends Application {
     }
 
     /**
+     * Ensure the sizing is right
+     */
+    public void resize() {
+        this.stage.sizeToScene();
+        this.stage.centerOnScreen();
+    }
+
+    /**
      * Exit the application entirely
      */
     public void quitAll() {

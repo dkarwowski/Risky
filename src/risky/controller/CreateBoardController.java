@@ -3,6 +3,7 @@ package risky.controller;
 import javafx.scene.Scene;
 import risky.Risky;
 import risky.model.CreateBoard;
+import risky.model.game.Board;
 import risky.view.CreateBoardSkin;
 
 /**
@@ -53,8 +54,8 @@ public class CreateBoardController {
         // create a blank board
         this.createBoard.generateBoard();
         // set up the new boardskin
-        this.createBoardSkin.switchView();
-        this.scene.setRoot(this.createBoardSkin); // assume scene already instantiated
+        this.createBoardSkin.switchView(this.createBoard.getBoardProperty());
+        this.app.resize();
     }
 
     /**

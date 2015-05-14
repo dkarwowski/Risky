@@ -1,35 +1,50 @@
 package risky.view;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeLineCap;
 import risky.controller.CreateBoardController;
+import risky.model.game.Board;
+import risky.model.game.Spot;
 
 /**
  * Displays the board and catches user input
  *
  * Created by davidkarwowski on 5/13/15.
  */
-public class CreateBoardSkin extends GridPane {
+public class CreateBoardSkin extends StackPane {
     private CreateBoardController controller;
 
     public CreateBoardSkin(CreateBoardController controller) {
         this.controller = controller;
 
+        GridPane settingsPane = new GridPane();
+
         // General settings
-        this.setHgap(5);
-        this.setVgap(5);
+        settingsPane.setHgap(5);
+        settingsPane.setVgap(5);
         this.setPadding(new Insets(10, 10, 10, 10));
 
         // Label
         Label boardSizeLabel = new Label("Select Board Size");
-        setConstraints(boardSizeLabel, 0, 0);
+        GridPane.setConstraints(boardSizeLabel, 0, 0);
         Label widthLabel = new Label("Width:  10");
-        setConstraints(widthLabel, 0, 1);
+        GridPane.setConstraints(widthLabel, 0, 1);
         Label heightLabel = new Label("Height:  10");
-        setConstraints(heightLabel, 0, 2);
+        GridPane.setConstraints(heightLabel, 0, 2);
         // Board Size Chooser
         Slider widthSlider = new Slider();
         widthSlider.setMin(10);
@@ -46,7 +61,7 @@ public class CreateBoardSkin extends GridPane {
                     widthLabel.setText(String.format("Width:  %d", newValue.intValue()));
                 }
         );
-        setConstraints(widthSlider, 1, 1, 2, 1);
+        GridPane.setConstraints(widthSlider, 1, 1, 2, 1);
         Slider heightSlider = new Slider();
         heightSlider.setMin(10);
         heightSlider.setMax(30);
@@ -62,16 +77,16 @@ public class CreateBoardSkin extends GridPane {
                     heightLabel.setText(String.format("Height:  %d", newValue.intValue()));
                 }
         );
-        setConstraints(heightSlider, 1, 2, 2, 1);
+        GridPane.setConstraints(heightSlider, 1, 2, 2, 1);
         // Buttons
         Button continueButton = new Button("Continue");
         continueButton.setOnAction(event -> this.controller.sizeChosen());
-        setConstraints(continueButton, 1, 3);
+        GridPane.setConstraints(continueButton, 1, 3);
         Button cancelButton = new Button("Cancel");
         cancelButton.setOnAction(event -> this.controller.quitToMenu());
-        setConstraints(cancelButton, 2, 3);
+        GridPane.setConstraints(cancelButton, 2, 3);
 
-        this.getChildren().addAll(
+        settingsPane.getChildren().addAll(
                 boardSizeLabel,
                 heightLabel,
                 widthLabel,
@@ -80,11 +95,96 @@ public class CreateBoardSkin extends GridPane {
                 continueButton,
                 cancelButton
         );
+
+        this.getChildren().addAll(settingsPane);
     }
 
-    public void switchView() {
-        // grab the generated board
+    public void switchView(ReadOnlyObjectProperty<Board> board) {
+        // remove previous objects
+        this.getChildren().clear();
         // create a board view
+        // TODO: move this out properly once finished
+        int[] dim = board.get().getDimensions();
+        Canvas boardView = new Canvas(45 * dim[0] + 35, 52 * dim[1] + 46);
+        // get the context to draw to the canvas
+        GraphicsContext context = boardView.getGraphicsContext2D();
+        Spot[] spots = board.get().getSpots(); // TODO: see about using arraylist
+        for (int y = 0; y < dim[1]; y++) {
+            for (int x = 0; x < dim[0]; x++) {
+                Spot spot = spots[x + y * dim[0]]; // TODO: see about using Coords
+                int xOffset = 10;
+                int yOffset = x % 2 == 0 ? 36 : 62;
+
+                if (spot == null) {
+                    context.setFill(Color.color(0.2f, 0.2f, 0.7f, 0.9f));
+                    context.setEffect(new GaussianBlur(1f));
+                    context.fillPolygon(
+                            new double[]{
+                                    xOffset + 44.5 * x,
+                                    xOffset + 44.5 * x + 15,
+                                    xOffset + 44.5 * x + 45,
+                                    xOffset + 44.5 * x + 60,
+                                    xOffset + 44.5 * x + 45,
+                                    xOffset + 44.5 * x + 15
+                            },
+                            new double[]{
+                                    yOffset + 52 * y,
+                                    yOffset + 52 * y - 26,
+                                    yOffset + 52 * y - 26,
+                                    yOffset + 52 * y,
+                                    yOffset + 52 * y + 26,
+                                    yOffset + 52 * y + 26
+                            },
+                            6
+                    );
+                    context.setStroke(Color.color(0.4f, 0.4f, 1.0f, 0.3f));
+                    context.setLineCap(StrokeLineCap.ROUND);
+                    context.setLineWidth(2);
+                    context.strokePolyline(
+                            new double[]{
+                                    xOffset + 3 + 44.5 * x,
+                                    xOffset + 2 + 44.5 * x + 15,
+                                    xOffset - 2 + 44.5 * x + 45
+                            },
+                            new double[]{
+                                    yOffset + 52 * y - 2,
+                                    yOffset + 52 * y - 26 + 2,
+                                    yOffset + 52 * y - 26 + 2
+                            },
+                            3
+                    );
+                    context.setStroke(Color.color(0.1f, 0.1f, 0.5f, 0.3f));
+                    context.setLineCap(StrokeLineCap.ROUND);
+                    context.setLineWidth(2);
+                    context.strokePolyline(
+                            new double[]{
+                                    xOffset + 44.5 * x + 60 - 3,
+                                    xOffset + 44.5 * x + 45 - 2,
+                                    xOffset + 44.5 * x + 15 + 2
+                            },
+                            new double[]{
+                                    yOffset + 52 * y + 2,
+                                    yOffset + 52 * y + 26 - 2,
+                                    yOffset + 52 * y + 26 - 2
+                            },
+                            3
+                    );
+                    context.setLineWidth(1);
+                    context.strokeLine(
+                            xOffset + 44.5 * x + 15 + 1,
+                            yOffset + 52 * y + 26 - 1,
+                            xOffset + 44.5 * x + 2,
+                            yOffset + 52 * y
+                    );
+                }
+            }
+        }
+
+        this.setMinSize(boardView.getWidth(), boardView.getHeight());
+        this.setMaxSize(boardView.getWidth(), boardView.getHeight());
+        this.setPrefSize(boardView.getWidth(), boardView.getHeight());
+        this.getChildren().addAll(boardView);
+
         // throw boardview on grid
         // throw buttons on grid
     }

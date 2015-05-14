@@ -1,5 +1,6 @@
 package risky.model;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import risky.model.game.Board;
 import risky.view.CreateBoardSkin;
@@ -44,7 +45,19 @@ public class CreateBoard {
         this.dimensions[0] = height;
     }
 
+    /**
+     * Generate a board given the selected dimensions
+     */
     public void generateBoard() {
         this.board = new ReadOnlyObjectWrapper<>(new Board(this.dimensions[1], this.dimensions[0]));
+    }
+
+    /**
+     * Get the read only property for the board
+     *
+     * @return read only property for binding
+     */
+    public ReadOnlyObjectProperty<Board> getBoardProperty() {
+        return this.board.getReadOnlyProperty();
     }
 }
