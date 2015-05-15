@@ -11,10 +11,10 @@ import risky.view.CreateBoardSkin;
  * Created by davidkarwowski on 5/13/15.
  */
 public class CreateBoardController {
-    private Risky app;
-    private Scene scene;
-    private CreateBoardSkin createBoardSkin;
-    private CreateBoard createBoard;
+    private final Risky app;
+    private final Scene scene;
+    private final CreateBoardSkin createBoardSkin;
+    private final CreateBoard createBoard;
 
     /**
      * Instantiate new controller

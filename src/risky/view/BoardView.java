@@ -12,9 +12,9 @@ import risky.model.game.Spot;
  *
  * Created by davidkarwowski on 5/13/15.
  */
-public class BoardView extends Canvas {
+class BoardView extends Canvas {
     private Board board;
-    private double radius; // synonymous with side length
+    private final double radius; // synonymous with side length
 
     /**
      * Create a new Board View

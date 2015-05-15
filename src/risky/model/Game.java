@@ -11,7 +11,7 @@ import risky.view.GameSkin;
  * Created by davidkarwowski on 5/12/15.
  */
 public class Game {
-    private GameSkin skin;
+    private final GameSkin skin;
     // TODO: implement these
     private Board board;
     private Player[] players;

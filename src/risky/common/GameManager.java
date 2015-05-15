@@ -11,7 +11,7 @@ import risky.model.Setup;
  * Created by davidkarwowski on 5/11/15.
  */
 public class GameManager {
-    private Risky app;
+    private final Risky app;
     private Scene scene;
 
     /**

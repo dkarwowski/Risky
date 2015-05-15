@@ -12,8 +12,8 @@ import java.util.List;
 public class Country {
     private static int nextID = 1;
 
-    private ReadOnlyIntegerWrapper id;
-    private ReadOnlyListWrapper<Spot> spots;
+    private final ReadOnlyIntegerWrapper id;
+    private final ReadOnlyListWrapper<Spot> spots;
 
     /**
      * Create a new country

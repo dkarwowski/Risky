@@ -11,10 +11,10 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 public class Spot {
     private static int nextID = 1;
 
-    private ReadOnlyIntegerWrapper id;              // used to compare two spots
-    private ReadOnlyIntegerWrapper troops;          // troops that have been placed
-    private ReadOnlyObjectWrapper<Player> player;   // person who owns the Spot
-    private ReadOnlyObjectWrapper<Coords> coords;   // coordinate location of the spot
+    private final ReadOnlyIntegerWrapper id;              // used to compare two spots
+    private final ReadOnlyIntegerWrapper troops;          // troops that have been placed
+    private final ReadOnlyObjectWrapper<Player> player;   // person who owns the Spot
+    private final ReadOnlyObjectWrapper<Coords> coords;   // coordinate location of the spot
 
     /**
      * Create a new Spot for the board

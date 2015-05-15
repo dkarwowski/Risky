@@ -16,7 +16,7 @@ import risky.model.game.Board;
  * Created by davidkarwowski on 5/13/15.
  */
 public class CreateBoardSkin extends StackPane {
-    private CreateBoardController controller;
+    private final CreateBoardController controller;
     private BoardView boardView;
 
     /**

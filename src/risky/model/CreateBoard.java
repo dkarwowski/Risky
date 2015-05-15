@@ -10,8 +10,8 @@ import risky.view.CreateBoardSkin;
  * Created by davidkarwowski on 5/13/15.
  */
 public class CreateBoard {
-    private CreateBoardSkin skin;
-    private int[] dimensions;       // dimensions of height, width
+    private final CreateBoardSkin skin;
+    private final int[] dimensions;       // dimensions of height, width
     private Board board;
 
     /**

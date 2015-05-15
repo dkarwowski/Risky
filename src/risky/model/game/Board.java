@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Board {
     // TODO: possibly make board hold country, country hold spots?
-    private Spot[] spots;   // single dimensional array of spots
-    private ArrayList<Country> countries;
+    private final Spot[] spots;   // single dimensional array of spots
+    private final ArrayList<Country> countries;
 
     private int[] dimensions = new int[2];
 

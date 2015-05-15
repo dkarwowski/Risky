@@ -8,8 +8,8 @@ import javafx.beans.property.ReadOnlyIntegerWrapper;
  * Created by davidkarwowski on 5/13/15.
  */
 public class Coords {
-    private ReadOnlyIntegerWrapper x;
-    private ReadOnlyIntegerWrapper y;
+    private final ReadOnlyIntegerWrapper x;
+    private final ReadOnlyIntegerWrapper y;
 
     /**
      * Create a new coordinate
