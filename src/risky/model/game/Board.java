@@ -1,8 +1,6 @@
 package risky.model.game;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Model for the Board of the game

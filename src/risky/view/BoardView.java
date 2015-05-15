@@ -6,11 +6,8 @@ import javafx.scene.paint.Color;
 import risky.model.game.Board;
 import risky.model.game.Spot;
 
-import java.awt.*;
-
 /**
  * Shows the Board as its own view, for use in multiple places
- * TODO: move things into here from CreateBoardScene
  *
  * Created by davidkarwowski on 5/13/15.
  */
@@ -62,7 +59,6 @@ public class BoardView extends Canvas {
 
     /**
      * Draw a spot as a Polygon. Assume that color has been preset
-     * TODO: add highlight drawing
      *
      * @param gc graphics context used to draw
      * @param x  the x center of the spot

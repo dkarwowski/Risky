@@ -2,19 +2,13 @@ package risky.view;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.geometry.Insets;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.StrokeLineCap;
 import risky.controller.CreateBoardController;
 import risky.model.game.Board;
-import risky.model.game.Spot;
 
 /**
  * Displays the board and catches user input
