@@ -58,6 +58,17 @@ public class BoardView extends Canvas {
     }
 
     /**
+     * Draw an updated board
+     * TODO: see about properties?
+     *
+     * @param board the new board to use
+     */
+    public void drawBoard(Board board) {
+        this.board = board;
+        this.drawBoard();
+    }
+
+    /**
      * Draw a spot as a Polygon. Assume that color has been preset
      *
      * @param gc graphics context used to draw
@@ -155,5 +166,17 @@ public class BoardView extends Canvas {
         double yCenter = 10 + ((x % 2) + 1) * yHeight + y * 2 * yHeight - y * 0.7; // determine center of the spot
 
         return new double[]{xCenter, yCenter};
+    }
+
+    public int[] getHex(double x, double y) {
+        double xRange = this.radius + this.radius / 2.0;
+        double xOffset = 10.0 + this.radius / 4.0;
+        int xIndex = (int) ((x - xOffset) / xRange);
+
+        double yRange = this.radius * Math.cos(Math.PI / 6.0) * 2.0;
+        double yOffset = 10.0 + (xIndex % 2) * yRange / 2.0;
+        int yIndex = (int) ((y - yOffset) / yRange);
+
+        return new int[]{xIndex, yIndex};
     }
 }

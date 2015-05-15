@@ -1,10 +1,10 @@
 package risky.view;
 
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import risky.controller.CreateBoardController;
@@ -17,7 +17,13 @@ import risky.model.game.Board;
  */
 public class CreateBoardSkin extends StackPane {
     private CreateBoardController controller;
+    private BoardView boardView;
 
+    /**
+     * Initialize the controller, start with a settings view
+     *
+     * @param controller the controller for the skin
+     */
     public CreateBoardSkin(CreateBoardController controller) {
         this.controller = controller;
 
@@ -72,17 +78,37 @@ public class CreateBoardSkin extends StackPane {
         this.getChildren().addAll(settingsPane);
     }
 
-    public void switchView(ReadOnlyObjectProperty<Board> board) {
+    /**
+     * Switch views to a board view from settings view
+     *
+     * @param board the board to use
+     */
+    public void switchView(Board board) {
         // remove previous objects
         this.getChildren().clear();
         // create a board view
-        BoardView boardView = new BoardView(board.get(), 30);
-        boardView.drawBoard();
+        this.boardView = new BoardView(board, 30);
+        this.boardView.drawBoard();
+        this.boardView.addEventFilter(MouseEvent.MOUSE_CLICKED,
+                event -> {
+                    int[] square = this.boardView.getHex(event.getX(), event.getY());
+                    this.controller.mouseClicked(square[0], square[1]);
+                }
+        );
 
         // throw boardview on grid
-        this.setPrefSize(boardView.getWidth(), boardView.getHeight());
-        this.getChildren().addAll(boardView);
+        this.setPrefSize(this.boardView.getWidth(), this.boardView.getHeight());
+        this.getChildren().addAll(this.boardView);
 
         // throw buttons on grid
+    }
+
+    /**
+     * Update the Board View
+     *
+     * @param board the board itself
+     */
+    public void updateBoard(Board board) {
+        this.boardView.drawBoard(board);
     }
 }

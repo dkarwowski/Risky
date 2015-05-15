@@ -1,7 +1,5 @@
 package risky.model;
 
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import risky.model.game.Board;
 import risky.view.CreateBoardSkin;
 
@@ -14,7 +12,7 @@ import risky.view.CreateBoardSkin;
 public class CreateBoard {
     private CreateBoardSkin skin;
     private int[] dimensions;       // dimensions of height, width
-    private ReadOnlyObjectWrapper<Board> board;
+    private Board board;
 
     /**
      * Instantiate the new creator
@@ -24,7 +22,7 @@ public class CreateBoard {
     public CreateBoard(CreateBoardSkin skin) {
         this.skin = skin;
         this.dimensions = new int[]{7, 15}; // the minimum size, TODO: make dynamic
-        this.board = new ReadOnlyObjectWrapper<>(new Board());
+        this.board = new Board();
     }
 
     /**
@@ -49,7 +47,22 @@ public class CreateBoard {
      * Generate a board given the selected dimensions
      */
     public void generateBoard() {
-        this.board = new ReadOnlyObjectWrapper<>(new Board(this.dimensions[1], this.dimensions[0]));
+        this.board = new Board(this.dimensions[1], this.dimensions[0]);
+    }
+
+    /**
+     * Create or remove spots as the player clicks on them
+     *
+     * @param x x index for the spot
+     * @param y y index for the spot
+     */
+    public void switchSpot(int x, int y) {
+        if (this.board.getSpot(x, y) == null)
+            this.board.createSpot(x, y);
+        else
+            this.board.removeSpot(x, y);
+
+        this.skin.updateBoard(this.board);
     }
 
     /**
@@ -57,7 +70,7 @@ public class CreateBoard {
      *
      * @return read only property for binding
      */
-    public ReadOnlyObjectProperty<Board> getBoardProperty() {
-        return this.board.getReadOnlyProperty();
+    public Board getBoard() {
+        return this.board;
     }
 }

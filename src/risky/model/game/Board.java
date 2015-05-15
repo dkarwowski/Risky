@@ -47,6 +47,18 @@ public class Board {
     }
 
     /**
+     * Get a specific spot from the board
+     * TODO: use coords
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return  the specified spot
+     */
+    public Spot getSpot(int x, int y) {
+        return this.spots[x + y * this.getWidth()];
+    }
+
+    /**
      * Get the dimensions of the board
      *
      * @return dimensions {width, height}
@@ -71,6 +83,28 @@ public class Board {
      */
     public int getHeight() {
         return this.dimensions[1];
+    }
+
+    /**
+     * Create a new spot on the board
+     *
+     * @param x x index for spot
+     * @param y y index for spot
+     */
+    public void createSpot(int x, int y) {
+        assert this.getSpot(x, y) == null;
+        this.spots[x + y * this.getWidth()] = new Spot(x, y);
+    }
+
+    /**
+     * Remove a spot on the board
+     *
+     * @param x x index for spot
+     * @param y y index for spot
+     */
+    public void removeSpot(int x, int y) {
+        assert this.getSpot(x, y) != null;
+        this.spots[x + y * this.getWidth()] = null;
     }
 
     /**

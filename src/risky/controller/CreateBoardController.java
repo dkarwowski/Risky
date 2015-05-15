@@ -47,13 +47,23 @@ public class CreateBoardController {
     }
 
     /**
+     * Callback from Board Skin
+     *
+     * @param x indexed x
+     * @param y indexed y
+     */
+    public void mouseClicked(int x, int y) {
+        this.createBoard.switchSpot(x, y);
+    }
+
+    /**
      * Callback from Skin, continue button hit
      */
     public void sizeChosen() {
         // create a blank board
         this.createBoard.generateBoard();
         // set up the new boardskin
-        this.createBoardSkin.switchView(this.createBoard.getBoardProperty());
+        this.createBoardSkin.switchView(this.createBoard.getBoard());
         this.app.resize();
     }
 
