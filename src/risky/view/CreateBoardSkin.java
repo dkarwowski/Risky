@@ -82,96 +82,13 @@ public class CreateBoardSkin extends StackPane {
         // remove previous objects
         this.getChildren().clear();
         // create a board view
-        // TODO: move this out properly once finished
-        int[] dim = board.get().getDimensions();
-        Canvas boardView = new Canvas(45 * dim[0] + 35, 52 * dim[1] + 46);
-        // get the context to draw to the canvas
-        GraphicsContext context = boardView.getGraphicsContext2D();
-        Spot[] spots = board.get().getSpots(); // TODO: see about using arraylist
-        for (int y = 0; y < dim[1]; y++) {
-            for (int x = 0; x < dim[0]; x++) {
-                Spot spot = spots[x + y * dim[0]]; // TODO: see about using Coords
-                int xOffset = 10;
-                int yOffset = x % 2 == 0 ? 36 : 62;
+        BoardView boardView = new BoardView(board.get(), 30);
+        boardView.drawBoard();
 
-                if (spot == null) {
-                    context.setFill(Color.color(0.2f, 0.2f, 0.7f, 0.9f));
-                    context.setEffect(new GaussianBlur(1f));
-                    context.fillPolygon(
-                            new double[]{
-                                    xOffset + 44.5 * x,
-                                    xOffset + 44.5 * x + 15,
-                                    xOffset + 44.5 * x + 45,
-                                    xOffset + 44.5 * x + 60,
-                                    xOffset + 44.5 * x + 45,
-                                    xOffset + 44.5 * x + 15
-                            },
-                            new double[]{
-                                    yOffset + 52 * y,
-                                    yOffset + 52 * y - 26,
-                                    yOffset + 52 * y - 26,
-                                    yOffset + 52 * y,
-                                    yOffset + 52 * y + 26,
-                                    yOffset + 52 * y + 26
-                            },
-                            6
-                    );
-                    context.setStroke(Color.color(0.4f, 0.4f, 1.0f, 0.3f));
-                    context.setLineCap(StrokeLineCap.ROUND);
-                    context.setLineWidth(2);
-                    context.strokePolyline(
-                            new double[]{
-                                    xOffset + 44.5 * x + 1,
-                                    xOffset + 44.5 * x + 16,
-                                    xOffset + 44.5 * x + 44
-                            },
-                            new double[]{
-                                    yOffset + 52 * y,
-                                    yOffset + 52 * y - 25,
-                                    yOffset + 52 * y - 25
-                            },
-                            3
-                    );
-                    context.setLineWidth(1);
-                    context.strokeLine(
-                            xOffset + 44.5 * x + 44,
-                            yOffset + 52 * y - 25,
-                            xOffset + 44.5 * x + 59,
-                            yOffset + 52 * y + 1
-                    );
-                    context.setStroke(Color.color(0.1f, 0.1f, 0.5f, 0.3f));
-                    context.setLineCap(StrokeLineCap.ROUND);
-                    context.setLineWidth(2);
-                    context.strokePolyline(
-                            new double[]{
-                                    xOffset + 44.5 * x + 59,
-                                    xOffset + 44.5 * x + 44,
-                                    xOffset + 44.5 * x + 16
-                            },
-                            new double[]{
-                                    yOffset + 52 * y - 1,
-                                    yOffset + 52 * y + 25,
-                                    yOffset + 52 * y + 25
-                            },
-                            3
-                    );
-                    context.setLineWidth(1);
-                    context.strokeLine(
-                            xOffset + 44.5 * x + 16,
-                            yOffset + 52 * y + 26,
-                            xOffset + 44.5 * x + 1,
-                            yOffset + 52 * y
-                    );
-                }
-            }
-        }
-
-        this.setMinSize(boardView.getWidth(), boardView.getHeight());
-        this.setMaxSize(boardView.getWidth(), boardView.getHeight());
+        // throw boardview on grid
         this.setPrefSize(boardView.getWidth(), boardView.getHeight());
         this.getChildren().addAll(boardView);
 
-        // throw boardview on grid
         // throw buttons on grid
     }
 }

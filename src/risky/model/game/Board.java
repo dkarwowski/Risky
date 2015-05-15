@@ -58,6 +58,24 @@ public class Board {
     }
 
     /**
+     * Get the width of the board
+     *
+     * @return number of spots across
+     */
+    public int getWidth() {
+        return this.dimensions[0];
+    }
+
+    /**
+     * Get the height of the board
+     *
+     * @return number of spots high
+     */
+    public int getHeight() {
+        return this.dimensions[1];
+    }
+
+    /**
      * Initialize the board off of a map file
      * TODO: implement
      *
