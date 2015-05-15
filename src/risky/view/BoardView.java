@@ -2,6 +2,7 @@ package risky.view;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 import risky.model.game.Board;
 import risky.model.game.Spot;
@@ -23,8 +24,8 @@ public class BoardView extends Canvas {
      */
     public BoardView(Board board, double sideLength) {
         super(
-                sideLength * 3.0 / 2.0 * board.getDimensions()[0] + 20 + sideLength / 2.0,
-                sideLength * Math.sqrt(3.0) * board.getDimensions()[1] + 20 + sideLength * Math.sqrt(3.0) / 2.0
+                sideLength * 3.0 / 2.0 * board.getDimensions()[0] + 40 + sideLength / 2.0,
+                sideLength * Math.sqrt(3.0) * board.getDimensions()[1] + 40 + sideLength * Math.sqrt(3.0) / 2.0
         );
 
         this.board = board;
@@ -36,6 +37,8 @@ public class BoardView extends Canvas {
      */
     public void drawBoard() {
         GraphicsContext gc = this.getGraphicsContext2D();
+        this.reset(gc);
+        this.outlineBoard(gc);
         for (int y = 0; y < board.getHeight(); y++) {
             for (int x = 0; x < board.getWidth(); x++) {
                 Spot spot = board.getSpots()[x + y * board.getWidth()];
@@ -58,6 +61,48 @@ public class BoardView extends Canvas {
     }
 
     /**
+     * Resets the board to a clear white
+     *
+     * @param gc the graphics context
+     */
+    private void reset(GraphicsContext gc) {
+        gc.clearRect(0, 0, this.getWidth(), this.getHeight());
+    }
+
+    /**
+     * Outline the board completely with drop shadow
+     *
+     * @param gc graphics context
+     */
+    private void outlineBoard(GraphicsContext gc) {
+        for (int y = 0; y < this.board.getHeight(); y++) {
+            for (int x = 0; x < this.board.getWidth(); x++) {
+                if (y != 0 && x != 0 && y != this.board.getHeight() - 1 && x != this.board.getWidth() - 1)
+                    continue;
+
+                this.dropShadow(gc, x, y);
+            }
+        }
+    }
+
+    /**
+     * Create a drop shadow for the board spot
+     *
+     * @param gc graphics context
+     * @param x  index x
+     * @param y  index y
+     */
+    private void dropShadow(GraphicsContext gc, int x, int y) {
+        double[] center = this.getCenter(x, y);
+        gc.setFill(Color.color(0.1f, 0.1f, 0.1f, 1.0f));
+        gc.setEffect(new GaussianBlur(20));
+
+        this.drawSpot(gc, center[0], center[1], 0);
+
+        gc.setEffect(null);
+    }
+
+    /**
      * Draw an updated board
      * TODO: see about properties?
      *
@@ -76,11 +121,15 @@ public class BoardView extends Canvas {
      * @param y  the y center of the spot
      */
     private void drawSpot(GraphicsContext gc, double x, double y) {
+        drawSpot(gc, x, y, 0);
+    }
+
+    private void drawSpot(GraphicsContext gc, double x, double y, double offset) {
         double[] xPoints = new double[6];
         double[] yPoints = new double[6];
         for (int i = 0; i < 6; i++) {
-            xPoints[i] = x + this.radius * Math.sin(i * Math.PI / 3.0 + Math.PI / 2.0);
-            yPoints[i] = y + this.radius * Math.cos(i * Math.PI / 3.0 + Math.PI / 2.0);
+            xPoints[i] = x + (this.radius + offset) * Math.sin(i * Math.PI / 3.0 + Math.PI / 2.0);
+            yPoints[i] = y + (this.radius + offset) * Math.cos(i * Math.PI / 3.0 + Math.PI / 2.0);
         }
 
         gc.fillPolygon(xPoints, yPoints, 6);
@@ -161,20 +210,20 @@ public class BoardView extends Canvas {
      * @return  array with {x, y} coords for the center
      */
     private double[] getCenter(int x, int y) {
-        double xCenter = 10 + this.radius + x * this.radius * 3.0 / 2.0 - x * 0.5;
+        double xCenter = 20 + this.radius + x * this.radius * 3.0 / 2.0 - x * 0.5;
         double yHeight = this.radius * Math.cos(Math.PI / 6.0); // determine half the height of a spot
-        double yCenter = 10 + ((x % 2) + 1) * yHeight + y * 2 * yHeight - y * 0.7; // determine center of the spot
+        double yCenter = 20 + ((x % 2) + 1) * yHeight + y * 2 * yHeight - y * 0.7; // determine center of the spot
 
         return new double[]{xCenter, yCenter};
     }
 
     public int[] getHex(double x, double y) {
         double xRange = this.radius + this.radius / 2.0;
-        double xOffset = 10.0 + this.radius / 4.0;
+        double xOffset = 20.0 + this.radius / 4.0;
         int xIndex = (int) ((x - xOffset) / xRange);
 
         double yRange = this.radius * Math.cos(Math.PI / 6.0) * 2.0;
-        double yOffset = 10.0 + (xIndex % 2) * yRange / 2.0;
+        double yOffset = 20.0 + (xIndex % 2) * yRange / 2.0;
         int yIndex = (int) ((y - yOffset) / yRange);
 
         return new int[]{xIndex, yIndex};
