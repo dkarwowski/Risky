@@ -24,10 +24,10 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
     - [x] ask for board size
     - [ ] display a board on the screen
         - [ ] display board outline
-        - [ ] display spots
+        - [x] display spots
             - [x] null spots
-            - [ ] empty spots
-        - [ ] display country border
+            - [x] empty spots - should work, untested
+        - [ ] country has its own colors
         - [ ] spot connections
     - [ ] gather input from clicking on board
     - [ ] field user input to make new spots on a board
@@ -54,7 +54,10 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
     - [ ] create a resource system
 - [ ] Display a simple board
     - [ ] display spots
-    - [ ] display country borders
+        - [x] null spots
+        - [x] empty spots - no country
+        - [ ] claimed spots
+    - [ ] display country colors
     - [ ] display spot connection overseas
 - [ ] Display buttons and information on board
     - [ ] end turn button
