@@ -28,13 +28,13 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
             - [x] null spots
             - [x] empty spots
         - [ ] country has its own colors
-        - [ ] spot connections
+        - [x] spot connections
     - [x] gather input from clicking on board
     - [x] field user input to make new spots on a board
     - [ ] create the board from the user input
         - [ ] countries exist
         - [x] spots have coordinates
-        - [x] spots have exits - untested
+        - [x] spots have exits - tested and buggy
         - [ ] ensure spots are fully connected
     - [ ] write information to a file
         - [ ] board gets named

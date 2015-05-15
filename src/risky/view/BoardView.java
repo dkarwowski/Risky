@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeLineCap;
 import risky.model.game.Board;
 import risky.model.game.Spot;
 
@@ -56,6 +57,16 @@ class BoardView extends Canvas {
                 this.drawSpot(gc, center[0], center[1]);
                 this.drawHighlight(gc, color, center[0], center[1]);
                 this.drawShadow(gc, color, center[0], center[1]);
+
+                if (spot == null)
+                    continue;
+
+                for (int i = 0; i < 6; i++) {
+                    if (spot.getExits()[i] == null)
+                        continue;
+
+                    this.drawConnection(gc, center[0], center[1], i);
+                }
             }
         }
     }
@@ -124,6 +135,14 @@ class BoardView extends Canvas {
         drawSpot(gc, x, y, 0);
     }
 
+    /**
+     * Draw a spot as a Polygon. Assume color has been preset
+     *
+     * @param gc     graphics context
+     * @param x      the x center
+     * @param y      the y center
+     * @param offset the offset for drawing larger/smaller spots
+     */
     private void drawSpot(GraphicsContext gc, double x, double y, double offset) {
         double[] xPoints = new double[6];
         double[] yPoints = new double[6];
@@ -203,6 +222,29 @@ class BoardView extends Canvas {
     }
 
     /**
+     * Draw a connection to an exit directly adjacent
+     * TODO: have it dependent on final spot
+     *
+     * @param gc   graphics context
+     * @param x    center x
+     * @param y    center y
+     * @param side the side to go out
+     */
+    private void drawConnection(GraphicsContext gc, double x, double y, int side) {
+        double[] xPoints = new double[2];
+        double[] yPoints = new double[2];
+        for (int i = 0; i < 2; i++) {
+            xPoints[i] = x + 3 + (this.radius / 2.0 + this.radius * i)
+                    * Math.sin(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
+            yPoints[i] = y + 3 + (this.radius / 2.0 + this.radius * i)
+                    * Math.cos(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
+        }
+
+        gc.setStroke(Color.BLACK);
+        gc.strokePolyline(xPoints, yPoints, 2);
+    }
+
+    /**
      * Get the center of a hexagon from x and y index
      *
      * @param x index along the width
@@ -217,6 +259,13 @@ class BoardView extends Canvas {
         return new double[]{xCenter, yCenter};
     }
 
+    /**
+     * Get a hex at a canvas coordinate
+     *
+     * @param x canvas x
+     * @param y canvas y
+     * @return  pair of indexes {x, y}
+     */
     public int[] getHex(double x, double y) {
         double xRange = this.radius + this.radius / 2.0;
         double xOffset = 20.0 + this.radius / 4.0;

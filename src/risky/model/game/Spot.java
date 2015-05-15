@@ -77,6 +77,15 @@ public class Spot {
     }
 
     /**
+     * Get the exits from this spot
+     *
+     * @return list of exits
+     */
+    public Spot[] getExits() {
+        return this.exits;
+    }
+
+    /**
      * Get the coordinates for a direction
      *
      * @param dir the direction to try
