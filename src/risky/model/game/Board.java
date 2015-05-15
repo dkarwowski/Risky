@@ -93,7 +93,18 @@ public class Board {
      */
     public void createSpot(int x, int y) {
         assert this.getSpot(x, y) == null;
-        this.spots[x + y * this.getWidth()] = new Spot(x, y);
+        Spot insert = new Spot(x, y);
+        // iterate over exits
+        for (Coords.Dir dir : Coords.Dir.values()) {
+            Coords exit = insert.coordsInDir(dir);
+            // TODO: clean this up to a better check
+            int exitI = exit.toIndex(this.getWidth(), this.getHeight());
+            if (exitI == -1) continue;
+
+            insert.setExit(dir, this.spots[exitI]);
+        }
+
+        this.spots[x + y * this.getWidth()] = insert;
     }
 
     /**
@@ -104,6 +115,17 @@ public class Board {
      */
     public void removeSpot(int x, int y) {
         assert this.getSpot(x, y) != null;
+        Spot remove = this.spots[x + y * this.getWidth()];
+        // iterate over exits
+        for (Coords.Dir dir : Coords.Dir.values()) {
+            Coords exit = remove.coordsInDir(dir);
+            // TODO: clean this up to a better check
+            int exitI = exit.toIndex(this.getWidth(), this.getHeight());
+            if (exitI == -1) continue;
+
+            remove.setExit(dir, this.spots[exitI]);
+        }
+
         this.spots[x + y * this.getWidth()] = null;
     }
 

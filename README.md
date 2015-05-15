@@ -34,7 +34,7 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
     - [ ] create the board from the user input
         - [ ] countries exist
         - [x] spots have coordinates
-        - [ ] spots have exits
+        - [x] spots have exits - untested
         - [ ] ensure spots are fully connected
     - [ ] write information to a file
         - [ ] board gets named
