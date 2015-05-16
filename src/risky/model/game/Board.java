@@ -123,7 +123,7 @@ public class Board {
             int exitI = exit.toIndex(this.getWidth(), this.getHeight());
             if (exitI == -1) continue;
 
-            remove.setExit(dir, this.spots[exitI]);
+            remove.removeExit(dir, this.spots[exitI]);
         }
 
         this.spots[x + y * this.getWidth()] = null;
