@@ -13,6 +13,8 @@ public class CreateBoard {
     private final CreateBoardSkin skin;
     private final int[] dimensions;       // dimensions of height, width
     private Board board;
+    private int[] selected; // TODO: use these somehow?
+    private boolean setExits; // TODO: use these somehow?
 
     /**
      * Instantiate the new creator
@@ -23,6 +25,8 @@ public class CreateBoard {
         this.skin = skin;
         this.dimensions = new int[]{7, 15}; // the minimum size, TODO: make dynamic
         this.board = new Board();
+        this.selected = new int[2];
+        this.setExits = false;
     }
 
     /**
@@ -63,6 +67,20 @@ public class CreateBoard {
             this.board.removeSpot(x, y);
 
         this.skin.updateBoard(this.board);
+    }
+
+    /**
+     * Set the new selected piece
+     *
+     * @param x indexed x
+     * @param y indexed y
+     */
+    public void setSelected(int x, int y) {
+        this.selected = new int[]{x, y};
+    }
+
+    public void setSetExits(boolean value) {
+        this.setExits = value;
     }
 
     /**

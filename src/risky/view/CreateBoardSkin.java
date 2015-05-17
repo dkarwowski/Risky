@@ -1,9 +1,9 @@
 package risky.view;
 
+import javafx.event.Event;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -18,6 +18,7 @@ import risky.model.game.Board;
 public class CreateBoardSkin extends StackPane {
     private final CreateBoardController controller;
     private BoardView boardView;
+    private boolean contextMenuActive;
 
     /**
      * Initialize the controller, start with a settings view
@@ -91,8 +92,15 @@ public class CreateBoardSkin extends StackPane {
         this.boardView.drawBoard();
         this.boardView.addEventFilter(MouseEvent.MOUSE_CLICKED,
                 event -> {
-                    int[] square = this.boardView.getHex(event.getX(), event.getY());
-                    this.controller.mouseClicked(square[0], square[1]);
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        int[] square = this.boardView.getHex(event.getX(), event.getY());
+                        this.controller.mouseClicked(square[0], square[1]);
+                    }
+                    else if (event.getButton() == MouseButton.SECONDARY) {
+                        int[] square = this.boardView.getHex(event.getX(), event.getY());
+                        this.contextMenu(event, square);
+                        // tell the board view to add a highlight?
+                    }
                 }
         );
 
@@ -101,6 +109,30 @@ public class CreateBoardSkin extends StackPane {
         this.getChildren().addAll(this.boardView);
 
         // throw buttons on grid
+    }
+
+    /**
+     * Create a context menu for the spot selected
+     *
+     * @param mouseEvent the mouse event for positioning
+     * @param square     the hex being used
+     */
+    private void contextMenu(MouseEvent mouseEvent, int[] square) {
+        if (this.contextMenuActive)
+            return;
+
+        ContextMenu menu = new ContextMenu();
+        MenuItem setExits = new MenuItem("Set Exits");
+        setExits.setOnAction(
+                event -> {
+                    this.controller.setSelectExits(square[0], square[1]);
+                    this.contextMenuActive = false;
+                }
+        );
+
+        menu.getItems().addAll(setExits);
+        menu.show(this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+        this.contextMenuActive = true;
     }
 
     /**

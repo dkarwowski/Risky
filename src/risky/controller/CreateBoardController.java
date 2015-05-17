@@ -57,6 +57,19 @@ public class CreateBoardController {
     }
 
     /**
+     * Sets the mode to be selecting exits for a spot, should limit clicks?
+     * TODO: implement all features
+     *
+     * @param x indexed x
+     * @param y indexed y
+     */
+    public void setSelectExits(int x, int y) {
+        this.createBoard.setSelected(x, y);
+        this.createBoard.setSetExits(true);
+        System.out.println("SetSelected"); // test to ensure working
+    }
+
+    /**
      * Callback from Skin, continue button hit
      */
     public void sizeChosen() {
