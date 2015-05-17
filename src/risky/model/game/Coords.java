@@ -53,11 +53,11 @@ public class Coords {
     public Coords coordsInDir(Dir dir) {
         switch(dir) {
             case UP_RIGHT:
-                return new Coords(this.getX() + 1, this.getY() - (this.getX() % 2 - 1));
+                return new Coords(this.getX() + 1, this.getY() + (this.getX() % 2 - 1));
             case UP:
                 return new Coords(this.getX(), this.getY() - 1);
             case UP_LEFT:
-                return new Coords(this.getX() - 1, this.getY() - (this.getX() % 2 - 1));
+                return new Coords(this.getX() - 1, this.getY() + (this.getX() % 2 - 1));
             case DOWN_RIGHT:
                 return new Coords(this.getX() + 1, this.getY() + (this.getX() % 2));
             case DOWN:
