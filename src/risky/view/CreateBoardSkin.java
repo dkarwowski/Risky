@@ -97,7 +97,7 @@ public class CreateBoardSkin extends StackPane {
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
-                        this.contextMenu(event, square);
+                        this.createContextMenu(event, square);
                         // tell the board view to add a highlight?
                     }
                 }
@@ -116,7 +116,7 @@ public class CreateBoardSkin extends StackPane {
      * @param mouseEvent the mouse event for positioning
      * @param square     the hex being used
      */
-    private void contextMenu(MouseEvent mouseEvent, int[] square) {
+    private void createContextMenu(MouseEvent mouseEvent, int[] square) {
         if (this.contextMenu != null)
             this.contextMenu.hide();
 
