@@ -1,6 +1,5 @@
 package risky.view;
 
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -18,7 +17,7 @@ import risky.model.game.Board;
 public class CreateBoardSkin extends StackPane {
     private final CreateBoardController controller;
     private BoardView boardView;
-    private boolean contextMenuActive;
+    private ContextMenu contextMenu;
 
     /**
      * Initialize the controller, start with a settings view
@@ -118,21 +117,21 @@ public class CreateBoardSkin extends StackPane {
      * @param square     the hex being used
      */
     private void contextMenu(MouseEvent mouseEvent, int[] square) {
-        if (this.contextMenuActive)
-            return;
+        if (this.contextMenu != null)
+            this.contextMenu.hide();
 
-        ContextMenu menu = new ContextMenu();
+        this.contextMenu = new ContextMenu();
         MenuItem setExits = new MenuItem("Set Exits");
         setExits.setOnAction(
-                event -> {
-                    this.controller.setSelectExits(square[0], square[1]);
-                    this.contextMenuActive = false;
-                }
+                event -> this.controller.setSelectExits(square[0], square[1])
+        );
+        MenuItem switchSpot = new MenuItem("Switch Type");
+        switchSpot.setOnAction(
+                event -> this.controller.mouseClicked(square[0], square[1]) // TODO: rename the function
         );
 
-        menu.getItems().addAll(setExits);
-        menu.show(this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-        this.contextMenuActive = true;
+        this.contextMenu.getItems().addAll(switchSpot, setExits);
+        this.contextMenu.show(this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
     }
 
     /**
