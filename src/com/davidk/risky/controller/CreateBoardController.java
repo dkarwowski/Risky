@@ -1,9 +1,9 @@
-package risky.controller;
+package com.davidk.risky.controller;
 
 import javafx.scene.Scene;
-import risky.Risky;
-import risky.model.CreateBoard;
-import risky.view.CreateBoardSkin;
+import com.davidk.risky.Risky;
+import com.davidk.risky.model.CreateBoard;
+import com.davidk.risky.view.CreateBoardSkin;
 
 /**
  * Controls the user input for creating a new board, handles calls to the Board

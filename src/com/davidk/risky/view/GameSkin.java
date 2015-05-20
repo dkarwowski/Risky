@@ -1,6 +1,6 @@
-package risky.view;
+package com.davidk.risky.view;
 
-import risky.controller.GameController;
+import com.davidk.risky.controller.GameController;
 
 /**
  * Scene of the game. Will hold the views for the various parts of gameplay

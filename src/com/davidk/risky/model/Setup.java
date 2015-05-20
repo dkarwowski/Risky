@@ -1,4 +1,4 @@
-package risky.model;
+package com.davidk.risky.model;
 
 /**
  * Holds the information necessary to create a new instance of the game

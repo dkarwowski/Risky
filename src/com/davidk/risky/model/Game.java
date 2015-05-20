@@ -1,8 +1,8 @@
-package risky.model;
+package com.davidk.risky.model;
 
-import risky.model.game.Board;
-import risky.model.game.Player;
-import risky.view.GameSkin;
+import com.davidk.risky.model.game.Board;
+import com.davidk.risky.model.game.Player;
+import com.davidk.risky.view.GameSkin;
 
 /**
  * Model of the game. Holds the logic for the game and will handle

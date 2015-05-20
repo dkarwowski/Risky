@@ -1,4 +1,4 @@
-package risky.model.game;
+package com.davidk.risky.model.game;
 
 import java.util.ArrayList;
 

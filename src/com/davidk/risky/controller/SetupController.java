@@ -1,8 +1,8 @@
-package risky.controller;
+package com.davidk.risky.controller;
 
-import risky.common.GameManager;
-import risky.model.Setup;
-import risky.view.SetupSkin;
+import com.davidk.risky.common.GameManager;
+import com.davidk.risky.model.Setup;
+import com.davidk.risky.view.SetupSkin;
 
 /**
  * Handles the buttons and choices made in the Setup Menu

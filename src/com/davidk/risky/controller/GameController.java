@@ -1,8 +1,8 @@
-package risky.controller;
+package com.davidk.risky.controller;
 
-import risky.common.GameManager;
-import risky.model.Game;
-import risky.view.GameSkin;
+import com.davidk.risky.common.GameManager;
+import com.davidk.risky.model.Game;
+import com.davidk.risky.view.GameSkin;
 
 /**
  * Controls the game, handles the user input from the view.

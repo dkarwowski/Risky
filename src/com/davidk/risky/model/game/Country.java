@@ -1,4 +1,4 @@
-package risky.model.game;
+package com.davidk.risky.model.game;
 
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyListWrapper;

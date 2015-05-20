@@ -1,4 +1,4 @@
-package risky.view;
+package com.davidk.risky.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import risky.controller.SetupController;
+import com.davidk.risky.controller.SetupController;
 
 
 /**

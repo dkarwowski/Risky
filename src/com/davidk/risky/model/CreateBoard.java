@@ -1,7 +1,7 @@
-package risky.model;
+package com.davidk.risky.model;
 
-import risky.model.game.Board;
-import risky.view.CreateBoardSkin;
+import com.davidk.risky.model.game.Board;
+import com.davidk.risky.view.CreateBoardSkin;
 
 /**
  * Takes calls from the Controller and manages them to create new boards

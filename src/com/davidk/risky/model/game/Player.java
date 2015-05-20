@@ -1,4 +1,4 @@
-package risky.model.game;
+package com.davidk.risky.model.game;
 
 /**
  * Model for the Players

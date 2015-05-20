@@ -1,4 +1,4 @@
-package risky.view;
+package com.davidk.risky.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import risky.Risky;
+import com.davidk.risky.Risky;
 
 /**
  * Handles the view of the first splash screen

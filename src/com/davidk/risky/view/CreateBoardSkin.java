@@ -1,4 +1,4 @@
-package risky.view;
+package com.davidk.risky.view;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -6,8 +6,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import risky.controller.CreateBoardController;
-import risky.model.game.Board;
+import com.davidk.risky.controller.CreateBoardController;
+import com.davidk.risky.model.game.Board;
 
 /**
  * Displays the board and catches user input

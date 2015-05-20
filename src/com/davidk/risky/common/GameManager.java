@@ -1,9 +1,9 @@
-package risky.common;
+package com.davidk.risky.common;
 
 import javafx.scene.Scene;
-import risky.Risky;
-import risky.controller.SetupController;
-import risky.model.Setup;
+import com.davidk.risky.Risky;
+import com.davidk.risky.controller.SetupController;
+import com.davidk.risky.model.Setup;
 
 /**
  * Manages the scenes and the menu states
