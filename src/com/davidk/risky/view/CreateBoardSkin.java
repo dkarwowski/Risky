@@ -93,7 +93,12 @@ public class CreateBoardSkin extends StackPane {
                 event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
-                        this.controller.mouseClicked(square[0], square[1]);
+
+                        // hide the context menu on a click outside
+                        if (this.contextMenu != null && this.contextMenu.isShowing())
+                            this.contextMenu.hide();
+                        else
+                            this.controller.mouseClicked(square[0], square[1]);
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
