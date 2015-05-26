@@ -1,5 +1,6 @@
 package com.davidk.risky.view;
 
+import com.davidk.risky.controller.SetupController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import com.davidk.risky.controller.SetupController;
 
 
 /**

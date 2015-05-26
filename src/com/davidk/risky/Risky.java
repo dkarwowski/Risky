@@ -1,12 +1,12 @@
 package com.davidk.risky;
 
+import com.davidk.risky.common.GameManager;
+import com.davidk.risky.controller.CreateBoardController;
+import com.davidk.risky.view.MenuSkin;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import com.davidk.risky.common.GameManager;
-import com.davidk.risky.controller.CreateBoardController;
-import com.davidk.risky.view.MenuSkin;
 
 /**
  * Main Loop to run the game from

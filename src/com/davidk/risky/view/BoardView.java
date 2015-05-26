@@ -1,11 +1,11 @@
 package com.davidk.risky.view;
 
+import com.davidk.risky.model.game.Board;
+import com.davidk.risky.model.game.Spot;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
-import com.davidk.risky.model.game.Board;
-import com.davidk.risky.model.game.Spot;
 
 /**
  * Shows the Board as its own view, for use in multiple places
