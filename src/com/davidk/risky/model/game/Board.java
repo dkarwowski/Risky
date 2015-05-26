@@ -1,5 +1,8 @@
 package com.davidk.risky.model.game;
 
+import com.davidk.risky.common.hexagon.Hex;
+import com.davidk.risky.common.hexagon.OffsetCoord;
+
 import java.util.ArrayList;
 
 /**
@@ -95,13 +98,13 @@ public class Board {
         assert this.getSpot(x, y) == null;
         Spot insert = new Spot(x, y);
         // iterate over exits
-        for (Coords.Dir dir : Coords.Dir.values()) {
-            Coords exit = insert.coordsInDir(dir);
+        for (int i = 0; i < 6; i++) {
+            Hex exit = insert.neighbor(i);
             // TODO: clean this up to a better check
-            int exitI = exit.toIndex(this.getWidth(), this.getHeight());
-            if (exitI == -1) continue;
+            OffsetCoord exitOffset = OffsetCoord.rOffsetFromCube(OffsetCoord.ODD, exit);
+            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
 
-            insert.setExit(dir, this.spots[exitI]);
+            insert.setExit(i, this.spots[exitI]);
         }
 
         this.spots[x + y * this.getWidth()] = insert;
@@ -117,13 +120,13 @@ public class Board {
         assert this.getSpot(x, y) != null;
         Spot remove = this.spots[x + y * this.getWidth()];
         // iterate over exits
-        for (Coords.Dir dir : Coords.Dir.values()) {
-            Coords exit = remove.coordsInDir(dir);
+        for (int i = 0; i < 6; i++) {
+            Hex exit = remove.neighbor(i);
             // TODO: clean this up to a better check
-            int exitI = exit.toIndex(this.getWidth(), this.getHeight());
-            if (exitI == -1) continue;
+            OffsetCoord exitOffset = OffsetCoord.rOffsetFromCube(OffsetCoord.ODD, exit);
+            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
 
-            remove.removeExit(dir, this.spots[exitI]);
+            remove.removeExit(i, this.spots[exitI]);
         }
 
         this.spots[x + y * this.getWidth()] = null;

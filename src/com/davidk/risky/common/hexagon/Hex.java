@@ -1,6 +1,8 @@
 package com.davidk.risky.common.hexagon;
 
 /**
+ * Create a Hexagon base class for other spots afterwards
+ *
  * Created by David Karwowski on 5/25/2015.
  */
 public class Hex {
@@ -13,6 +15,13 @@ public class Hex {
     private int r;
     private int s;
 
+    /**
+     * Create a new Hexagon from cubic coordinates
+     *
+     * @param q x direction
+     * @param r y direction
+     * @param s z direction
+     */
     public Hex(int q, int r, int s) {
         assert q + r + s == 0;
 
@@ -21,20 +30,41 @@ public class Hex {
         this.s = s;
     }
 
+    /**
+     * Create a new Hexagon from axial coordinates
+     *
+     * @param q x direction
+     * @param r y direction
+     */
     public Hex(int q, int r) {
         this.q = q;
         this.r = r;
         this.s = - q - r;
     }
 
+    /**
+     * Get the x coordinate
+     *
+     * @return x coordinate
+     */
     public int getQ() {
         return this.q;
     }
 
+    /**
+     * Get the y coordinate
+     *
+     * @return y coordinate
+     */
     public int getR() {
         return this.r;
     }
 
+    /**
+     * Get the z coordinate
+     *
+     * @return z coordinate
+     */
     public int getS() {
         return this.s;
     }
@@ -50,6 +80,12 @@ public class Hex {
                 && this.getS() == o.getS();
     }
 
+    /**
+     * Add a Hex to the current hex in the form of (q+q, r+r, s+s)
+     *
+     * @param other the amount of movement for hexagon
+     * @return new hexagon
+     */
     public Hex add(Hex other) {
         return new Hex(
                 this.getQ() + other.getQ(),
@@ -58,6 +94,12 @@ public class Hex {
         );
     }
 
+    /**
+     * Subtract a Hex from the current hex in the form of (q-q, r-r, s-s)
+     *
+     * @param other the amount of movement back from the hexagon
+     * @return new hexagon
+     */
     public Hex subtract(Hex other) {
         return new Hex(
                 this.getQ() - other.getQ(),
@@ -66,6 +108,12 @@ public class Hex {
         );
     }
 
+    /**
+     * Multiply a constant into the hexagon
+     *
+     * @param k constant to multiply by
+     * @return new hexagon
+     */
     public Hex multiply(int k) {
         return new Hex(
                 this.getQ() * k,
@@ -74,6 +122,11 @@ public class Hex {
         );
     }
 
+    /**
+     * How far the hexagon goes out
+     *
+     * @return integer length of the hexagon
+     */
     public int length() {
         return (int)(
                 (Math.abs(this.getQ()) + Math.abs(this.getR()) + Math.abs(this.getS()))
@@ -81,16 +134,33 @@ public class Hex {
         );
     }
 
+    /**
+     * Get the distance between hexagons
+     *
+     * @param other the hexagon comparing to
+     * @return integer distance between hexagons
+     */
     public int distance(Hex other) {
         return this.subtract(other).length();
     }
 
+    /**
+     * Get the neighboring hexagon
+     *
+     * @param direction direction to go in
+     * @return the hexagon in that direction
+     */
     public Hex neighbor(int direction) {
         return this.add(Hex.direction(direction));
     }
 
+    /**
+     * Get the directional hex
+     *
+     * @param direction direction to go in
+     * @return the hexagon that moves in that direction
+     */
     public static Hex direction(int direction) {
-        assert (0 <= direction && direction < 6);
-        return DIRECTIONS[direction];
+        return DIRECTIONS[(6 + (direction % 6)) % 6];
     }
 }

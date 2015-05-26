@@ -1,6 +1,8 @@
 package com.davidk.risky.common.hexagon;
 
 /**
+ * The orientation built off of the types of polygons
+ *
  * Created by David Karwowski on 5/25/2015.
  */
 public class Orientation {
