@@ -6,12 +6,12 @@ package com.davidk.risky.common.hexagon;
  * Created by David Karwowski on 5/25/2015.
  */
 public class Orientation {
-    private final static Orientation pointy = new Orientation(
+    public final static Orientation pointy = new Orientation(
             Math.sqrt(3.0), Math.sqrt(3.0) / 2.0, 0.0, 3.0 / 2.0,
             Math.sqrt(3.0) / 3.0, -1.0 / 3.0, 0.0, 2.0 / 3.0,
             0.5
     );
-    private final static Orientation flat = new Orientation(
+    public final static Orientation flat = new Orientation(
             3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0),
             2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0,
             0.0

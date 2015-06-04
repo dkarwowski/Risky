@@ -1,7 +1,10 @@
 package com.davidk.risky.view;
 
+import com.davidk.risky.common.hexagon.Layout;
+import com.davidk.risky.common.hexagon.Orientation;
 import com.davidk.risky.model.game.Board;
 import com.davidk.risky.model.game.Spot;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.GaussianBlur;
@@ -14,6 +17,7 @@ import javafx.scene.paint.Color;
  */
 class BoardView extends Canvas {
     private Board board;
+    private Layout layout;
     private final double radius; // synonymous with side length
 
     /**
@@ -30,6 +34,14 @@ class BoardView extends Canvas {
 
         this.board = board;
         this.radius = sideLength;
+
+        // create a layout based off of the side length, and the center
+        // currently mixing the code a lot, should be reworked?
+        this.layout = new Layout(
+                Orientation.pointy,
+                new Point2D(sideLength, sideLength),
+                new Point2D(this.getCenter(0, 0)[0], this.getCenter(0, 0)[1])
+        );
     }
 
     /**
