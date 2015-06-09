@@ -40,7 +40,7 @@ class BoardView extends Canvas {
         this.layout = new Layout(
                 Orientation.pointy,
                 new Point2D(sideLength, sideLength),
-                new Point2D(this.getCenter(0, 0)[0], this.getCenter(0, 0)[1])
+                this.getCenter(0, 0)
         );
     }
 
@@ -55,7 +55,7 @@ class BoardView extends Canvas {
             for (int x = 0; x < board.getWidth(); x++) {
                 Spot spot = board.getSpots()[x + y * board.getWidth()];
                 Color color;
-                double[] center = this.getCenter(x, y);
+                Point2D center = this.getCenter(x, y);
 
                 if (spot == null) {
                     color = Color.color(0.2f, 0.2f, 0.7f, 1.0f);
@@ -65,9 +65,9 @@ class BoardView extends Canvas {
                 }
 
                 gc.setFill(color);
-                this.drawSpot(gc, center[0], center[1]);
-                this.drawHighlight(gc, color, center[0], center[1]);
-                this.drawShadow(gc, color, center[0], center[1]);
+                this.drawSpot(gc, center);
+                this.drawHighlight(gc, color, center);
+                this.drawShadow(gc, color, center);
 
                 if (spot == null)
                     continue;
@@ -76,7 +76,7 @@ class BoardView extends Canvas {
                     if (spot.getExits()[i] == null)
                         continue;
 
-                    this.drawConnection(gc, center[0], center[1], i);
+                    this.drawConnection(gc, center, i);
                 }
             }
         }
@@ -115,11 +115,11 @@ class BoardView extends Canvas {
      * @param y  index y
      */
     private void dropShadow(GraphicsContext gc, int x, int y) {
-        double[] center = this.getCenter(x, y);
+        Point2D center = this.getCenter(x, y);
         gc.setFill(Color.color(0.1f, 0.1f, 0.1f, 1.0f));
         gc.setEffect(new GaussianBlur(20));
 
-        this.drawSpot(gc, center[0], center[1], 0);
+        this.drawSpot(gc, center, 0);
 
         gc.setEffect(null);
     }
@@ -138,28 +138,26 @@ class BoardView extends Canvas {
     /**
      * Draw a spot as a Polygon. Assume that color has been preset
      *
-     * @param gc graphics context used to draw
-     * @param x  the x center of the spot
-     * @param y  the y center of the spot
+     * @param gc     graphics context used to draw
+     * @param center center position
      */
-    private void drawSpot(GraphicsContext gc, double x, double y) {
-        drawSpot(gc, x, y, 0);
+    private void drawSpot(GraphicsContext gc, Point2D center) {
+        drawSpot(gc, center, 0);
     }
 
     /**
      * Draw a spot as a Polygon. Assume color has been preset
      *
      * @param gc     graphics context
-     * @param x      the x center
-     * @param y      the y center
+     * @param center center position
      * @param offset the offset for drawing larger/smaller spots
      */
-    private void drawSpot(GraphicsContext gc, double x, double y, double offset) {
+    private void drawSpot(GraphicsContext gc, Point2D center, double offset) {
         double[] xPoints = new double[6];
         double[] yPoints = new double[6];
         for (int i = 0; i < 6; i++) {
-            xPoints[i] = x + (this.radius + offset) * Math.sin(i * Math.PI / 3.0 + Math.PI / 2.0);
-            yPoints[i] = y + (this.radius + offset) * Math.cos(i * Math.PI / 3.0 + Math.PI / 2.0);
+            xPoints[i] = center.getX() + (this.radius + offset) * Math.sin(i * Math.PI / 3.0 + Math.PI / 2.0);
+            yPoints[i] = center.getY() + (this.radius + offset) * Math.cos(i * Math.PI / 3.0 + Math.PI / 2.0);
         }
 
         gc.fillPolygon(xPoints, yPoints, 6);
@@ -168,47 +166,44 @@ class BoardView extends Canvas {
     /**
      * Draw the highlight on the spot
      *
-     * @param gc   the graphics context for drawing
-     * @param orig the color of the spot
-     * @param x    the x center coord
-     * @param y    the y center coord
+     * @param gc     the graphics context for drawing
+     * @param orig   the color of the spot
+     * @param center center position
      */
-    private void drawHighlight(GraphicsContext gc, Color orig, double x, double y) {
+    private void drawHighlight(GraphicsContext gc, Color orig, Point2D center) {
         gc.setStroke(orig.brighter());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, x, y, new int[]{1, 2}, -1.5);
+        this.drawLines(gc, center, new int[]{1, 2}, -1.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, x, y, 3, -1.5);
+        this.drawLine(gc, center, 3, -1.5);
     }
 
     /**
      * Draw the shadow on the spot
      *
-     * @param gc   graphics context for drawing
-     * @param orig the color on the spot
-     * @param x    the x center coord
-     * @param y    the y center coord
+     * @param gc     graphics context for drawing
+     * @param orig   the color on the spot
+     * @param center center position
      */
-    private void drawShadow(GraphicsContext gc, Color orig, double x, double y) {
+    private void drawShadow(GraphicsContext gc, Color orig, Point2D center) {
         gc.setStroke(orig.darker());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, x, y, new int[]{4, 5}, -1.5);
+        this.drawLines(gc, center, new int[]{4, 5}, -1.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, x, y, 0, -1.5);
+        this.drawLine(gc, center, 0, -1.5);
     }
 
     /**
      * Draw multiple lines on the canvas, relative to a hexagon
      *
      * @param gc     graphics context for drawing
-     * @param x      the x center coord
-     * @param y      the y center coord
+     * @param center center position
      * @param sides  the sides to be drawn - see spot class
      * @param offset +/- offset for the radius, determining out or in, respectively
      */
-    private void drawLines(GraphicsContext gc, double x, double y, int[] sides, double offset) {
+    private void drawLines(GraphicsContext gc, Point2D center, int[] sides, double offset) {
         for (int side : sides) {
-            this.drawLine(gc, x, y, side, offset);
+            this.drawLine(gc, center, side, offset);
         }
     }
 
@@ -216,17 +211,18 @@ class BoardView extends Canvas {
      * Draw a single line on the canvas, relative to a hexagon
      *
      * @param gc     graphics context for drawing
-     * @param x      the x center coord
-     * @param y      the y center coord
+     * @param center center position
      * @param side   the side to be drawn - see spot class
      * @param offset +/- offset for the radius, determining out or in, respectively
      */
-    private void drawLine(GraphicsContext gc, double x, double y, int side, double offset) {
+    private void drawLine(GraphicsContext gc, Point2D center, int side, double offset) {
         double[] xPoints = new double[2];
         double[] yPoints = new double[2];
         for (int i = 0; i < 2; i++) {
-            xPoints[i] = x + (this.radius + offset) * Math.sin((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
-            yPoints[i] = y + (this.radius + offset) * Math.cos((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
+            xPoints[i] = center.getX()
+                    + (this.radius + offset) * Math.sin((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
+            yPoints[i] = center.getY()
+                    + (this.radius + offset) * Math.cos((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
         }
 
         gc.strokePolyline(xPoints, yPoints, 2);
@@ -236,18 +232,17 @@ class BoardView extends Canvas {
      * Draw a connection to an exit directly adjacent
      * TODO: have it dependent on final spot
      *
-     * @param gc   graphics context
-     * @param x    center x
-     * @param y    center y
-     * @param side the side to go out
+     * @param gc     graphics context
+     * @param center center position
+     * @param side   the side to go out
      */
-    private void drawConnection(GraphicsContext gc, double x, double y, int side) {
+    private void drawConnection(GraphicsContext gc, Point2D center, int side) {
         double[] xPoints = new double[2];
         double[] yPoints = new double[2];
         for (int i = 0; i < 2; i++) {
-            xPoints[i] = x + 3 + (this.radius / 2.0 + this.radius * i)
+            xPoints[i] = center.getX() + 3 + (this.radius / 2.0 + this.radius * i)
                     * Math.sin(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
-            yPoints[i] = y + 3 + (this.radius / 2.0 + this.radius * i)
+            yPoints[i] = center.getY() + 3 + (this.radius / 2.0 + this.radius * i)
                     * Math.cos(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
         }
 
@@ -260,14 +255,14 @@ class BoardView extends Canvas {
      *
      * @param x index along the width
      * @param y index along the height
-     * @return  array with {x, y} coords for the center
+     * @return  point for the center
      */
-    private double[] getCenter(int x, int y) {
+    private Point2D getCenter(int x, int y) {
         double xCenter = 20 + this.radius + x * this.radius * 3.0 / 2.0 - x * 0.5;
         double yHeight = this.radius * Math.cos(Math.PI / 6.0); // determine half the height of a spot
         double yCenter = 20 + ((x % 2) + 1) * yHeight + y * 2 * yHeight - y * 0.7; // determine center of the spot
 
-        return new double[]{xCenter, yCenter};
+        return new Point2D(xCenter, yCenter);
     }
 
     /**
