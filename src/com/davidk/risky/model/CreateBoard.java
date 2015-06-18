@@ -23,7 +23,7 @@ public class CreateBoard {
      */
     public CreateBoard(CreateBoardSkin skin) {
         this.skin = skin;
-        this.dimensions = new int[]{7, 15}; // the minimum size, TODO: make dynamic
+        this.dimensions = new int[]{7, 10}; // the minimum size, TODO: make dynamic
         this.board = new Board();
         this.selected = new int[2];
         this.setExits = false;

@@ -77,7 +77,7 @@ public class Spot extends Hex {
         if (exit == null)
             return;
 
-        exit.setExit(- dir, this, true);
+        exit.setExit(-dir, this, true);
         this.setExit(dir, exit, true);
     }
 
@@ -105,7 +105,7 @@ public class Spot extends Hex {
         if (exit == null)
             return;
 
-        exit.removeExit(- dir, this, true);
+        exit.removeExit(-dir, this, true);
         this.removeExit(dir, exit, true);
     }
 

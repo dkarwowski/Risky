@@ -42,39 +42,13 @@ public class OffsetCoord {
     }
 
     /**
-     * Use the Q's offset, get the offset from the cubic coordinates
-     *
-     * @param offset the even or odd offset
-     * @param h      the hexagon
-     * @return the offset coordinates
-     */
-    public static OffsetCoord qOffsetFromCube(int offset, Hex h) {
-        int col = h.getQ();
-        int row = h.getR() + (int)((h.getQ() + offset * (h.getQ() & 1)) / 2.0);
-        return new OffsetCoord(col, row);
-    }
-
-    /**
-     * Use the Q's offset, get the cubic coordinates
-     *
-     * @param offset the offset to convert
-     * @return the new hexagon
-     */
-    public Hex qOffsetToCube(int offset) {
-        int q = this.getCol();
-        int r = this.getRow() - (int)((this.getCol() + offset * (this.getCol() & 1)) / 2.0);
-        return new Hex(q, r);
-    }
-
-    /**
      * Use the R's offset, get the offset from cubic coordinates
      *
-     * @param offset the even or odd offset
-     * @param h      the hexagon
+     * @param h the hexagon
      * @return the offset coordinates
      */
-    public static OffsetCoord rOffsetFromCube(int offset, Hex h) {
-        int col = h.getQ() + (int)((h.getR() + offset * (h.getR() & 1)) / 2.0);
+    public static OffsetCoord rOffsetFromCube(Hex h) {
+        int col = h.getQ() + (int)((h.getR() + EVEN * (h.getR() & 1)) / 2.0);
         int row = h.getR();
         return new OffsetCoord(col, row);
     }
@@ -82,12 +56,12 @@ public class OffsetCoord {
     /**
      * Use the R's offset, get the cubic coordinates
      *
-     * @param offset the even or odd offset
+     * @param row row
+     * @param col col
      * @return the new hexagon
      */
-    public Hex rOffsetToCube(int offset) {
-        int q = this.getCol() - (int)((this.getRow() + offset * (this.getRow() & 1)) / 2.0);
-        int r = this.getRow();
-        return new Hex(q, r);
+    public static Hex rOffsetToCube(int row, int col) {
+        int q = col - (int)((row + EVEN * (row & 1)) / 2.0);
+        return new Hex(q, row);
     }
 }

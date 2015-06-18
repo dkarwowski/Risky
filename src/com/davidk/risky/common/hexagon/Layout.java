@@ -87,16 +87,26 @@ public class Layout {
 
     /**
      * Get a specific corner of a hexagon
+     *
+     * @param corner the corner to look at
+     * @return       point of the corner
+     */
+    public Point2D hexCornerOffset(int corner) {
+        return hexCornerOffset(corner, 0);
+    }
+
+    /**
+     * Get a specific corner of a hexagon
      * TODO: see if necessary
      *
      * @param corner the corner to look at
      * @return point of the corner
      */
-    public Point2D hexCornerOffset(int corner) {
+    public Point2D hexCornerOffset(int corner, double offset) {
         double angle = 2.0 * Math.PI * (corner + this.orientation.getAngle()) / 6.0;
         return new Point2D(
-                this.size.getX() * Math.cos(angle),
-                this.size.getY() * Math.sin(angle)
+                (this.size.getX() + offset) * Math.cos(angle),
+                (this.size.getY() + offset) * Math.sin(angle)
         );
     }
 

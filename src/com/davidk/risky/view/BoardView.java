@@ -1,6 +1,8 @@
 package com.davidk.risky.view;
 
+import com.davidk.risky.common.hexagon.FractionalHex;
 import com.davidk.risky.common.hexagon.Layout;
+import com.davidk.risky.common.hexagon.OffsetCoord;
 import com.davidk.risky.common.hexagon.Orientation;
 import com.davidk.risky.model.game.Board;
 import com.davidk.risky.model.game.Spot;
@@ -11,14 +13,13 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 
 /**
- * Shows the Board as its own view, for use in multiple places
+ * Creates the view of the board using the hexagon classes
  *
- * Created by davidkarwowski on 5/13/15.
+ * Created by davidkarwowski on 6/17/15.
  */
-class BoardView extends Canvas {
+public class BoardView extends Canvas {
     private Board board;
     private Layout layout;
-    private final double radius; // synonymous with side length
 
     /**
      * Create a new Board View
@@ -26,22 +27,37 @@ class BoardView extends Canvas {
      * @param board      board to draw initially
      * @param sideLength the length of a side on the hexagon (radius)
      */
-    public BoardView(Board board, double sideLength) {
-        super(
-                sideLength * 3.0 / 2.0 * board.getDimensions()[0] + 40 + sideLength / 2.0,
-                sideLength * Math.sqrt(3.0) * board.getDimensions()[1] + 40 + sideLength * Math.sqrt(3.0) / 2.0
-        );
+    public BoardView(Board board, int sideLength) {
+        super(500, 500);
 
         this.board = board;
-        this.radius = sideLength;
-
-        // create a layout based off of the side length, and the center
-        // currently mixing the code a lot, should be reworked?
         this.layout = new Layout(
                 Orientation.pointy,
                 new Point2D(sideLength, sideLength),
-                this.getCenter(0, 0)
+                new Point2D(2 * sideLength + 20, sideLength + 20)
         );
+
+        this.setWidth(40 + sideLength +
+                this.layout.hexToPixel(
+                        OffsetCoord.rOffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
+                ).getX()
+        );
+        this.setHeight(40 + sideLength +
+                this.layout.hexToPixel(
+                        OffsetCoord.rOffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
+                ).getY()
+        );
+    }
+
+    /**
+     * Draw an updated board
+     * TODO: see about properties?
+     *
+     * @param board the new board to use
+     */
+    public void drawBoard(Board board) {
+        this.board = board;
+        this.drawBoard();
     }
 
     /**
@@ -51,23 +67,22 @@ class BoardView extends Canvas {
         GraphicsContext gc = this.getGraphicsContext2D();
         this.reset(gc);
         this.outlineBoard(gc);
-        for (int y = 0; y < board.getHeight(); y++) {
-            for (int x = 0; x < board.getWidth(); x++) {
-                Spot spot = board.getSpots()[x + y * board.getWidth()];
-                Color color;
-                Point2D center = this.getCenter(x, y);
 
-                if (spot == null) {
+        for (int y = 0; y < this.board.getHeight(); y++) {
+            for (int x = 0; x < this.board.getWidth(); x++) {
+                Spot spot = this.board.getSpot(x, y);
+                Color color;
+                Point2D center = this.layout.hexToPixel(OffsetCoord.rOffsetToCube(y, x));
+
+                if (spot == null)
                     color = Color.color(0.2f, 0.2f, 0.7f, 1.0f);
-                }
-                else {
+                else
                     color = Color.color(0.2f, 0.7f, 0.2f, 1.0f);
-                }
 
                 gc.setFill(color);
                 this.drawSpot(gc, center);
-                this.drawHighlight(gc, color, center);
-                this.drawShadow(gc, color, center);
+                this.drawHighlight(gc, center, color);
+                this.drawShadow(gc, center, color);
 
                 if (spot == null)
                     continue;
@@ -83,9 +98,25 @@ class BoardView extends Canvas {
     }
 
     /**
-     * Resets the board to a clear white
+     * Get a hex at a canvas coordinate
      *
-     * @param gc the graphics context
+     * @param x canvas x
+     * @param y canvas y
+     * @return  pair of indexes {x, y}
+     */
+    public int[] getHex(double x, double y) {
+        FractionalHex fHex = this.layout.pixelToHex(new Point2D(x, y));
+        OffsetCoord offset = OffsetCoord.rOffsetFromCube(fHex.round());
+        if (offset.getCol() < 0 || offset.getCol() >= this.board.getWidth()
+                || offset.getRow() < 0 || offset.getRow() >= this.board.getHeight())
+            return null;
+        return new int[]{offset.getCol(), offset.getRow()};
+    }
+
+    /**
+     * Outline the board completely with drop shadow
+     *
+     * @param gc graphics context
      */
     private void reset(GraphicsContext gc) {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -99,10 +130,10 @@ class BoardView extends Canvas {
     private void outlineBoard(GraphicsContext gc) {
         for (int y = 0; y < this.board.getHeight(); y++) {
             for (int x = 0; x < this.board.getWidth(); x++) {
-                if (y != 0 && x != 0 && y != this.board.getHeight() - 1 && x != this.board.getWidth() - 1)
+                if (x != 0 && y != 0 && y != this.board.getHeight() - 1 && x != this.board.getWidth() - 1)
                     continue;
 
-                this.dropShadow(gc, x, y);
+                this.dropShadow(gc, this.layout.hexToPixel(OffsetCoord.rOffsetToCube(y, x)));
             }
         }
     }
@@ -111,28 +142,15 @@ class BoardView extends Canvas {
      * Create a drop shadow for the board spot
      *
      * @param gc graphics context
-     * @param x  index x
-     * @param y  index y
+     * @param center the center of the point for the drop shadow
      */
-    private void dropShadow(GraphicsContext gc, int x, int y) {
-        Point2D center = this.getCenter(x, y);
-        gc.setFill(Color.color(0.1f, 0.1f, 0.1f, 1.0f));
+    private void dropShadow(GraphicsContext gc, Point2D center) {
+        gc.setFill(new Color(0.1f, 0.1f, 0.1f, 1.0f));
         gc.setEffect(new GaussianBlur(20));
 
-        this.drawSpot(gc, center, 0);
+        this.drawSpot(gc, center);
 
         gc.setEffect(null);
-    }
-
-    /**
-     * Draw an updated board
-     * TODO: see about properties?
-     *
-     * @param board the new board to use
-     */
-    public void drawBoard(Board board) {
-        this.board = board;
-        this.drawBoard();
     }
 
     /**
@@ -156,8 +174,8 @@ class BoardView extends Canvas {
         double[] xPoints = new double[6];
         double[] yPoints = new double[6];
         for (int i = 0; i < 6; i++) {
-            xPoints[i] = center.getX() + (this.radius + offset) * Math.sin(i * Math.PI / 3.0 + Math.PI / 2.0);
-            yPoints[i] = center.getY() + (this.radius + offset) * Math.cos(i * Math.PI / 3.0 + Math.PI / 2.0);
+            xPoints[i] = center.add(this.layout.hexCornerOffset(i, offset)).getX();
+            yPoints[i] = center.add(this.layout.hexCornerOffset(i, offset)).getY();
         }
 
         gc.fillPolygon(xPoints, yPoints, 6);
@@ -170,12 +188,12 @@ class BoardView extends Canvas {
      * @param orig   the color of the spot
      * @param center center position
      */
-    private void drawHighlight(GraphicsContext gc, Color orig, Point2D center) {
+    private void drawHighlight(GraphicsContext gc, Point2D center, Color orig) {
         gc.setStroke(orig.brighter());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, center, new int[]{1, 2}, -1.5);
+        this.drawLines(gc, center, new int[]{2, 3}, -1.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, center, 3, -1.5);
+        this.drawLine(gc, center, 4, -1.5);
     }
 
     /**
@@ -185,12 +203,12 @@ class BoardView extends Canvas {
      * @param orig   the color on the spot
      * @param center center position
      */
-    private void drawShadow(GraphicsContext gc, Color orig, Point2D center) {
+    private void drawShadow(GraphicsContext gc, Point2D center, Color orig) {
         gc.setStroke(orig.darker());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, center, new int[]{4, 5}, -1.5);
+        this.drawLines(gc, center, new int[]{5, 0}, -1.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, center, 0, -1.5);
+        this.drawLine(gc, center, 1, -1.5);
     }
 
     /**
@@ -202,9 +220,8 @@ class BoardView extends Canvas {
      * @param offset +/- offset for the radius, determining out or in, respectively
      */
     private void drawLines(GraphicsContext gc, Point2D center, int[] sides, double offset) {
-        for (int side : sides) {
+        for (int side : sides)
             this.drawLine(gc, center, side, offset);
-        }
     }
 
     /**
@@ -216,13 +233,11 @@ class BoardView extends Canvas {
      * @param offset +/- offset for the radius, determining out or in, respectively
      */
     private void drawLine(GraphicsContext gc, Point2D center, int side, double offset) {
-        double[] xPoints = new double[2];
-        double[] yPoints = new double[2];
+        double[] xPoints = new double[6];
+        double[] yPoints = new double[6];
         for (int i = 0; i < 2; i++) {
-            xPoints[i] = center.getX()
-                    + (this.radius + offset) * Math.sin((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
-            yPoints[i] = center.getY()
-                    + (this.radius + offset) * Math.cos((side + i) * Math.PI / 3.0 + Math.PI / 2.0);
+            xPoints[i] = center.add(this.layout.hexCornerOffset(side + i, offset)).getX();
+            yPoints[i] = center.add(this.layout.hexCornerOffset(side + i, offset)).getY();
         }
 
         gc.strokePolyline(xPoints, yPoints, 2);
@@ -237,50 +252,6 @@ class BoardView extends Canvas {
      * @param side   the side to go out
      */
     private void drawConnection(GraphicsContext gc, Point2D center, int side) {
-        double[] xPoints = new double[2];
-        double[] yPoints = new double[2];
-        for (int i = 0; i < 2; i++) {
-            xPoints[i] = center.getX() + 3 + (this.radius / 2.0 + this.radius * i)
-                    * Math.sin(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
-            yPoints[i] = center.getY() + 3 + (this.radius / 2.0 + this.radius * i)
-                    * Math.cos(side * Math.PI / 3.0 + 2.0 * Math.PI / 3.0);
-        }
 
-        gc.setStroke(Color.BLACK);
-        gc.strokePolyline(xPoints, yPoints, 2);
-    }
-
-    /**
-     * Get the center of a hexagon from x and y index
-     *
-     * @param x index along the width
-     * @param y index along the height
-     * @return  point for the center
-     */
-    private Point2D getCenter(int x, int y) {
-        double xCenter = 20 + this.radius + x * this.radius * 3.0 / 2.0 - x * 0.5;
-        double yHeight = this.radius * Math.cos(Math.PI / 6.0); // determine half the height of a spot
-        double yCenter = 20 + ((x % 2) + 1) * yHeight + y * 2 * yHeight - y * 0.7; // determine center of the spot
-
-        return new Point2D(xCenter, yCenter);
-    }
-
-    /**
-     * Get a hex at a canvas coordinate
-     *
-     * @param x canvas x
-     * @param y canvas y
-     * @return  pair of indexes {x, y}
-     */
-    public int[] getHex(double x, double y) {
-        double xRange = this.radius + this.radius / 2.0;
-        double xOffset = 20.0 + this.radius / 4.0;
-        int xIndex = (int) ((x - xOffset) / xRange);
-
-        double yRange = this.radius * Math.cos(Math.PI / 6.0) * 2.0;
-        double yOffset = 20.0 + (xIndex % 2) * yRange / 2.0;
-        int yIndex = (int) ((y - yOffset) / yRange);
-
-        return new int[]{xIndex, yIndex};
     }
 }

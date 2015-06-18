@@ -37,12 +37,12 @@ public class CreateBoardSkin extends StackPane {
         // Label
         Label boardSizeLabel = new Label("Select Board Size");
         GridPane.setConstraints(boardSizeLabel, 0, 0);
-        Label widthLabel = new Label("Dim: 15x7");
+        Label widthLabel = new Label("Dim: 10x7");
         GridPane.setConstraints(widthLabel, 0, 1);
         // Board Size Chooser
         Slider widthSlider = new Slider();
-        widthSlider.setMin(15);
-        widthSlider.setMax(25);
+        widthSlider.setMin(10);
+        widthSlider.setMax(20);
         widthSlider.setBlockIncrement(1);
         widthSlider.setMajorTickUnit(5);
         widthSlider.setMinorTickCount(4);
@@ -52,9 +52,9 @@ public class CreateBoardSkin extends StackPane {
         widthSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     this.controller.setWidth(newValue.intValue());
-                    this.controller.setHeight(newValue.intValue() / 2);
+                    this.controller.setHeight(newValue.intValue() * 3 / 4);
                     widthLabel.setText(
-                            String.format("Dim: %dx%d", newValue.intValue(), newValue.intValue()/2)
+                            String.format("Dim: %dx%d", newValue.intValue(), newValue.intValue() * 3 / 4)
                     );
                 }
         );
@@ -93,6 +93,8 @@ public class CreateBoardSkin extends StackPane {
                 event -> {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
+                        if (square == null)
+                            return;
 
                         // hide the context menu on a click outside
                         if (this.contextMenu != null && this.contextMenu.isShowing())
@@ -102,6 +104,9 @@ public class CreateBoardSkin extends StackPane {
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
+                        if (square == null)
+                            return;
+
                         this.createContextMenu(event, square);
                         // tell the board view to add a highlight?
                     }

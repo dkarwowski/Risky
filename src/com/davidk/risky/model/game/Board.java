@@ -97,15 +97,15 @@ public class Board {
     public void createSpot(int x, int y) {
         assert this.getSpot(x, y) == null;
         Spot insert = new Spot(x, y);
-        // iterate over exits
-        for (int i = 0; i < 6; i++) {
-            Hex exit = insert.neighbor(i);
-            // TODO: clean this up to a better check
-            OffsetCoord exitOffset = OffsetCoord.rOffsetFromCube(OffsetCoord.ODD, exit);
-            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
-
-            insert.setExit(i, this.spots[exitI]);
-        }
+//        // iterate over exits
+//        for (int i = 0; i < 6; i++) {
+//            Hex exit = insert.neighbor(i);
+//            // TODO: clean this up to a better check
+//            OffsetCoord exitOffset = OffsetCoord.qOffsetFromCube(exit);
+//            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
+//
+//            insert.setExit(i, this.spots[exitI]);
+//        }
 
         this.spots[x + y * this.getWidth()] = insert;
     }
@@ -118,16 +118,16 @@ public class Board {
      */
     public void removeSpot(int x, int y) {
         assert this.getSpot(x, y) != null;
-        Spot remove = this.spots[x + y * this.getWidth()];
-        // iterate over exits
-        for (int i = 0; i < 6; i++) {
-            Hex exit = remove.neighbor(i);
-            // TODO: clean this up to a better check
-            OffsetCoord exitOffset = OffsetCoord.rOffsetFromCube(OffsetCoord.ODD, exit);
-            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
-
-            remove.removeExit(i, this.spots[exitI]);
-        }
+//        Spot remove = this.spots[x + y * this.getWidth()];
+//        // iterate over exits
+//        for (int i = 0; i < 6; i++) {
+//            Hex exit = remove.neighbor(i);
+//            // TODO: clean this up to a better check
+//            OffsetCoord exitOffset = OffsetCoord.qOffsetFromCube(exit);
+//            int exitI = exitOffset.getCol() * this.getWidth() + exitOffset.getRow();
+//
+//            remove.removeExit(i, this.spots[exitI]);
+//        }
 
         this.spots[x + y * this.getWidth()] = null;
     }
