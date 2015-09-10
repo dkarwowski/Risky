@@ -5,6 +5,7 @@ import com.davidk.risky.common.hexagon.Layout;
 import com.davidk.risky.common.hexagon.OffsetCoord;
 import com.davidk.risky.common.hexagon.Orientation;
 import com.davidk.risky.model.game.Board;
+import com.davidk.risky.model.game.Country;
 import com.davidk.risky.model.game.Spot;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -95,6 +96,15 @@ public class BoardView extends Canvas {
                 }
             }
         }
+    }
+
+    /**
+     * Get the countries currently existing on the board
+     *
+     * @return list of countries
+     */
+    public Country[] getCountries() {
+        return this.board.getCountries();
     }
 
     /**

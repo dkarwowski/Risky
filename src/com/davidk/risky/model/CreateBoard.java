@@ -1,6 +1,8 @@
 package com.davidk.risky.model;
 
 import com.davidk.risky.model.game.Board;
+import com.davidk.risky.model.game.Country;
+import com.davidk.risky.model.game.Spot;
 import com.davidk.risky.view.CreateBoardSkin;
 
 /**
@@ -81,6 +83,25 @@ public class CreateBoard {
 
     public void setSetExits(boolean value) {
         this.setExits = value;
+    }
+
+    /**
+     * Add a spot to the country, as well as creating it if it doesn't exist
+     *
+     * @param x       coordinate of the spot
+     * @param y       coordinate of the spot
+     * @param country Country to add a spot to
+     */
+    public void setCountry(int x, int y, Country country) throws Exception {
+        if (this.board.getSpot(x, y) == null)
+            this.board.createSpot(x, y);
+
+        Spot spot = this.board.getSpot(x, y);
+        if (spot.getCountry() != null) {
+            spot.getCountry().remove(spot);
+        }
+
+        country.add(spot);
     }
 
     /**

@@ -71,6 +71,17 @@ public class Board {
     }
 
     /**
+     * Get an array of all the countries
+     *
+     * @return array of countries
+     */
+    public Country[] getCountries() {
+        if (this.countries.isEmpty())
+            return new Country[0];
+        return (Country[])this.countries.toArray();
+    }
+
+    /**
      * Get the width of the board
      *
      * @return number of spots across

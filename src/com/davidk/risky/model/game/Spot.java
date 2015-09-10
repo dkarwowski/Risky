@@ -15,6 +15,7 @@ public class Spot extends Hex {
     private final ReadOnlyIntegerWrapper id;              // used to compare two spots
     private final ReadOnlyIntegerWrapper troops;          // troops that have been placed
     private final ReadOnlyObjectWrapper<Player> player;   // person who owns the Spot
+    private final ReadOnlyObjectWrapper<Country> country; // country
     private Spot[] exits;
 
     /**
@@ -28,6 +29,7 @@ public class Spot extends Hex {
         this.id = new ReadOnlyIntegerWrapper(Spot.nextID++);
         this.troops = new ReadOnlyIntegerWrapper(0);
         this.player = new ReadOnlyObjectWrapper<>(null);
+        this.country = new ReadOnlyObjectWrapper<>(null);
         this.exits = new Spot[6];
     }
 
@@ -121,6 +123,24 @@ public class Spot extends Hex {
             this.exits[dir] = null;
         else
             this.removeExit(dir, exit);
+    }
+
+    /**
+     * Get the country the spot belongs to
+     *
+     * @return Country object
+     */
+    public Country getCountry() {
+        return this.country.get();
+    }
+
+    /**
+     * Set the country to be a new value
+     *
+     * @param country Country to be set
+     */
+    public void setCountry(Country country) {
+        this.country.set(country);
     }
 
     @Override

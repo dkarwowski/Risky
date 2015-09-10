@@ -2,6 +2,7 @@ package com.davidk.risky.view;
 
 import com.davidk.risky.controller.CreateBoardController;
 import com.davidk.risky.model.game.Board;
+import com.davidk.risky.model.game.Country;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -101,8 +102,7 @@ public class CreateBoardSkin extends StackPane {
                             this.contextMenu.hide();
                         else
                             this.controller.mouseClicked(square[0], square[1]);
-                    }
-                    else if (event.getButton() == MouseButton.SECONDARY) {
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
                         int[] square = this.boardView.getHex(event.getX(), event.getY());
                         if (square == null)
                             return;
@@ -139,8 +139,35 @@ public class CreateBoardSkin extends StackPane {
         switchSpot.setOnAction(
                 event -> this.controller.mouseClicked(square[0], square[1]) // TODO: rename the function
         );
+        Menu countryMenu = new Menu("Set Country");
+        final ToggleGroup countries = new ToggleGroup();
+        for (Country country : this.boardView.getCountries()) {
+            RadioMenuItem item = new RadioMenuItem(country.getName());
+            item.setOnAction(
+                    event -> {
+                        try {
+                            this.controller.setCountry(square[0], square[1], country);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+            );
+            item.setToggleGroup(countries);
+            countryMenu.getItems().add(item);
+        }
+        MenuItem addCountryToMenu = new MenuItem("Add Country...");
+        addCountryToMenu.setOnAction(
+                event -> {
+                    try {
+                        this.controller.setCountry(square[0], square[1], this.controller.createCountry());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+        countryMenu.getItems().add(addCountryToMenu);
 
-        this.contextMenu.getItems().addAll(switchSpot, setExits);
+        this.contextMenu.getItems().addAll(switchSpot, setExits, countryMenu);
         this.contextMenu.show(this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
     }
 

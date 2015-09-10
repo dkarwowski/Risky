@@ -2,6 +2,7 @@ package com.davidk.risky.controller;
 
 import com.davidk.risky.Risky;
 import com.davidk.risky.model.CreateBoard;
+import com.davidk.risky.model.game.Country;
 import com.davidk.risky.view.CreateBoardSkin;
 import javafx.scene.Scene;
 
@@ -67,6 +68,32 @@ public class CreateBoardController {
         this.createBoard.setSelected(x, y);
         this.createBoard.setSetExits(true);
         System.out.println("SetSelected"); // test to ensure working
+    }
+
+    /**
+     * Set the country of a specific spot to be a selected country
+     *
+     * @param x       offset x coordinate of the spot
+     * @param y       offset y coordinate of the spot
+     * @param country unique country on the board
+     */
+    public void setCountry(int x, int y, Country country) throws Exception {
+        System.out.println("SetCountry");
+        if (country == null) // TODO: remove this shit because it's a test
+            return;
+
+        this.createBoard.setCountry(x, y, country);
+    }
+
+    /**
+     * Create a new country on the board
+     *
+     * @return the created country
+     */
+    public Country createCountry() {
+        // TODO: implement country creation
+        System.out.println("CreateCountry");
+        return null;
     }
 
     /**
