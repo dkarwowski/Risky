@@ -47,7 +47,7 @@ public class OffsetCoord {
      * @param h the hexagon
      * @return the offset coordinates
      */
-    public static OffsetCoord rOffsetFromCube(Hex h) {
+    public static OffsetCoord OffsetFromCube(Hex h) {
         int col = h.getQ() + (int)((h.getR() + EVEN * (h.getR() & 1)) / 2.0);
         int row = h.getR();
         return new OffsetCoord(col, row);
@@ -60,7 +60,7 @@ public class OffsetCoord {
      * @param col col
      * @return the new hexagon
      */
-    public static Hex rOffsetToCube(int row, int col) {
+    public static Hex OffsetToCube(int row, int col) {
         int q = col - (int)((row + EVEN * (row & 1)) / 2.0);
         return new Hex(q, row);
     }

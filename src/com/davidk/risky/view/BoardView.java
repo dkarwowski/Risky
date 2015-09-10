@@ -39,12 +39,12 @@ public class BoardView extends Canvas {
 
         this.setWidth(40 + sideLength +
                 this.layout.hexToPixel(
-                        OffsetCoord.rOffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
+                        OffsetCoord.OffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
                 ).getX()
         );
         this.setHeight(40 + sideLength +
                 this.layout.hexToPixel(
-                        OffsetCoord.rOffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
+                        OffsetCoord.OffsetToCube(this.board.getHeight() - 1, this.board.getWidth() - 1)
                 ).getY()
         );
     }
@@ -72,7 +72,7 @@ public class BoardView extends Canvas {
             for (int x = 0; x < this.board.getWidth(); x++) {
                 Spot spot = this.board.getSpot(x, y);
                 Color color;
-                Point2D center = this.layout.hexToPixel(OffsetCoord.rOffsetToCube(y, x));
+                Point2D center = this.layout.hexToPixel(OffsetCoord.OffsetToCube(y, x));
 
                 if (spot == null)
                     color = Color.color(0.2f, 0.2f, 0.7f, 1.0f);
@@ -106,7 +106,7 @@ public class BoardView extends Canvas {
      */
     public int[] getHex(double x, double y) {
         FractionalHex fHex = this.layout.pixelToHex(new Point2D(x, y));
-        OffsetCoord offset = OffsetCoord.rOffsetFromCube(fHex.round());
+        OffsetCoord offset = OffsetCoord.OffsetFromCube(fHex.round());
         if (offset.getCol() < 0 || offset.getCol() >= this.board.getWidth()
                 || offset.getRow() < 0 || offset.getRow() >= this.board.getHeight())
             return null;
@@ -133,7 +133,7 @@ public class BoardView extends Canvas {
                 if (x != 0 && y != 0 && y != this.board.getHeight() - 1 && x != this.board.getWidth() - 1)
                     continue;
 
-                this.dropShadow(gc, this.layout.hexToPixel(OffsetCoord.rOffsetToCube(y, x)));
+                this.dropShadow(gc, this.layout.hexToPixel(OffsetCoord.OffsetToCube(y, x)));
             }
         }
     }
