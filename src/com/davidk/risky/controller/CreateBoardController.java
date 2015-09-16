@@ -92,6 +92,7 @@ public class CreateBoardController {
      */
     public Country createCountry() {
         // TODO: implement country creation
+        this.createBoardSkin.createCountryDialog();
         System.out.println("CreateCountry");
         return null;
     }

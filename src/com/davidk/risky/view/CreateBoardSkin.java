@@ -4,9 +4,12 @@ import com.davidk.risky.controller.CreateBoardController;
 import com.davidk.risky.model.game.Board;
 import com.davidk.risky.model.game.Country;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -114,7 +117,10 @@ public class CreateBoardSkin extends StackPane {
         );
 
         // throw boardview on grid
+        this.setMinSize(this.boardView.getWidth(), this.boardView.getHeight());
+        this.setMaxSize(this.boardView.getWidth(), this.boardView.getHeight());
         this.setPrefSize(this.boardView.getWidth(), this.boardView.getHeight());
+        StackPane.setAlignment(this.boardView, Pos.TOP_LEFT);
         this.getChildren().addAll(this.boardView);
 
         // throw buttons on grid
@@ -178,5 +184,35 @@ public class CreateBoardSkin extends StackPane {
      */
     public void updateBoard(Board board) {
         this.boardView.drawBoard(board);
+    }
+
+    /**
+     * Popup Dialog for the user to make a country
+     */
+    public void createCountryDialog() {
+        // created a base stack gridpane to fill the screen with blank space
+        GridPane stackFiller = new GridPane();
+        // country pane will hold the actual input
+        GridPane countryPane = new GridPane();
+        countryPane.setHgap(5);
+        countryPane.setVgap(5);
+        countryPane.setPadding(new Insets(10, 10, 10, 10));
+
+        // create the input fields
+        TextField textField = new TextField("Name");
+        Button b = new Button("Submit");
+        b.setOnAction(
+                event -> this.getChildren().remove(countryPane)
+        );
+
+        // set the placement
+        GridPane.setConstraints(textField, 0, 0);
+        GridPane.setConstraints(b, 1, 0);
+        countryPane.getChildren().addAll(textField, b);
+        // TODO: remove this style
+        countryPane.setStyle("-fx-background-color: aqua");
+        stackFiller.getChildren().add(countryPane);
+        stackFiller.setAlignment(Pos.BOTTOM_CENTER);
+        this.getChildren().add(stackFiller);
     }
 }
