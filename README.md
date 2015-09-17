@@ -33,7 +33,7 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
     - [x] gather input from clicking on board
     - [x] field user input to make new spots on a board
     - [ ] create the board from the user input
-        - [ ] countries exist
+        - [x] countries exist
         - [x] spots have coordinates
         - [x] spots have exits - tested and buggy
         - [ ] ensure spots are fully connected
