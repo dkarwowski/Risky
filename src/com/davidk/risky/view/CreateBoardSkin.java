@@ -165,7 +165,7 @@ public class CreateBoardSkin extends StackPane {
         addCountryToMenu.setOnAction(
                 event -> {
                     try {
-                        this.controller.setCountry(square[0], square[1], this.controller.createCountry());
+                        this.controller.setCountry(square[0], square[1], this.controller.createCountryDialog());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -199,16 +199,24 @@ public class CreateBoardSkin extends StackPane {
         countryPane.setPadding(new Insets(10, 10, 10, 10));
 
         // create the input fields
-        TextField textField = new TextField("Name");
-        Button b = new Button("Submit");
-        b.setOnAction(
-                event -> this.getChildren().remove(countryPane)
+        TextField countryName = new TextField("Name");
+        Button submit = new Button("Submit");
+        submit.setOnAction(
+                event -> {
+                    this.controller.createCountry(countryName.getText());
+                    this.getChildren().remove(stackFiller);
+                }
+        );
+        Button exit = new Button("Cancel");
+        exit.setOnAction(
+                event -> this.getChildren().remove(stackFiller)
         );
 
         // set the placement
-        GridPane.setConstraints(textField, 0, 0);
-        GridPane.setConstraints(b, 1, 0);
-        countryPane.getChildren().addAll(textField, b);
+        GridPane.setConstraints(countryName, 0, 0);
+        GridPane.setConstraints(submit, 1, 0);
+        GridPane.setConstraints(exit, 2, 0);
+        countryPane.getChildren().addAll(countryName, submit, exit);
         // TODO: remove this style
         countryPane.setStyle("-fx-background-color: aqua");
         stackFiller.getChildren().add(countryPane);

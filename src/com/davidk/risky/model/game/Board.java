@@ -78,7 +78,9 @@ public class Board {
     public Country[] getCountries() {
         if (this.countries.isEmpty())
             return new Country[0];
-        return (Country[])this.countries.toArray();
+        Country[] result = new Country[this.countries.size()];
+        this.countries.toArray(result);
+        return result;
     }
 
     /**
@@ -141,6 +143,19 @@ public class Board {
 //        }
 
         this.spots[x + y * this.getWidth()] = null;
+    }
+
+    /**
+     * Add a country to the array
+     *
+     * @param countryName name of the country to be added- should be unique
+     */
+    public void addCountry(String countryName) {
+        for (Country c : countries)
+            assert !c.getName().equals(countryName);
+
+        Country c = new Country(countryName);
+        this.countries.add(c);
     }
 
     /**

@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class Country {
     private static int nextID = 1;
 
     private final ReadOnlyIntegerWrapper id;
-    private final ReadOnlyListWrapper<Spot> spots;
+    private final ArrayList<Spot> spots;
     private final ReadOnlyStringWrapper name;
 
     /**
@@ -26,7 +27,7 @@ public class Country {
         assert(name != null);
         this.name = new ReadOnlyStringWrapper(name);
         this.id = new ReadOnlyIntegerWrapper(Country.nextID++);
-        this.spots = new ReadOnlyListWrapper<>();
+        this.spots = new ArrayList<>();
     }
 
     /**
@@ -43,8 +44,12 @@ public class Country {
      *
      * @return List of spots
      */
-    public List<Spot> getSpots() {
-        return this.spots.get();
+    public Spot[] getSpots() {
+        if (this.spots.isEmpty())
+            return new Spot[0];
+        Spot[] result = new Spot[this.spots.size()];
+        this.spots.toArray(result);
+        return result;
     }
 
     /**
@@ -91,6 +96,6 @@ public class Country {
             return false;
 
         Country o = (Country) other;
-        return (o.getId() == this.getId() && o.getName().equals(this.getName()));
+        return (o.getId() == this.getId() || o.getName().equals(this.getName()));
     }
 }

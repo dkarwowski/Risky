@@ -90,11 +90,20 @@ public class CreateBoardController {
      *
      * @return the created country
      */
-    public Country createCountry() {
+    public Country createCountryDialog() {
         // TODO: implement country creation
         this.createBoardSkin.createCountryDialog();
         System.out.println("CreateCountry");
         return null;
+    }
+
+    /**
+     * Simply tells the create board to modify and create the country
+     *
+     * @param cName name of the country to be added
+     */
+    public void createCountry(String cName) {
+        this.createBoard.createCountry(cName);
     }
 
     /**

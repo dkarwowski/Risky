@@ -104,6 +104,10 @@ public class CreateBoard {
         country.add(spot);
     }
 
+    public void createCountry(String countryName) {
+        this.board.addCountry(countryName);
+    }
+
     /**
      * Get the read only property for the board
      *
