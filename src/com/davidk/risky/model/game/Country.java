@@ -3,6 +3,7 @@ package com.davidk.risky.model.game;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +16,22 @@ public class Country {
     private static int nextID = 1;
 
     private final ReadOnlyIntegerWrapper id;
-    private final ArrayList<Spot> spots;
     private final ReadOnlyStringWrapper name;
+    private final ArrayList<Spot> spots;
+    private final Color color;
 
     /**
      * Create a new country
      *
-     * @param name name of the country, must be unique
+     * @param name  name of the country, must be unique
+     * @param color the color to use
      */
-    public Country(String name) {
+    public Country(String name, Color color) {
         assert(name != null);
         this.name = new ReadOnlyStringWrapper(name);
         this.id = new ReadOnlyIntegerWrapper(Country.nextID++);
         this.spots = new ArrayList<>();
+        this.color = color;
     }
 
     /**
@@ -61,6 +65,14 @@ public class Country {
         return this.name.get();
     }
 
+    /**
+     * Get the color of the country
+     *
+     * @return color value
+     */
+    public Color getColor() {
+        return this.color;
+    }
     /**
      * Adds a spot to the country so long as there's nothing to overwrite
      *

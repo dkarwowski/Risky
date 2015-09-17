@@ -81,12 +81,17 @@ public class BoardView extends Canvas {
                     color = Color.color(0.2f, 0.7f, 0.2f, 1.0f);
 
                 gc.setFill(color);
+                gc.setEffect(new GaussianBlur(2.0));
                 this.drawSpot(gc, center);
+                gc.setEffect(null);
                 this.drawHighlight(gc, center, color);
                 this.drawShadow(gc, center, color);
 
                 if (spot == null)
                     continue;
+
+                if (spot.getCountry() != null)
+                    this.drawOutline(gc, center, spot.getCountry().getColor());
 
                 for (int i = 0; i < 6; i++) {
                     if (spot.getExits()[i] == null)
@@ -140,8 +145,6 @@ public class BoardView extends Canvas {
     private void outlineBoard(GraphicsContext gc) {
         for (int y = 0; y < this.board.getHeight(); y++) {
             for (int x = 0; x < this.board.getWidth(); x++) {
-                if (x != 0 && y != 0 && y != this.board.getHeight() - 1 && x != this.board.getWidth() - 1)
-                    continue;
 
                 this.dropShadow(gc, this.layout.hexToPixel(OffsetCoord.OffsetToCube(y, x)));
             }
@@ -201,9 +204,9 @@ public class BoardView extends Canvas {
     private void drawHighlight(GraphicsContext gc, Point2D center, Color orig) {
         gc.setStroke(orig.brighter());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, center, new int[]{2, 3}, -1.5);
+        this.drawLines(gc, center, new int[]{2, 3}, -2.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, center, 4, -1.5);
+        this.drawLine(gc, center, 4, -2.5);
     }
 
     /**
@@ -216,9 +219,22 @@ public class BoardView extends Canvas {
     private void drawShadow(GraphicsContext gc, Point2D center, Color orig) {
         gc.setStroke(orig.darker());
         gc.setLineWidth(2.0);
-        this.drawLines(gc, center, new int[]{5, 0}, -1.5);
+        this.drawLines(gc, center, new int[]{5, 0}, -2.5);
         gc.setLineWidth(1.0);
-        this.drawLine(gc, center, 1, -1.5);
+        this.drawLine(gc, center, 1, -2.5);
+    }
+
+    /**
+     * Draw the outline for each spot based on the country
+     *
+     * @param gc      graphics context for drawing
+     * @param center  the center point of the spot
+     * @param country the country color
+     */
+    private void drawOutline(GraphicsContext gc, Point2D center, Color country) {
+        gc.setStroke(country);
+        gc.setLineWidth(2.0);
+        this.drawLines(gc, center, new int[]{0,1,2,3,4,5}, -1.5);
     }
 
     /**

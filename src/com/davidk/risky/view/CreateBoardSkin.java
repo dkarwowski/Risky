@@ -12,6 +12,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 /**
  * Displays the board and catches user input
@@ -200,10 +201,11 @@ public class CreateBoardSkin extends StackPane {
 
         // create the input fields
         TextField countryName = new TextField("Name");
+        ColorPicker colorPicker = new ColorPicker(Color.color(0.2, 0.7, 0.3, 0.9));
         Button submit = new Button("Submit");
         submit.setOnAction(
                 event -> {
-                    this.controller.createCountry(countryName.getText());
+                    this.controller.createCountry(countryName.getText(), colorPicker.getValue());
                     this.getChildren().remove(stackFiller);
                 }
         );
@@ -214,9 +216,10 @@ public class CreateBoardSkin extends StackPane {
 
         // set the placement
         GridPane.setConstraints(countryName, 0, 0);
-        GridPane.setConstraints(submit, 1, 0);
-        GridPane.setConstraints(exit, 2, 0);
-        countryPane.getChildren().addAll(countryName, submit, exit);
+        GridPane.setConstraints(colorPicker, 1, 0);
+        GridPane.setConstraints(submit, 2, 0);
+        GridPane.setConstraints(exit, 3, 0);
+        countryPane.getChildren().addAll(countryName, colorPicker, submit, exit);
         // TODO: remove this style
         countryPane.setStyle("-fx-background-color: aqua");
         stackFiller.getChildren().add(countryPane);

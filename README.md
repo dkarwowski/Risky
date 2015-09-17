@@ -27,7 +27,8 @@ An unofficial Risk-like game where players place Resources/Troops on spaces on a
         - [x] display spots
             - [x] null spots
             - [x] empty spots
-        - [ ] country has its own colors
+        - [x] country has its own colors
+            - [ ] country is set on adding
         - [x] spot connections
     - [x] gather input from clicking on board
     - [x] field user input to make new spots on a board

@@ -4,6 +4,7 @@ import com.davidk.risky.model.game.Board;
 import com.davidk.risky.model.game.Country;
 import com.davidk.risky.model.game.Spot;
 import com.davidk.risky.view.CreateBoardSkin;
+import javafx.scene.paint.Color;
 
 /**
  * Takes calls from the Controller and manages them to create new boards
@@ -102,10 +103,17 @@ public class CreateBoard {
         }
 
         country.add(spot);
+        this.skin.updateBoard(this.board);
     }
 
-    public void createCountry(String countryName) {
-        this.board.addCountry(countryName);
+    /**
+     * Add a country to the board with a specific color
+     *
+     * @param countryName name of the country
+     * @param color       color for outline
+     */
+    public void createCountry(String countryName, Color color) {
+        this.board.addCountry(countryName, color);
     }
 
     /**

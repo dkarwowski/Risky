@@ -2,6 +2,7 @@ package com.davidk.risky.model.game;
 
 import com.davidk.risky.common.hexagon.Hex;
 import com.davidk.risky.common.hexagon.OffsetCoord;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -149,12 +150,13 @@ public class Board {
      * Add a country to the array
      *
      * @param countryName name of the country to be added- should be unique
+     * @param color       color of the country
      */
-    public void addCountry(String countryName) {
+    public void addCountry(String countryName, Color color) {
         for (Country c : countries)
             assert !c.getName().equals(countryName);
 
-        Country c = new Country(countryName);
+        Country c = new Country(countryName, color);
         this.countries.add(c);
     }
 
