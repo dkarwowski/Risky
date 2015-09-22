@@ -151,13 +151,26 @@ public class Board {
      *
      * @param countryName name of the country to be added- should be unique
      * @param color       color of the country
+     * @return            the new country
      */
-    public void addCountry(String countryName, Color color) {
+    public Country addCountry(String countryName, Color color) {
         for (Country c : countries)
             assert !c.getName().equals(countryName);
 
         Country c = new Country(countryName, color);
         this.countries.add(c);
+        return c;
+    }
+
+    /**
+     * Get the newest Country added after using create country
+     *
+     * @return The new country
+     */
+    public Country getNewCountry() {
+        if (!this.countries.isEmpty())
+            return this.countries.get(this.countries.size() - 1);
+        return null;
     }
 
     /**

@@ -234,7 +234,7 @@ public class BoardView extends Canvas {
     private void drawOutline(GraphicsContext gc, Point2D center, Color country) {
         gc.setStroke(country);
         gc.setLineWidth(2.0);
-        this.drawLines(gc, center, new int[]{0,1,2,3,4,5}, -1.5);
+        this.drawLines(gc, center, new int[]{0,1,2,3,4,5}, -1);
     }
 
     /**

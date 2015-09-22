@@ -8,8 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -23,6 +21,7 @@ public class CreateBoardSkin extends StackPane {
     private final CreateBoardController controller;
     private BoardView boardView;
     private ContextMenu contextMenu;
+    private boolean creatingCountry;
 
     /**
      * Initialize the controller, start with a settings view
@@ -30,6 +29,7 @@ public class CreateBoardSkin extends StackPane {
      * @param controller the controller for the skin
      */
     public CreateBoardSkin(CreateBoardController controller) {
+        this.creatingCountry = false;
         this.controller = controller;
 
         GridPane settingsPane = new GridPane();
@@ -84,6 +84,15 @@ public class CreateBoardSkin extends StackPane {
     }
 
     /**
+     * Check if the skin is on creating a country
+     *
+     * @return whether or not the creating country dialog is open
+     */
+    public boolean isCreatingCountry() {
+        return this.creatingCountry;
+    }
+
+    /**
      * Switch views to a board view from settings view
      *
      * @param board the board to use
@@ -96,21 +105,17 @@ public class CreateBoardSkin extends StackPane {
         this.boardView.drawBoard();
         this.boardView.addEventFilter(MouseEvent.MOUSE_CLICKED,
                 event -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        int[] square = this.boardView.getHex(event.getX(), event.getY());
-                        if (square == null)
-                            return;
+                    int[] square = this.boardView.getHex(event.getX(), event.getY());
+                    if (square == null)
+                        return;
 
+                    if (event.getButton() == MouseButton.PRIMARY) {
                         // hide the context menu on a click outside
                         if (this.contextMenu != null && this.contextMenu.isShowing())
                             this.contextMenu.hide();
                         else
                             this.controller.mouseClicked(square[0], square[1]);
                     } else if (event.getButton() == MouseButton.SECONDARY) {
-                        int[] square = this.boardView.getHex(event.getX(), event.getY());
-                        if (square == null)
-                            return;
-
                         this.createContextMenu(event, square);
                         // tell the board view to add a highlight?
                     }
@@ -166,7 +171,7 @@ public class CreateBoardSkin extends StackPane {
         addCountryToMenu.setOnAction(
                 event -> {
                     try {
-                        this.controller.setCountry(square[0], square[1], this.controller.createCountryDialog());
+                        this.controller.createCountryDialog(square[0], square[1]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -189,8 +194,12 @@ public class CreateBoardSkin extends StackPane {
 
     /**
      * Popup Dialog for the user to make a country
+     *
+     * @param x offset x coordinate of the spot
+     * @param y offset y coordinate of the spot
      */
-    public void createCountryDialog() {
+    public void createCountryDialog(int x, int y) {
+        this.creatingCountry = true;
         // created a base stack gridpane to fill the screen with blank space
         GridPane stackFiller = new GridPane();
         // country pane will hold the actual input
@@ -200,18 +209,31 @@ public class CreateBoardSkin extends StackPane {
         countryPane.setPadding(new Insets(10, 10, 10, 10));
 
         // create the input fields
-        TextField countryName = new TextField("Name");
+        TextField countryName = new TextField();
+        countryName.setPromptText("Country Name");
         ColorPicker colorPicker = new ColorPicker(Color.color(0.2, 0.7, 0.3, 0.9));
         Button submit = new Button("Submit");
         submit.setOnAction(
                 event -> {
-                    this.controller.createCountry(countryName.getText(), colorPicker.getValue());
+                    if (countryName.getText().isEmpty())
+                        return;
+                    Country c = this.controller.createCountry(countryName.getText(), colorPicker.getValue());
+
                     this.getChildren().remove(stackFiller);
+
+                    try {
+                        this.controller.setCountry(x, y, c);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
         );
         Button exit = new Button("Cancel");
         exit.setOnAction(
-                event -> this.getChildren().remove(stackFiller)
+                event -> {
+                    this.getChildren().remove(stackFiller);
+                    this.creatingCountry = false;
+                }
         );
 
         // set the placement
@@ -220,10 +242,11 @@ public class CreateBoardSkin extends StackPane {
         GridPane.setConstraints(submit, 2, 0);
         GridPane.setConstraints(exit, 3, 0);
         countryPane.getChildren().addAll(countryName, colorPicker, submit, exit);
-        // TODO: remove this style
-        countryPane.setStyle("-fx-background-color: aqua");
         stackFiller.getChildren().add(countryPane);
         stackFiller.setAlignment(Pos.BOTTOM_CENTER);
         this.getChildren().add(stackFiller);
+        submit.setDefaultButton(true);
+        submit.requestFocus();
+        exit.setCancelButton(true);
     }
 }

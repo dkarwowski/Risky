@@ -89,13 +89,12 @@ public class CreateBoardController {
     /**
      * Create a new country on the board
      *
-     * @return the created country
+     * @param x offset x coordinate of the spot
+     * @param y offset y coordinate of the spot
      */
-    public Country createCountryDialog() {
+    public void createCountryDialog(int x, int y) throws Exception {
         // TODO: implement country creation
-        this.createBoardSkin.createCountryDialog();
-        System.out.println("CreateCountry");
-        return null;
+        this.createBoardSkin.createCountryDialog(x, y);
     }
 
     /**
@@ -103,9 +102,10 @@ public class CreateBoardController {
      *
      * @param cName name of the country to be added
      * @param color color of the country
+     * @return      the new country
      */
-    public void createCountry(String cName, Color color) {
-        this.createBoard.createCountry(cName, color);
+    public Country createCountry(String cName, Color color) {
+        return this.createBoard.createCountry(cName, color);
     }
 
     /**

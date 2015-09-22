@@ -111,9 +111,10 @@ public class CreateBoard {
      *
      * @param countryName name of the country
      * @param color       color for outline
+     * @return            the new country
      */
-    public void createCountry(String countryName, Color color) {
-        this.board.addCountry(countryName, color);
+    public Country createCountry(String countryName, Color color) {
+        return this.board.addCountry(countryName, color);
     }
 
     /**
